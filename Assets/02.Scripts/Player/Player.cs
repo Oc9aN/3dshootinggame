@@ -15,12 +15,14 @@ public class Player : MonoBehaviour
     [Header("Stamina")]
     [SerializeField]
     private float _maxStamina = 100f;
+    public float MaxStamina => _maxStamina;
     [SerializeField]
     private float _staminaRecoverPerSecond = 20f;
     
     private float _stamina = 100f;
     private bool _isUsingStamina = false;
     public bool IsUsingStamina { set => _isUsingStamina = value; }
+    public event Action<float> OnStaminaChanged;   // 스테미나가 변할 때(늘거나, 줄을 때) 호출
 
     private void Update()
     {
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
 
         _stamina += _staminaRecoverPerSecond * Time.deltaTime;
         _stamina = Mathf.Min(_stamina, _maxStamina);
-        Debug.Log("Stamina: " + _stamina);
+        OnStaminaChanged?.Invoke(_stamina);
     }
 
     public bool TryUseStamina(float value)
@@ -51,7 +53,7 @@ public class Player : MonoBehaviour
         // 스테미나 사용
         _isUsingStamina = true;
         _stamina -= value;
-        Debug.Log("Stamina: " + _stamina);
+        OnStaminaChanged?.Invoke(_stamina);
         return true;
     }
 
