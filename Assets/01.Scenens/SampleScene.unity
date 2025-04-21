@@ -1108,8 +1108,8 @@ GameObject:
   - component: {fileID: 1675623921}
   - component: {fileID: 1675623920}
   - component: {fileID: 1675623927}
-  - component: {fileID: 1675623923}
   - component: {fileID: 1675623924}
+  - component: {fileID: 1675623923}
   - component: {fileID: 1675623926}
   - component: {fileID: 1675623928}
   - component: {fileID: 1675623925}
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d521076838cc86c429ce05b2cddb65b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _jumpForce: 10
+  _jumpForce: 5
 --- !u!143 &1675623925
 CharacterController:
   m_ObjectHideFlags: 0
