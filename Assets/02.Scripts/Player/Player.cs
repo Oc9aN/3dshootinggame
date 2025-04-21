@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // 목표: 코드에서 변하는 플레이어 데이터 관리
+    [Header("Movement")]
     [SerializeField]
     private float _defaultMoveSpeed = 7f;
     [SerializeField]
