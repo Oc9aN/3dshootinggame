@@ -2,7 +2,7 @@ using System;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : PlayerComponent
 {
     // 목표: WASD로 캐릭터를 카메라에 맞게 이동
     
@@ -13,8 +13,6 @@ public class PlayerMove : MonoBehaviour
     private const float GRAVITY = -9.8f;
     
     [SerializeField]
-    private float _moveSpeed = 10f;
-    [SerializeField]
     private float _jumpForce = 10f;
     
     private CharacterController _characterController;
@@ -22,12 +20,18 @@ public class PlayerMove : MonoBehaviour
     private float _yVelocity = 0f;
     private bool _isJumping = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
+    {
+        Move();
+    }
+
+    private void Move()
     {
         // 키보드 입력
         float horizontal = Input.GetAxis("Horizontal");
@@ -57,6 +61,6 @@ public class PlayerMove : MonoBehaviour
         direction.y = _yVelocity;
 
         // 캐릭터 컨트롤러로 이동
-        _characterController.Move(direction * (_moveSpeed * Time.deltaTime));
+        _characterController.Move(direction * (Player.MoveSpeed * Time.deltaTime));
     }
 }
