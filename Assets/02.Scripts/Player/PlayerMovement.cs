@@ -20,16 +20,23 @@ public class PlayerMovement : PlayerComponent
     private float _jumpForce = 5f;
     
     private CharacterController _characterController;
+
+    private Vector3 _direction;
     
     private float _yVelocity = 0f;
     private bool _jumpAble = false;
     private int _jumpCounter = 0;
+
+    private GameObject _wall;
+    private bool _isClimbing = false;
 
     [Header("Dash")]
     [SerializeField]
     private float _dashTime = 0.5f;
     [SerializeField]
     private float _dashForce = 10f;
+    [SerializeField]
+    private float _dashStamina = 20f;
     private bool _isDash = false;
     
     private Camera _camera;
@@ -48,37 +55,36 @@ public class PlayerMovement : PlayerComponent
 
     private void Movement()
     {
-        Vector3 direction = Move();
+        Move();
         Dash();
+        Climb();
         // 캐릭터 컨트롤러로 이동
         if (!_isDash)
         {
             Jump();
-            direction.y = _yVelocity;
-            _characterController.Move(direction * (Player.MoveSpeed * Time.deltaTime));
+            _direction.y = _yVelocity;
+            _characterController.Move(_direction * (Player.MoveSpeed * Time.deltaTime));
         }
         else
         {  
             // 대쉬는 중력을 무시
-            direction = direction ==  Vector3.zero ? transform.forward : direction; // 이동중이면 이동 방향으로 대쉬 아니면 앞으로
-            direction.y = 0f;
-            _characterController.Move(direction * (_dashForce * Time.deltaTime));
+            _direction = _direction ==  Vector3.zero ? transform.forward : _direction; // 이동중이면 이동 방향으로 대쉬 아니면 앞으로
+            _direction.y = 0f;
+            _characterController.Move(_direction * (_dashForce * Time.deltaTime));
         }
     }
 
-    private Vector3 Move()
+    private void Move()
     {
         // 키보드 입력
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         
-        Vector3 direction = new Vector3(horizontal, 0, vertical);
-        direction = direction.normalized;
+        _direction = new Vector3(horizontal, 0, vertical);
+        _direction = _direction.normalized;
         
         // 플레이어 기준으로 방향을 변환
-        direction = _camera.transform.TransformDirection(direction);
-        
-        return direction;
+        _direction = _camera.transform.TransformDirection(_direction);
     }
 
     private void Jump()
@@ -100,14 +106,18 @@ public class PlayerMovement : PlayerComponent
                 _jumpAble = false;
             }
         }
-        
+
+        if (_isClimbing)
+        {
+            return;
+        }
         // 중력 적용
         _yVelocity += GRAVITY * Time.deltaTime;
     }
     
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && Player.TryUseStamina(_dashStamina))
         {
             StartCoroutine(DashCoroutine());
         }
@@ -120,5 +130,37 @@ public class PlayerMovement : PlayerComponent
         yield return new WaitForSeconds(_dashTime);
 
         _isDash = false;
+        Player.IsUsingStamina = false;
+    }
+
+    private void Climb()
+    {
+        if (ReferenceEquals(_wall, null))
+        {
+            _isClimbing = false;
+            return;
+        }
+        Vector3 wallDirection = _wall.transform.position - transform.position;
+        wallDirection.Normalize();
+
+        float dotResult = Vector3.Dot(wallDirection, transform.forward);
+        if (dotResult > 0.7f)
+        {
+            // 벽과 방향이 얼추 일치
+            _yVelocity = 1f;
+            _isClimbing = true;
+        }
+
+        // 벽에서 벗어난 것 체크를 위해
+        _wall = null;
+    }
+
+    // TODO: 나가는 함수는 왜 없지..
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Wall"))
+        {
+            _wall = hit.gameObject;
+        }
     }
 }
