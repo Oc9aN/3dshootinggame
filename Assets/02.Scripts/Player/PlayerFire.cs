@@ -32,7 +32,7 @@ public class PlayerFire : PlayerComponent
     private void Fire()
     {
         _fireRate -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && _fireRate <= 0 && Player.TryUseAmmo())
+        if (Input.GetMouseButton(0) && _fireRate <= 0 && Player.CurrentAmmo > 0)
         {
             Ray ray = new Ray(_firePosition.transform.position, _camera.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -43,6 +43,12 @@ public class PlayerFire : PlayerComponent
             }
             // 허공에 쏘는 것도 쏘는 것
             _fireRate = Player.Data.FireRate;
+            Player.CurrentAmmo--;
+            // 재장전 중이면 중지
+            if (Player.IsReloading)
+            {
+                Player.IsReloading = false;
+            }
         }
     }
 
@@ -58,14 +64,19 @@ public class PlayerFire : PlayerComponent
             // 차징
             _bombForce += Player.Data.AddBombForcePerSecond * Time.deltaTime;
         }
-        else if (Input.GetMouseButtonUp(1)
-                 && Player.TryUseBomb())
+        else if (Input.GetMouseButtonUp(1))
         {
             Bomb bomb = Pool_Bomb.Instance.GetBomb();
+            if (Player.BombCount <= 0 || ReferenceEquals(bomb, null))
+            {
+                return;
+            }
             bomb.transform.position = _firePosition.transform.position;
 
             _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);
             bomb.Fire(_bombForce);
+
+            Player.BombCount--;
         }
     }
 }

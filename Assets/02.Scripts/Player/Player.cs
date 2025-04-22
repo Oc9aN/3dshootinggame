@@ -42,7 +42,17 @@ public class Player : MonoBehaviour
     
     // 장전중?
     private bool _isReloading = false;
-    public bool IsReloading { get => _isReloading; set => _isReloading = value; }
+
+    public bool IsReloading
+    {
+        get => _isReloading;
+        set
+        {
+            _isReloading = value;
+            if (!_isReloading)
+                ReloadingProgress = 0f;
+        }
+    }
     
     // UI에 표시되는 값
     private float _reloadingProgress = 0f;
@@ -60,7 +70,7 @@ public class Player : MonoBehaviour
 
     private int _currentAmmo = 50;
     public event Action<int, int> OnAmmoChanged;
-    private int CurrentAmmo
+    public int CurrentAmmo
     {
         get => _currentAmmo;
         set
@@ -72,7 +82,7 @@ public class Player : MonoBehaviour
     
     private int _bombCount = 3;
     public event Action<int, int> OnBombCountChanged;
-    private int BombCount
+    public int BombCount
     {
         get => _bombCount;
         set
@@ -102,25 +112,10 @@ public class Player : MonoBehaviour
         _bombCount = _data.MaxBomb;
     }
 
+    // 스테미나만 Player에서관리
     private void Update()
     {
         RecoverStamina();
-        Reloading();
-    }
-
-    private void Reloading()
-    {
-        if (_isReloading)
-        {
-            ReloadingProgress += Time.deltaTime;
-            if (_reloadingProgress >= _data.ReloadTime)
-            {
-                // 재장전
-                CurrentAmmo = _data.MaxAmmo;
-                _isReloading = false;
-                ReloadingProgress = 0f;
-            }
-        }
     }
 
     private void RecoverStamina()
@@ -145,33 +140,6 @@ public class Player : MonoBehaviour
         // 스테미나 사용
         _isRecoverStamina = false;
         Stamina -= value;
-        return true;
-    }
-
-    public bool TryUseBomb()
-    {
-        if (_bombCount <= 0)
-        {
-            return false;
-        }
-
-        BombCount--;
-        return true;
-    }
-
-    public bool TryUseAmmo()
-    {
-        if (_currentAmmo <= 0)
-        {
-            return false;
-        }
-
-        if (_isReloading)
-        {
-            _isReloading = false;
-            ReloadingProgress = 0f;
-        }
-        CurrentAmmo--;
         return true;
     }
 }
