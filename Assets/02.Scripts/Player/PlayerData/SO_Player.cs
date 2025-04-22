@@ -17,6 +17,14 @@ public class SO_Player : ScriptableObject
     private float _rotateSpeed = 90f;
     public float RotateSpeed => _rotateSpeed;
     
+    [Header("Run")]
+    [SerializeField]
+    private float _runMoveSpeed = 12f;
+    public float RunMoveSpeed => _runMoveSpeed;
+    [SerializeField]
+    private float _useStaminaPerSecond = 10f;
+    public float UseStaminaPerSecond => _useStaminaPerSecond;
+    
     [Header("Jump")]
     [SerializeField]
     private float _jumpForce = 5f;

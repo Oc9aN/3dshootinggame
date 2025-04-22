@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField]    // 디버깅
     private float _moveSpeed = 7f;
 
-    public float MoveSpeed => _moveSpeed;
+    public float MoveSpeed {get => _moveSpeed; set => _moveSpeed = value; }
 
     [SerializeField]    // 디버깅
     private float _stamina = 100f;
@@ -89,15 +89,5 @@ public class Player : MonoBehaviour
         _isRecoverStamina = false;
         Stamina -= value;
         return true;
-    }
-
-    public void SetMoveSpeed(float speed)
-    {
-        _moveSpeed = speed;
-    }
-
-    public void SetDefaultMoveSpeed()
-    {
-        _moveSpeed = _data.DefaultMoveSpeed;
     }
 }
