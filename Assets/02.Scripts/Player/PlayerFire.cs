@@ -10,10 +10,10 @@ public class PlayerFire : PlayerComponent
 
     [SerializeField]
     private Bomb _bomb;
-    
+
     [SerializeField]
     private ParticleSystem _bulletEffect;
-    
+
     private Camera _camera;
 
     protected override void Awake()
@@ -25,11 +25,12 @@ public class PlayerFire : PlayerComponent
     private void Update()
     {
         // 0: 왼쪽, 2: 오른쪽, 3: 휠
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)
+            && Player.TryUseBomb())
         {
             Bomb bomb = Instantiate(_bomb);
             bomb.transform.position = _firePosition.transform.position;
-            
+
             bomb.Fire();
         }
 

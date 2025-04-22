@@ -8,26 +8,44 @@ public class Player : MonoBehaviour
     [Header("Data")]
     [SerializeField]
     private SO_Player _data;
+
     public SO_Player Data => _data;
 
-    [SerializeField]    // 디버깅
+    [SerializeField] // 디버깅
     private float _moveSpeed = 7f;
 
-    public float MoveSpeed {get => _moveSpeed; set => _moveSpeed = value; }
+    public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
-    [SerializeField]    // 디버깅
-    private float _stamina = 100f;
-    
     private float _yVelocity = 0f;
+
     public float YVelocity { get => _yVelocity; set => _yVelocity = value; }
-    
+
     private Vector3 _direction;
+
     public Vector3 Direction { get => _direction; set => _direction = value; }
-    
+
     // 상태
+    // 중력 적용?
     private bool _applyGravity = true;
+
     public bool ApplyGravity { get => _applyGravity; set => _applyGravity = value; }
 
+    // 움직임 제한?
+    private bool _isMoveable = true;
+
+    public bool IsMoveable { get => _isMoveable; set => _isMoveable = value; }
+
+    private bool _isRecoverStamina = true;
+
+    public bool IsRecoverStamina { set => _isRecoverStamina = value; }
+    
+    // UI에 표시되는 값
+    private int _bombCount = 3;
+    public event Action<int, int> OnBombCountChanged;
+
+    [SerializeField] // 디버깅
+    private float _stamina = 100f;
+    public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
     private float Stamina
     {
         get => _stamina;
@@ -37,24 +55,6 @@ public class Player : MonoBehaviour
             OnStaminaChanged?.Invoke(_stamina);
         }
     }
-
-    private bool _isRecoverStamina = true;
-
-    public bool IsRecoverStamina
-    {
-        set => _isRecoverStamina = value;
-    }
-
-    // 움직임 제한
-    private bool _isMoveable = true;
-
-    public bool IsMoveable
-    {
-        get => _isMoveable;
-        set => _isMoveable = value;
-    }
-
-    public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
 
     private void Awake()
     {
@@ -88,6 +88,18 @@ public class Player : MonoBehaviour
         // 스테미나 사용
         _isRecoverStamina = false;
         Stamina -= value;
+        return true;
+    }
+
+    public bool TryUseBomb()
+    {
+        if (_bombCount <= 0)
+        {
+            return false;
+        }
+
+        _bombCount--;
+        OnBombCountChanged?.Invoke(_bombCount, _data.MaxBomb);
         return true;
     }
 }

@@ -60,4 +60,13 @@ public class SO_Player : ScriptableObject
     [SerializeField]
     private float _climbForce = 11f;
     public float ClimbForce => _climbForce;
+    
+    [Header("Weapon")]
+    [SerializeField]
+    private int _maxAmmo = 50;
+    public int MaxAmmo => _maxAmmo;
+
+    [SerializeField]
+    private int _maxBomb = 3;
+    public int MaxBomb => _maxBomb;
 }
