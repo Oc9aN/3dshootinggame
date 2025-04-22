@@ -15,6 +15,7 @@ public class UI_PlayerStamina : MonoBehaviour
     public void Initialize(float maxStamina)
     {
         _slider.maxValue = maxStamina;
+        _slider.value = maxStamina;
     }
 
     public void RefreshSliderValue(float value)

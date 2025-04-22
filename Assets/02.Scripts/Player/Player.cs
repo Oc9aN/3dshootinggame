@@ -7,23 +7,60 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     [SerializeField]
     private float _defaultMoveSpeed = 7f;
+
     [SerializeField]
     private float _moveSpeed = 7f;
+
     public float MoveSpeed => _moveSpeed;
+
     [SerializeField]
     private float _rotateSpeed = 90f;
+
     public float RotateSpeed => _rotateSpeed;
+
     [Header("Stamina")]
     [SerializeField]
     private float _maxStamina = 100f;
+
     public float MaxStamina => _maxStamina;
+
     [SerializeField]
     private float _staminaRecoverPerSecond = 20f;
-    
+
     private float _stamina = 100f;
-    private bool _isUsingStamina = false;
-    public bool IsUsingStamina { set => _isUsingStamina = value; }
-    public event Action<float> OnStaminaChanged;   // 스테미나가 변할 때(늘거나, 줄을 때) 호출
+
+    private float Stamina
+    {
+        get => _stamina;
+        set
+        {
+            _stamina = value;
+            OnStaminaChanged?.Invoke(_stamina);
+        }
+    }
+
+    private bool _isRecoverStamina = true;
+
+    public bool IsRecoverStamina
+    {
+        set => _isRecoverStamina = value;
+    }
+
+    // 대쉬
+    private bool _isDash = false;
+
+    public bool IsDash
+    {
+        get => _isDash;
+        set => _isDash = value;
+    }
+
+    public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
+
+    private void Awake()
+    {
+        Stamina = _maxStamina;
+    }
 
     private void Update()
     {
@@ -32,29 +69,28 @@ public class Player : MonoBehaviour
 
     private void RecoverStamina()
     {
-        if (_isUsingStamina)
+        if (!_isRecoverStamina)
         {
             return;
         }
 
-        _stamina += _staminaRecoverPerSecond * Time.deltaTime;
-        _stamina = Mathf.Min(_stamina, _maxStamina);
-        OnStaminaChanged?.Invoke(_stamina);
+        Stamina += _staminaRecoverPerSecond * Time.deltaTime;
+        Stamina = Mathf.Min(Stamina, _maxStamina);
     }
 
     public bool TryUseStamina(float value)
     {
         // 스테미나가 있다면 사용
-        if (_stamina - value < 0)
+        if (Stamina - value < 0)
         {
             Debug.Log("Stamina is negative");
-            _isUsingStamina = false;
+            //_isUsingStamina = false;
             return false;
         }
+
         // 스테미나 사용
-        _isUsingStamina = true;
-        _stamina -= value;
-        OnStaminaChanged?.Invoke(_stamina);
+        _isRecoverStamina = false;
+        Stamina -= value;
         return true;
     }
 

@@ -28,7 +28,7 @@ public class PlayerRun : PlayerComponent
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             Player.SetDefaultMoveSpeed();
-            Player.IsUsingStamina = false;
+            Player.IsRecoverStamina = true;
         }
     }
 }
