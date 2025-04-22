@@ -16,9 +16,9 @@ public class Bomb : MonoBehaviour
         _camera = Camera.main;
     }
 
-    public void Fire()
+    public void Fire(float force)
     {
-        _rigidbody.AddForce(_camera.transform.forward * 15f, ForceMode.Impulse);
+        _rigidbody.AddForce(_camera.transform.forward * force, ForceMode.Impulse);
         _rigidbody.AddTorque(Vector3.one);
     }
 
@@ -27,6 +27,6 @@ public class Bomb : MonoBehaviour
         GameObject effectObject = Instantiate(_explosionEffectPrefab);
         effectObject.transform.position = transform.position;
         
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
