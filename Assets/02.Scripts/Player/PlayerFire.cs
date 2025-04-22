@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class PlayerFire : MonoBehaviour
 {
-    // 2. 오른쪽 버튼 입력 받기
-    // 3. 발사 위치에 수류탄 생성하기
-    // 4. 생성된 수류탄을 카메라 방향으로 물리적인 힘 가하기
+    // 마우스 왼쪽과 오른쪽으로 총알과 수류탄을 발사
 
     private GameObject _firePosition;
 

@@ -34,7 +34,7 @@ public class PlayerMove : PlayerComponent
 
     private void Move()
     {
-        if (Player.IsDash)
+        if (!Player.IsMoveable)
         {
             return;
         }
@@ -48,6 +48,7 @@ public class PlayerMove : PlayerComponent
         // 플레이어 기준으로 방향을 변환
         direction = _camera.transform.TransformDirection(direction);
         
+        // Y가속도 적용
         direction.y = Player.YVelocity;
         Player.Direction = direction;
         _characterController.Move(Player.Direction * (Player.MoveSpeed * Time.deltaTime));

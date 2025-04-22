@@ -18,8 +18,8 @@ MonoBehaviour:
   _jumpForce: 5
   _maxStamina: 100
   _staminaRecoverPerSecond: 20
-  _dashTime: 0.5
+  _dashTime: 0.1
   _dashStaminaCost: 20
-  _dashForce: 10
-  _climbStaminaPerSecond: 10
+  _dashForce: 50
+  _climbStaminaPerSecond: 50
   _climbForce: 1

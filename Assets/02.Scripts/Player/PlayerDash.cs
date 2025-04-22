@@ -6,6 +6,8 @@ public class PlayerDash : PlayerComponent
 {
     private CharacterController _characterController;
 
+    private bool _isDashing = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -24,7 +26,7 @@ public class PlayerDash : PlayerComponent
             StartCoroutine(DashCoroutine());
         }
         // 캐릭터 컨트롤러로 이동
-        if (Player.IsDash)
+        if (_isDashing)
         {
             // 대쉬는 중력을 무시
             Vector3 dashDirection = Player.Direction == Vector3.zero ? transform.forward : Player.Direction; // 이동중이면 이동 방향으로 대쉬 아니면 앞으로
@@ -36,11 +38,13 @@ public class PlayerDash : PlayerComponent
 
     private IEnumerator DashCoroutine()
     {
-        Player.IsDash = true;
+        _isDashing = true;
+        Player.IsMoveable = false;
 
         yield return new WaitForSeconds(Player.Data.DashTime);
 
-        Player.IsDash = false;
+        _isDashing = false;
+        Player.IsMoveable = true;
         Player.IsRecoverStamina = true;
     }
 }

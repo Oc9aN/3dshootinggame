@@ -45,13 +45,13 @@ public class Player : MonoBehaviour
         set => _isRecoverStamina = value;
     }
 
-    // 대쉬
-    private bool _isDash = false;
+    // 움직임 제한
+    private bool _isMoveable = true;
 
-    public bool IsDash
+    public bool IsMoveable
     {
-        get => _isDash;
-        set => _isDash = value;
+        get => _isMoveable;
+        set => _isMoveable = value;
     }
 
     public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
