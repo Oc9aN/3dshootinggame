@@ -11,6 +11,8 @@ public class PlayerFire : PlayerComponent
     [SerializeField]
     private ParticleSystem _bulletEffect;
 
+    private float _fireRate = 0f;
+
     private float _bombForce = 1f;
 
     private Camera _camera;
@@ -23,8 +25,14 @@ public class PlayerFire : PlayerComponent
 
     private void Update()
     {
+        Fire();
         Bomb();
-        if (Input.GetMouseButtonDown(0))
+    }
+
+    private void Fire()
+    {
+        _fireRate -= Time.deltaTime;
+        if (Input.GetMouseButton(0) && _fireRate <= 0)
         {
             Ray ray = new Ray(_firePosition.transform.position, _camera.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -32,6 +40,7 @@ public class PlayerFire : PlayerComponent
                 _bulletEffect.transform.position = hit.point;
                 _bulletEffect.transform.forward = hit.normal;
                 _bulletEffect.Play();
+                _fireRate = Player.Data.FireRate;
             }
         }
     }

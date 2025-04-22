@@ -72,16 +72,17 @@ public class SO_Player : ScriptableObject
 
     [SerializeField]
     private float _minBombForce = 5f;
-
     public float MinBombForce => _minBombForce;
 
     [SerializeField]
     private float _maxBombForce = 20f;
-
     public float MaxBombForce => _maxBombForce;
 
     [SerializeField]
     private float _addBombForcePerSecond = 5f;
-
     public float AddBombForcePerSecond => _addBombForcePerSecond;
+
+    [SerializeField]
+    private float _fireRate = 0.5f;
+    public float FireRate => _fireRate;
 }
