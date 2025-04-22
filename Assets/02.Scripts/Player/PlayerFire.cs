@@ -32,7 +32,7 @@ public class PlayerFire : PlayerComponent
     private void Fire()
     {
         _fireRate -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && _fireRate <= 0)
+        if (Input.GetMouseButton(0) && _fireRate <= 0 && Player.TryUseAmmo())
         {
             Ray ray = new Ray(_firePosition.transform.position, _camera.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -40,8 +40,9 @@ public class PlayerFire : PlayerComponent
                 _bulletEffect.transform.position = hit.point;
                 _bulletEffect.transform.forward = hit.normal;
                 _bulletEffect.Play();
-                _fireRate = Player.Data.FireRate;
             }
+            // 허공에 쏘는 것도 쏘는 것
+            _fireRate = Player.Data.FireRate;
         }
     }
 

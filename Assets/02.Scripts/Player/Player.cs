@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     public bool IsRecoverStamina { set => _isRecoverStamina = value; }
     
     // UI에 표시되는 값
+    private int _currentAmmo = 50;
+    public event Action<int, int> OnAmmoChanged;
+    
     private int _bombCount = 3;
     public event Action<int, int> OnBombCountChanged;
 
@@ -59,6 +62,8 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Stamina = _data.MaxStamina;
+        _bombCount = _data.MaxBomb;
+        _currentAmmo = _data.MaxAmmo;
     }
 
     private void Update()
@@ -100,6 +105,17 @@ public class Player : MonoBehaviour
 
         _bombCount--;
         OnBombCountChanged?.Invoke(_bombCount, _data.MaxBomb);
+        return true;
+    }
+
+    public bool TryUseAmmo()
+    {
+        if (_currentAmmo <= 0)
+        {
+            return false;
+        }
+        _currentAmmo--;
+        OnAmmoChanged?.Invoke(_currentAmmo, _data.MaxAmmo);
         return true;
     }
 }

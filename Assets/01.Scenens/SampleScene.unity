@@ -720,6 +720,7 @@ GameObject:
   - component: {fileID: 474817017}
   - component: {fileID: 474817019}
   - component: {fileID: 474817018}
+  - component: {fileID: 474817020}
   m_Layer: 5
   m_Name: UI_PlayerAmmo
   m_TagString: Untagged
@@ -845,6 +846,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474817016}
   m_CullTransparentMesh: 1
+--- !u!114 &474817020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474817016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110e93a65944bd0489eff25dd6e44dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &482708700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,8 +2032,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a0326029983ab244a17f99794948ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStamina: {fileID: 482708703}
-  _bombCount: {fileID: 1950352907}
+  _playerStaminaUI: {fileID: 482708703}
+  _playerBombUI: {fileID: 1950352907}
+  _playerAmmoUI: {fileID: 474817020}
 --- !u!136 &1675623929
 CapsuleCollider:
   m_ObjectHideFlags: 0
