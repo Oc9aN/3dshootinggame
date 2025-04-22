@@ -32,6 +32,8 @@ public class PlayerClimb : PlayerComponent
         }
 
         // wall만 체크
+        // 여러 방향에서 벽을 타기 위해 Raycast활용
+        // 벽 방향으로 이동하면 벽타기
         Vector3 rayDirection = Player.Direction;
         rayDirection.y = 0f;
         rayDirection.Normalize();
