@@ -23,6 +23,11 @@ public class PlayerJump : PlayerComponent
 
     private void Jump()
     {
+        if (!Player.ApplyGravity)
+        {
+            // 중력이 없으면 점프 안함
+            return;
+        }
         if (_characterController.isGrounded)
         {
             _jumpAble = true;
