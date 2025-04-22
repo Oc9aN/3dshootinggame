@@ -85,4 +85,8 @@ public class SO_Player : ScriptableObject
     [SerializeField]
     private float _fireRate = 0.5f;
     public float FireRate => _fireRate;
+    
+    [SerializeField]
+    private float _reloadTime = 2f;
+    public float ReloadTime => _reloadTime;
 }

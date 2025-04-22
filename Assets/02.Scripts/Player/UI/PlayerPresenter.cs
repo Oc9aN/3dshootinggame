@@ -13,16 +13,21 @@ public class PlayerPresenter : PlayerComponent
     
     [SerializeField]
     private UI_PlayerAmmo _playerAmmoUI;
+    
+    [SerializeField]
+    private UI_PlayerReload _playerReloadUI;
 
     private void Start()
     {
         Player.OnStaminaChanged += OnStaminaChanged;
         Player.OnBombCountChanged += OnBombCountChanged;
         Player.OnAmmoChanged += OnAmmoChanged;
+        Player.OnReloadProgressChanged += OnReloadProgressChanged;
         
         _playerStaminaUI.Initialize(Player.Data.MaxStamina);
         _playerBombUI.Initialize(Player.Data.MaxBomb);
         _playerAmmoUI.Initialize(Player.Data.MaxAmmo);
+        _playerReloadUI.Initialize(Player.Data.ReloadTime);
     }
 
     private void OnStaminaChanged(float value)
@@ -38,5 +43,10 @@ public class PlayerPresenter : PlayerComponent
     private void OnAmmoChanged(int ammo, int maxAmmo)
     {
         _playerAmmoUI.RefreshAmmoText(ammo, maxAmmo);
+    }
+
+    private void OnReloadProgressChanged(float time)
+    {
+        _playerReloadUI.RefreshSliderValue(time);
     }
 }

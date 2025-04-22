@@ -35,16 +35,52 @@ public class Player : MonoBehaviour
 
     public bool IsMoveable { get => _isMoveable; set => _isMoveable = value; }
 
+    // 스테미나 회복?
     private bool _isRecoverStamina = true;
 
     public bool IsRecoverStamina { set => _isRecoverStamina = value; }
     
+    // 장전중?
+    private bool _isReloading = false;
+    public bool IsReloading { get => _isReloading; set => _isReloading = value; }
+    
     // UI에 표시되는 값
+    private float _reloadingProgress = 0f;
+    public event Action<float> OnReloadProgressChanged;
+
+    public float ReloadingProgress
+    {
+        get => _reloadingProgress;
+        set
+        {
+            _reloadingProgress = value;
+            OnReloadProgressChanged?.Invoke(_reloadingProgress);
+        }
+    }
+
     private int _currentAmmo = 50;
     public event Action<int, int> OnAmmoChanged;
+    private int CurrentAmmo
+    {
+        get => _currentAmmo;
+        set
+        {
+            _currentAmmo = value;
+            OnAmmoChanged?.Invoke(_currentAmmo, _data.MaxAmmo);
+        }
+    }
     
     private int _bombCount = 3;
     public event Action<int, int> OnBombCountChanged;
+    private int BombCount
+    {
+        get => _bombCount;
+        set
+        {
+            _bombCount = value;
+            OnBombCountChanged?.Invoke(_bombCount, _data.MaxBomb);
+        }
+    }
 
     [SerializeField] // 디버깅
     private float _stamina = 100f;
@@ -61,14 +97,30 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Stamina = _data.MaxStamina;
-        _bombCount = _data.MaxBomb;
+        _stamina = _data.MaxStamina;
         _currentAmmo = _data.MaxAmmo;
+        _bombCount = _data.MaxBomb;
     }
 
     private void Update()
     {
         RecoverStamina();
+        Reloading();
+    }
+
+    private void Reloading()
+    {
+        if (_isReloading)
+        {
+            ReloadingProgress += Time.deltaTime;
+            if (_reloadingProgress >= _data.ReloadTime)
+            {
+                // 재장전
+                CurrentAmmo = _data.MaxAmmo;
+                _isReloading = false;
+                ReloadingProgress = 0f;
+            }
+        }
     }
 
     private void RecoverStamina()
@@ -103,8 +155,7 @@ public class Player : MonoBehaviour
             return false;
         }
 
-        _bombCount--;
-        OnBombCountChanged?.Invoke(_bombCount, _data.MaxBomb);
+        BombCount--;
         return true;
     }
 
@@ -114,8 +165,13 @@ public class Player : MonoBehaviour
         {
             return false;
         }
-        _currentAmmo--;
-        OnAmmoChanged?.Invoke(_currentAmmo, _data.MaxAmmo);
+
+        if (_isReloading)
+        {
+            _isReloading = false;
+            ReloadingProgress = 0f;
+        }
+        CurrentAmmo--;
         return true;
     }
 }

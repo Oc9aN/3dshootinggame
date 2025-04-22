@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_PlayerStamina : MonoBehaviour
+public class UI_PlayerReload : MonoBehaviour
 {
     // 플레이어의 스테미나를 Slider로 표시
     private Slider _slider;
@@ -12,10 +11,10 @@ public class UI_PlayerStamina : MonoBehaviour
         _slider = GetComponent<Slider>();
     }
 
-    public void Initialize(float maxValue)
+    public void Initialize(float maxStamina)
     {
-        _slider.maxValue = maxValue;
-        _slider.value = maxValue;
+        _slider.maxValue = maxStamina;
+        _slider.value = 0;
     }
 
     public void RefreshSliderValue(float value)
