@@ -4,30 +4,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // 목표: 코드에서 변하는 플레이어 데이터 관리
-    [Header("Movement")]
+    // TODO: 이동 방향과 Y가속도도 여기서 관리
+    [Header("Data")]
     [SerializeField]
-    private float _defaultMoveSpeed = 7f;
+    private SO_Player _data;
+    public SO_Player Data => _data;
 
-    [SerializeField]
+    [SerializeField]    // 디버깅
     private float _moveSpeed = 7f;
 
     public float MoveSpeed => _moveSpeed;
 
-    [SerializeField]
-    private float _rotateSpeed = 90f;
-
-    public float RotateSpeed => _rotateSpeed;
-
-    [Header("Stamina")]
-    [SerializeField]
-    private float _maxStamina = 100f;
-
-    public float MaxStamina => _maxStamina;
-
-    [SerializeField]
-    private float _staminaRecoverPerSecond = 20f;
-
+    [SerializeField]    // 디버깅
     private float _stamina = 100f;
+    
+    private float _yVelocity = 0f;
+    public float YVelocity { get => _yVelocity; set => _yVelocity = value; }
+    
+    private Vector3 _direction;
+    public Vector3 Direction { get => _direction; set => _direction = value; }
+    
+    // 상태
+    private bool _applyGravity = true;
+    public bool ApplyGravity { get => _applyGravity; set => _applyGravity = value; }
 
     private float Stamina
     {
@@ -59,7 +58,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Stamina = _maxStamina;
+        Stamina = _data.MaxStamina;
     }
 
     private void Update()
@@ -74,8 +73,8 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Stamina += _staminaRecoverPerSecond * Time.deltaTime;
-        Stamina = Mathf.Min(Stamina, _maxStamina);
+        Stamina += _data.StaminaRecoverPerSecond * Time.deltaTime;
+        Stamina = Mathf.Min(Stamina, _data.MaxStamina);
     }
 
     public bool TryUseStamina(float value)
@@ -83,8 +82,6 @@ public class Player : MonoBehaviour
         // 스테미나가 있다면 사용
         if (Stamina - value < 0)
         {
-            Debug.Log("Stamina is negative");
-            //_isUsingStamina = false;
             return false;
         }
 
@@ -101,6 +98,6 @@ public class Player : MonoBehaviour
 
     public void SetDefaultMoveSpeed()
     {
-        _moveSpeed = _defaultMoveSpeed;
+        _moveSpeed = _data.DefaultMoveSpeed;
     }
 }

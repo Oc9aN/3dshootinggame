@@ -11,7 +11,7 @@ public class PlayerPresenter : PlayerComponent
     private void Start()
     {
         Player.OnStaminaChanged += OnStaminaChanged;
-        _playerStamina.Initialize(Player.MaxStamina);
+        _playerStamina.Initialize(Player.Data.MaxStamina);
     }
 
     private void OnStaminaChanged(float value)
