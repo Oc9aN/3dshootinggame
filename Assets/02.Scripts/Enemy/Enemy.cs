@@ -1,11 +1,15 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
     private enum EnemyState
     {
         Idle,
+        Patrol,
         Trace,
         Return,
         Attack,
@@ -28,7 +32,7 @@ public class Enemy : MonoBehaviour
     private float _attackDistance = 2.5f; // 공격 사거리
 
     [SerializeField]
-    private float _returnDistance = 0.1f; // 복귀 사거리
+    private float _onPlaceThreshold = 0.1f; // 제자리 임계점
 
     [SerializeField]
     private float _moveSpeed = 3.3f; // 이동 속도
@@ -39,27 +43,51 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _stiffTime = 0.5f; // 경직 시간
 
-    private float _attackCoolTimer = 0f;
+    [SerializeField]
+    private float _dieTime = 2f; // 사망 시간
+    
+    [SerializeField]
+    private float _patrolTime = 1f;
+    
+    [SerializeField]
+    private List<Transform> _patrolPoints;
 
-    private float _stiffTimer = 0f;
+    private float _attackCoolTimer = 0f;
+    
+    private float _patrolTimer = 0f;
 
     private CharacterController _characterController;
 
-    private Vector3 _startPosition;
+    private Vector3 _targetPosition;    // 이동 목표 위치
 
     private void Awake()
     {
-        _startPosition = transform.position;
+        _targetPosition = transform.position;
         _characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
+        StateCheck();
+    }
+
+    private void StateCheck()
+    {
+        if (_currentState == EnemyState.Damaged || _currentState == EnemyState.Die)
+        {
+            return;
+        }
+        
         switch (_currentState)
         {
             case EnemyState.Idle:
             {
                 Idle();
+                break;
+            }
+            case EnemyState.Patrol:
+            {
+                Patrol();
                 break;
             }
             case EnemyState.Trace:
@@ -77,25 +105,29 @@ public class Enemy : MonoBehaviour
                 Attack();
                 break;
             }
-            case EnemyState.Damaged:
-            {
-                Damaged();
-                break;
-            }
-            case EnemyState.Die:
-            {
-                Die();
-                break;
-            }
         }
     }
 
     public void TakeDamage(Damage damage)
     {
+        if (_currentState == EnemyState.Damaged || _currentState == EnemyState.Die)
+        {
+            return;
+        }
+
         _health -= damage.Value;
+
+        if (_health <= 0)
+        {
+            Debug.Log($"상태전환 {_currentState}->Die");
+            _currentState = EnemyState.Die;
+            StartCoroutine(Die_Coroutine());
+            return;
+        }
 
         Debug.Log($"상태전환 {_currentState}->Damaged");
         _currentState = EnemyState.Damaged;
+        StartCoroutine(Damaged_Coroutine());
     }
 
     // FSM
@@ -107,8 +139,44 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("상태전환 Idle->Trace");
             _currentState = EnemyState.Trace;
+            _patrolTimer = 0f;
             return;
         }
+        
+        _patrolTimer += Time.deltaTime;
+        if (_patrolTimer >= _patrolTime)
+        {
+            // 순찰
+            Debug.Log("상태전환 Idle->Patrol");
+            _patrolTimer = 0f;
+            // 목표 위치 설정
+            _targetPosition = _patrolPoints[Random.Range(0, _patrolPoints.Count)].position;
+            _currentState = EnemyState.Patrol;
+        }
+    }
+
+    private void Patrol()
+    {
+        // 전이 Trace
+        if (Vector3.Distance(transform.position, _player.transform.position) < _findDistance)
+        {
+            Debug.Log("상태전환 Patrol->Trace");
+            _currentState = EnemyState.Trace;
+            _patrolTimer = 0f;
+            return;
+        }
+        
+        // 전이 Idle
+        if (Vector3.Distance(transform.position, _targetPosition) < _onPlaceThreshold)
+        {
+            Debug.Log("상태전환 Patrol->Idle");
+            _currentState = EnemyState.Idle;
+            return;
+        }
+        
+        // 목표 지점으로 이동
+        Vector3 direction = (_targetPosition - transform.position).normalized;
+        _characterController.Move(direction * (_moveSpeed * Time.deltaTime));
     }
 
     private void Trace()
@@ -137,7 +205,7 @@ public class Enemy : MonoBehaviour
     private void Return()
     {
         // 전이 Idle
-        if (Vector3.Distance(transform.position, _startPosition) < _returnDistance)
+        if (Vector3.Distance(transform.position, _targetPosition) < _onPlaceThreshold)
         {
             Debug.Log("상태전환 Return->Idle");
             _currentState = EnemyState.Idle;
@@ -153,14 +221,14 @@ public class Enemy : MonoBehaviour
         }
 
         // 제자리로 복귀
-        Vector3 direction = (_startPosition - transform.position).normalized;
+        Vector3 direction = (_targetPosition - transform.position).normalized;
         _characterController.Move(direction * (_moveSpeed * Time.deltaTime));
     }
 
     private void Attack()
     {
         // 전이 Trace
-        if (Vector3.Distance(transform.position, _player.transform.position) < _findDistance)
+        if (Vector3.Distance(transform.position, _player.transform.position) >= _attackDistance)
         {
             Debug.Log("상태전환 Attack->Trace");
             _attackCoolTimer = 0f;
@@ -177,20 +245,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Damaged()
+    private IEnumerator Damaged_Coroutine()
     {
-        // 피격 = 경직 후 Trace
-        _stiffTimer += Time.deltaTime;
-        if (_stiffTimer >= _stiffTime)
-        {
-            _stiffTimer = 0f;
-            Debug.Log("상태전환 Damaged->Trace");
-            _currentState = EnemyState.Trace;
-        }
+        yield return new WaitForSeconds(_stiffTime);
+        Debug.Log("상태전환 Damaged->Trace");
+        _currentState = EnemyState.Trace;
     }
 
-    private void Die()
+    private IEnumerator Die_Coroutine()
     {
         // 사망
+        yield return new WaitForSeconds(_dieTime);
+        gameObject.SetActive(false);
     }
 }
