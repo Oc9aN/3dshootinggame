@@ -377,6 +377,8 @@ GameObject:
   - component: {fileID: 229122281}
   - component: {fileID: 229122280}
   - component: {fileID: 229122279}
+  - component: {fileID: 229122284}
+  - component: {fileID: 229122283}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -475,6 +477,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &229122283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229122278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e954a106692a0d34690c08687cc361ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1675623918}
+  _findDistance: 7
+  _moveSpeed: 5
+--- !u!143 &229122284
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229122278}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &273994117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -593,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468535aa798d7ed42943de9b28e6a035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bombPrefab: {fileID: 1525912607980806581, guid: fb40a27b7afedeb4096a846c0d97bc0f, type: 3}
+  _poolObjectPrefab: {fileID: 1525912607980806581, guid: fb40a27b7afedeb4096a846c0d97bc0f, type: 3}
   _poolSize: 3
   _pool: []
 --- !u!1 &330585543
@@ -1985,7 +2027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0e8635d7bcba44eb5015bee1b025a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 2916245339825876046, guid: 0d777d7442e13cc4e903bca0cf6fe934, type: 3}
+  _poolObjectPrefab: {fileID: 2916245339825876046, guid: 0d777d7442e13cc4e903bca0cf6fe934, type: 3}
   _poolSize: 100
   _pool: []
 --- !u!1 &1327272367
@@ -2259,7 +2301,7 @@ GameObject:
   - component: {fileID: 1675623929}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
