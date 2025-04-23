@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private float _attackCoolTime = 2f; // 공격 쿨타임
-    
+
     [SerializeField]
     private float _stiffTime = 0.5f; // 경직 시간
 
@@ -68,24 +68,32 @@ public class Enemy : MonoBehaviour
                 break;
             }
             case EnemyState.Return:
+            {
                 Return();
                 break;
+            }
             case EnemyState.Attack:
+            {
                 Attack();
                 break;
+            }
             case EnemyState.Damaged:
+            {
                 Damaged();
                 break;
+            }
             case EnemyState.Die:
+            {
                 Die();
                 break;
+            }
         }
     }
 
     public void TakeDamage(Damage damage)
     {
         _health -= damage.Value;
-        
+
         Debug.Log($"상태전환 {_currentState}->Damaged");
         _currentState = EnemyState.Damaged;
     }
