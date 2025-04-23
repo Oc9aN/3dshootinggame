@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -55,6 +56,15 @@ public class PlayerFire : PlayerComponent
                 _bulletEffect.transform.position = hit.point;
                 _bulletEffect.transform.forward = hit.normal;
                 _bulletEffect.Play();
+
+                if (hit.collider.gameObject.CompareTag("Enemy"))
+                {
+                    Enemy enemy = hit.collider.GetComponent<Enemy>();
+                    
+                    Damage damage = new Damage(10, gameObject);
+                    
+                    enemy.TakeDamage(damage);
+                }
             }
 
             // 허공에 쏘는 것도 쏘는 것

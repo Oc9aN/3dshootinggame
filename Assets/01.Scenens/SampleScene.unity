@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 229122283}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -490,10 +490,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1675623918}
+  _health: 0
   _findDistance: 7
   _attackDistance: 3
   _returnDistance: 0.1
   _moveSpeed: 3.3
+  _attackCoolTime: 1
+  _stiffTime: 2
 --- !u!143 &229122284
 CharacterController:
   m_ObjectHideFlags: 0
