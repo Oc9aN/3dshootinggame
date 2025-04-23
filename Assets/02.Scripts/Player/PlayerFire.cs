@@ -48,7 +48,6 @@ public class PlayerFire : PlayerComponent
 
             Vector3 fireDirection = _camera.transform.rotation * Vector3.forward;
             Ray ray = new Ray(_firePosition.transform.position, fireDirection);
-            Debug.DrawRay(_firePosition.transform.position, fireDirection * 100f, Color.blue, 100f);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 _bulletEffect.transform.position = hit.point;
