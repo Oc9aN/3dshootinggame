@@ -14,21 +14,34 @@ public class Enemy : MonoBehaviour
     }
 
     private EnemyState _currentState = EnemyState.Idle;
-    
-    [SerializeField]
-    private GameObject _player;
-    [SerializeField]
-    private float _findDistance = 7f;   // 추격 거리
 
     [SerializeField]
-    private float _attackDistance = 2.5f;
-    
-    private CharacterController _characterController;
+    private GameObject _player;
+
     [SerializeField]
-    private float _moveSpeed = 3.3f;
+    private float _findDistance = 7f;       // 추격 거리
+
+    [SerializeField]
+    private float _attackDistance = 2.5f;   // 공격 사거리
+    
+    [SerializeField]
+    private float _returnDistance = 0.1f;   // 복귀 사거리
+
+    [SerializeField]
+    private float _moveSpeed = 3.3f;        // 이동 속도
+    
+    [SerializeField]
+    private float _attackCoolTime = 2f;   // 공격 쿨타임
+
+    private float _attackCoolTimer = 0f;
+
+    private CharacterController _characterController;
+
+    private Vector3 _startPosition;
 
     private void Awake()
     {
+        _startPosition = transform.position;
         _characterController = GetComponent<CharacterController>();
     }
 
@@ -64,11 +77,12 @@ public class Enemy : MonoBehaviour
     private void Idle()
     {
         // 대기 상태
-        // 전이
+        // 전이 Trace
         if (Vector3.Distance(transform.position, _player.transform.position) < _findDistance)
         {
             Debug.Log($"상태전환 Idle->Trace");
             _currentState = EnemyState.Trace;
+            return;
         }
     }
 
@@ -81,6 +95,7 @@ public class Enemy : MonoBehaviour
             _currentState = EnemyState.Return;
             return;
         }
+
         // 전이 Attack
         if (Vector3.Distance(transform.position, _player.transform.position) < _attackDistance)
         {
@@ -88,7 +103,7 @@ public class Enemy : MonoBehaviour
             _currentState = EnemyState.Attack;
             return;
         }
-        
+
         // 플레이어 추적
         Vector3 direction = (_player.transform.position - transform.position).normalized;
         _characterController.Move(direction * (_moveSpeed * Time.deltaTime));
@@ -96,12 +111,45 @@ public class Enemy : MonoBehaviour
 
     private void Return()
     {
+        // 전이 Idle
+        if (Vector3.Distance(transform.position, _startPosition) < _returnDistance)
+        {
+            Debug.Log($"상태전환 Return->Idle");
+            _currentState = EnemyState.Idle;
+            return;
+        }
+        
+        // 전이 Trace
+        if (Vector3.Distance(transform.position, _player.transform.position) < _findDistance)
+        {
+            Debug.Log($"상태전환 Return->Trace");
+            _currentState = EnemyState.Trace;
+            return;
+        }
+        
         // 제자리로 복귀
+        Vector3 direction = (_startPosition - transform.position).normalized;
+        _characterController.Move(direction * (_moveSpeed * Time.deltaTime));
     }
 
     private void Attack()
     {
+        // 전이 Trace
+        if (Vector3.Distance(transform.position, _player.transform.position) < _findDistance)
+        {
+            Debug.Log($"상태전환 Attack->Trace");
+            _attackCoolTimer = 0f;
+            _currentState = EnemyState.Trace;
+            return;
+        }
+        
         // 공격
+        _attackCoolTimer += Time.deltaTime;
+        if (_attackCoolTimer >= _attackCoolTime)
+        {
+            Debug.Log("Attack");
+            _attackCoolTimer = 0f;
+        }
     }
 
     private void Damaged()

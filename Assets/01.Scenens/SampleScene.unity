@@ -491,7 +491,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1675623918}
   _findDistance: 7
-  _moveSpeed: 5
+  _attackDistance: 3
+  _returnDistance: 0.1
+  _moveSpeed: 3.3
 --- !u!143 &229122284
 CharacterController:
   m_ObjectHideFlags: 0
