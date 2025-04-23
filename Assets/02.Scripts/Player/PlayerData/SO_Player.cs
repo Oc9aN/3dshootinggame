@@ -61,11 +61,7 @@ public class SO_Player : ScriptableObject
     private float _climbForce = 11f;
     public float ClimbForce => _climbForce;
     
-    [Header("Weapon")]
-    [SerializeField]
-    private int _maxAmmo = 50;
-    public int MaxAmmo => _maxAmmo;
-
+    [Header("Bomb")]
     [SerializeField]
     private int _maxBomb = 3;
     public int MaxBomb => _maxBomb;
@@ -81,6 +77,11 @@ public class SO_Player : ScriptableObject
     [SerializeField]
     private float _addBombForcePerSecond = 5f;
     public float AddBombForcePerSecond => _addBombForcePerSecond;
+    
+    [Header("Fire")]
+    [SerializeField]
+    private int _maxAmmo = 50;
+    public int MaxAmmo => _maxAmmo;
 
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -89,4 +90,21 @@ public class SO_Player : ScriptableObject
     [SerializeField]
     private float _reloadTime = 2f;
     public float ReloadTime => _reloadTime;
+    
+    [Header("Recoil")]
+    [SerializeField]
+    private float _verticalRecoil = 2f;
+    public float VerticalRecoil => _verticalRecoil;
+    
+    [SerializeField]
+    private float _horizontalRecoil = 1f;
+    public float HorizontalRecoil => _horizontalRecoil;
+    
+    [SerializeField]
+    private float _recoilSpeed = 10f;
+    public float RecoilSpeed => _recoilSpeed;
+    
+    [SerializeField]
+    private float _recoilReturnSpeed = 20f;
+    public float RecoilReturnSpeed => _recoilReturnSpeed;
 }

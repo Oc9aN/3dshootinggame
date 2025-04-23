@@ -25,9 +25,14 @@ MonoBehaviour:
   _dashForce: 50
   _climbStaminaPerSecond: 50
   _climbForce: 1
-  _maxAmmo: 50
   _maxBomb: 3
   _minBombForce: 5
   _maxBombForce: 20
   _addBombForcePerSecond: 5
+  _maxAmmo: 50
   _fireRate: 0.1
+  _reloadTime: 2
+  _verticalRecoil: 5
+  _horizontalRecoil: 4
+  _recoilSpeed: 20
+  _recoilReturnSpeed: 30

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerFire : PlayerComponent
 {
@@ -16,6 +17,9 @@ public class PlayerFire : PlayerComponent
     private float _bombForce = 1f;
 
     private Camera _camera;
+    
+    private Vector3 _currentRecoil;
+    private Vector3 _targetRecoil;
 
     protected override void Awake()
     {
@@ -34,7 +38,17 @@ public class PlayerFire : PlayerComponent
         _fireRate -= Time.deltaTime;
         if (Input.GetMouseButton(0) && _fireRate <= 0 && Player.CurrentAmmo > 0)
         {
-            Ray ray = new Ray(_firePosition.transform.position, _camera.transform.forward);
+            ApplyRandomRecoil(); // 먼저 반동 값을 계산
+
+            // 반동 계산
+            _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * Player.Data.RecoilSpeed);
+            _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * Player.Data.RecoilReturnSpeed);
+
+            _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
+
+            Vector3 fireDirection = _camera.transform.rotation * Vector3.forward;
+            Ray ray = new Ray(_firePosition.transform.position, fireDirection);
+            Debug.DrawRay(_firePosition.transform.position, fireDirection * 100f, Color.blue, 100f);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 _bulletEffect.transform.position = hit.point;
@@ -50,6 +64,20 @@ public class PlayerFire : PlayerComponent
                 Player.IsReloading = false;
             }
         }
+        // 반동 계산 (발사하지 않을 때도 목표 반동 감소)
+        else
+        {
+            _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * Player.Data.RecoilSpeed);
+            _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * Player.Data.RecoilReturnSpeed);
+            _camera.transform.localEulerAngles += _currentRecoil;
+        }
+    }
+
+    private void ApplyRandomRecoil()
+    {
+        float vertical = Random.Range(0f, Player.Data.VerticalRecoil); // 위로 튕김
+        float horizontal = Random.Range(-Player.Data.HorizontalRecoil, Player.Data.HorizontalRecoil);   // 좌우 랜덤
+        _targetRecoil += new Vector3(vertical, horizontal, 0f);
     }
 
     private void Bomb()
