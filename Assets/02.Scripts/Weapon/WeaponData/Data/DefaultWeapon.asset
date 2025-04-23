@@ -23,3 +23,4 @@ MonoBehaviour:
   _bulletSpeed: 100
   _damage:
     _damageValue: 10
+    _knockBackForce: 10
