@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool_Bomb : MonoBehaviour
+public class Pool_Bomb : Singleton<Pool_Bomb>
 {
-    public static Pool_Bomb Instance;
-
     [SerializeField]
     private Bomb _bombPrefab;
 
@@ -14,15 +12,6 @@ public class Pool_Bomb : MonoBehaviour
 
     [SerializeField]
     private List<Bomb> _pool;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        Instance = this;
-    }
 
     private void Start()
     {
