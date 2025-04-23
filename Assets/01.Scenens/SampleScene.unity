@@ -493,11 +493,16 @@ MonoBehaviour:
   _health: 100
   _findDistance: 7
   _attackDistance: 3
-  _returnDistance: 0.1
+  _onPlaceThreshold: 0.1
   _moveSpeed: 3.3
   _attackCoolTime: 1
   _stiffTime: 0.5
   _dieTime: 2
+  _patrolTime: 1
+  _patrolPoints:
+  - {fileID: 1314660341}
+  - {fileID: 1507140378}
+  - {fileID: 1642966469}
 --- !u!143 &229122284
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2395,6 +2400,7 @@ GameObject:
   - component: {fileID: 1675623930}
   - component: {fileID: 1675623934}
   - component: {fileID: 1675623935}
+  - component: {fileID: 1675623936}
   - component: {fileID: 1675623928}
   - component: {fileID: 1675623925}
   - component: {fileID: 1675623929}
@@ -2667,6 +2673,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8f4dac9627099488d49f51d2f0b34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1675623936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675623918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d4598e0fd9d024597751de9545d074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponData:
+  - {fileID: 11400000, guid: faf1b67f1316e6e43961f2c677480011, type: 2}
+  - {fileID: 11400000, guid: e4a851c9d65d1fa41abdd142881384ba, type: 2}
 --- !u!1 &1679366388
 GameObject:
   m_ObjectHideFlags: 0

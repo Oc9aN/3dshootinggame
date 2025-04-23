@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        _health -= damage.Value;
+        _health -= damage.DamageValue;
 
         if (_health <= 0)
         {
@@ -127,7 +127,7 @@ public class Enemy : MonoBehaviour
 
         Debug.Log($"상태전환 {_currentState}->Damaged");
         _currentState = EnemyState.Damaged;
-        StartCoroutine(Damaged_Coroutine());
+        StartCoroutine(Damaged_Coroutine(damage.KnockBackForce));
     }
 
     // FSM
@@ -245,9 +245,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private IEnumerator Damaged_Coroutine()
+    private IEnumerator Damaged_Coroutine(float knockBackForce)
     {
-        yield return new WaitForSeconds(_stiffTime);
+        float startTime = Time.time;
+        float currentKnockBackValue = knockBackForce;
+        while (Time.time - startTime < 1f)
+        {
+            // 경과 시간 비율 (0 ~ 1)
+            float timeRatio = (Time.time - startTime) / 1f;
+
+            // 감소된 넉백 값 (1에서 0으로 선형 감소)
+            currentKnockBackValue = knockBackForce * (1f - timeRatio);
+            
+            Vector3 direction = (transform.position - _player.transform.position).normalized;
+            _characterController.Move(direction * (currentKnockBackValue * Time.deltaTime));
+            yield return null;
+        }
         Debug.Log("상태전환 Damaged->Trace");
         _currentState = EnemyState.Trace;
     }

@@ -8,41 +8,37 @@ public class Player : MonoBehaviour
     [Header("Data")]
     [SerializeField]
     private SO_Player _data;
-
     public SO_Player Data => _data;
+    
+    [SerializeField]
+    private Weapon _currentWeapon;
+    public Weapon CurrentWeapon { get => _currentWeapon; set => _currentWeapon = value; }
 
     [SerializeField] // 디버깅
     private float _moveSpeed = 7f;
-
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
     private float _yVelocity = 0f;
-
     public float YVelocity { get => _yVelocity; set => _yVelocity = value; }
 
     private Vector3 _direction;
-
     public Vector3 Direction { get => _direction; set => _direction = value; }
 
     // 상태
     // 중력 적용?
     private bool _applyGravity = true;
-
     public bool ApplyGravity { get => _applyGravity; set => _applyGravity = value; }
 
     // 움직임 제한?
     private bool _isMoveable = true;
-
     public bool IsMoveable { get => _isMoveable; set => _isMoveable = value; }
 
     // 스테미나 회복?
     private bool _isRecoverStamina = true;
-
     public bool IsRecoverStamina { set => _isRecoverStamina = value; }
     
     // 장전중?
     private bool _isReloading = false;
-
     public bool IsReloading
     {
         get => _isReloading;
@@ -53,8 +49,9 @@ public class Player : MonoBehaviour
                 ReloadingProgress = 0f;
         }
     }
-    
+
     // UI에 표시되는 값
+    // 재장전 진행도
     private float _reloadingProgress = 0f;
     public event Action<float> OnReloadProgressChanged;
 
@@ -68,6 +65,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 총알
     private int _currentAmmo = 50;
     public event Action<int, int> OnAmmoChanged;
     public int CurrentAmmo
@@ -76,10 +74,11 @@ public class Player : MonoBehaviour
         set
         {
             _currentAmmo = value;
-            OnAmmoChanged?.Invoke(_currentAmmo, _data.MaxAmmo);
+            OnAmmoChanged?.Invoke(_currentAmmo, _currentWeapon.Data.MaxAmmo);
         }
     }
     
+    // 폭탄
     private int _bombCount = 3;
     public event Action<int, int> OnBombCountChanged;
     public int BombCount
@@ -92,6 +91,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 스테미나
     [SerializeField] // 디버깅
     private float _stamina = 100f;
     public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
@@ -105,10 +105,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         _stamina = _data.MaxStamina;
-        _currentAmmo = _data.MaxAmmo;
+        _currentAmmo = _currentWeapon.Data.MaxAmmo;
         _bombCount = _data.MaxBomb;
     }
 

@@ -26,8 +26,8 @@ public class PlayerPresenter : PlayerComponent
         
         _playerStaminaUI.Initialize(Player.Data.MaxStamina);
         _playerBombUI.Initialize(Player.Data.MaxBomb);
-        _playerAmmoUI.Initialize(Player.Data.MaxAmmo);
-        _playerReloadUI.Initialize(Player.Data.ReloadTime);
+        _playerAmmoUI.Initialize(Player.CurrentWeapon.Data.MaxAmmo);
+        _playerReloadUI.Initialize(Player.CurrentWeapon.Data.ReloadTime);
     }
 
     private void OnStaminaChanged(float value)

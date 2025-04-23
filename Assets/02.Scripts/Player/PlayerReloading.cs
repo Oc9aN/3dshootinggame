@@ -18,10 +18,10 @@ public class PlayerReloading : PlayerComponent
         if (Player.IsReloading)
         {
             Player.ReloadingProgress += Time.deltaTime;
-            if (Player.ReloadingProgress >= Player.Data.ReloadTime)
+            if (Player.ReloadingProgress >= Player.CurrentWeapon.Data.ReloadTime)
             {
                 // 재장전
-                Player.CurrentAmmo = Player.Data.MaxAmmo;
+                Player.CurrentAmmo = Player.CurrentWeapon.Data.MaxAmmo;
                 Player.IsReloading = false;
             }
         }
