@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour
     private CharacterController _characterController;
 
     private Vector3 _targetPosition;    // 이동 목표 위치
+    
+    private Coroutine _damageCoroutine;
 
     private void Awake()
     {
@@ -110,7 +112,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(Damage damage)
     {
-        if (_currentState == EnemyState.Damaged || _currentState == EnemyState.Die)
+        if (_currentState == EnemyState.Die)
         {
             return;
         }
@@ -127,7 +129,9 @@ public class Enemy : MonoBehaviour
 
         Debug.Log($"상태전환 {_currentState}->Damaged");
         _currentState = EnemyState.Damaged;
-        StartCoroutine(Damaged_Coroutine(damage.KnockBackForce));
+        if (_damageCoroutine != null)
+            StopCoroutine(_damageCoroutine);
+        _damageCoroutine = StartCoroutine(Damaged_Coroutine(damage.KnockBackForce));
     }
 
     // FSM
