@@ -17,7 +17,7 @@ public class PlayerFire : PlayerComponent
     private float _bombForce = 1f;
 
     private Camera _camera;
-    
+
     private Vector3 _currentRecoil;
     private Vector3 _targetRecoil;
 
@@ -48,13 +48,20 @@ public class PlayerFire : PlayerComponent
 
             Vector3 fireDirection = _camera.transform.rotation * Vector3.forward;
             Ray ray = new Ray(_firePosition.transform.position, fireDirection);
+            Vector3 hitPoint = fireDirection * Player.Data.BulletMaxDistance;   // 안맞으면 최대 거리까지 존재
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
+                hitPoint = hit.point;
                 _bulletEffect.transform.position = hit.point;
                 _bulletEffect.transform.forward = hit.normal;
                 _bulletEffect.Play();
             }
+
             // 허공에 쏘는 것도 쏘는 것
+            Bullet bullet = Pool_Bullet.Instance.GetBullet();
+            bullet.transform.position = _firePosition.transform.position;
+            bullet.Fire(hitPoint, Player.Data.BulletSpeed);
+
             _fireRate = Player.Data.FireRate;
             Player.CurrentAmmo--;
             // 재장전 중이면 중지
@@ -75,7 +82,7 @@ public class PlayerFire : PlayerComponent
     private void ApplyRandomRecoil()
     {
         float vertical = Random.Range(0f, Player.Data.VerticalRecoil); // 위로 튕김
-        float horizontal = Random.Range(-Player.Data.HorizontalRecoil, Player.Data.HorizontalRecoil);   // 좌우 랜덤
+        float horizontal = Random.Range(-Player.Data.HorizontalRecoil, Player.Data.HorizontalRecoil); // 좌우 랜덤
         _targetRecoil += new Vector3(vertical, horizontal, 0f);
     }
 
@@ -98,6 +105,7 @@ public class PlayerFire : PlayerComponent
             {
                 return;
             }
+
             bomb.transform.position = _firePosition.transform.position;
 
             _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);

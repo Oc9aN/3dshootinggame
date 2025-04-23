@@ -61,6 +61,7 @@ public class SO_Player : ScriptableObject
     private float _climbForce = 11f;
     public float ClimbForce => _climbForce;
     
+    // TODO: 추후 분류가 된다면 분리
     [Header("Bomb")]
     [SerializeField]
     private int _maxBomb = 3;
@@ -107,4 +108,13 @@ public class SO_Player : ScriptableObject
     [SerializeField]
     private float _recoilReturnSpeed = 20f;
     public float RecoilReturnSpeed => _recoilReturnSpeed;
+    
+    [Header("Bullet")]
+    [SerializeField]
+    private float _bulletMaxDistance = 100f;
+    public float BulletMaxDistance => _bulletMaxDistance;
+    
+    [SerializeField]
+    private float _bulletSpeed = 100f;
+    public float BulletSpeed => _bulletSpeed;
 }
