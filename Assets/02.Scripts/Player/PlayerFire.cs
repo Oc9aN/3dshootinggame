@@ -58,7 +58,7 @@ public class PlayerFire : PlayerComponent
             }
 
             // 허공에 쏘는 것도 쏘는 것
-            Bullet bullet = Pool_Bullet.Instance.GetBullet();
+            Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
             bullet.transform.position = _firePosition.transform.position;
             bullet.Fire(hitPoint, Player.Data.BulletSpeed);
 
@@ -100,7 +100,7 @@ public class PlayerFire : PlayerComponent
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            Bomb bomb = Pool_Bomb.Instance.GetBomb();
+            Bomb bomb = Pool_Bomb.Instance.GetPooledObject();
             if (Player.BombCount <= 0 || ReferenceEquals(bomb, null))
             {
                 return;
