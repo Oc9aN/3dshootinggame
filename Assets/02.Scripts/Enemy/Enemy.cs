@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
-    // TODO: 상태만 가지고 있고 인터페이스를 통해 Acting
+    // 상태만 가지고 있고 인터페이스를 통해 Acting
     private Dictionary<EnemyState, IEnemyState> _enemyStates;
     private IEnemyState _currentState;
     private EnemyState _currentStateEnum;
@@ -30,6 +31,9 @@ public class Enemy : MonoBehaviour
 
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
+    
+    private NavMeshAgent _navMeshAgent;
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     private float _knockBackForce;
     public float KnockBackForce => _knockBackForce;
@@ -39,6 +43,8 @@ public class Enemy : MonoBehaviour
         _health = Data.Health;
         _targetPosition = transform.position;
         _characterController = GetComponent<CharacterController>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = _data.MoveSpeed;
 
         _enemyStates = new Dictionary<EnemyState, IEnemyState>()
         {
