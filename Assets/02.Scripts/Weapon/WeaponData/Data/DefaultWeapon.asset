@@ -22,5 +22,5 @@ MonoBehaviour:
   _bulletMaxDistance: 100
   _bulletSpeed: 100
   _damage:
-    _damageValue: 10
+    _damageValue: 0
     _knockBackForce: 10

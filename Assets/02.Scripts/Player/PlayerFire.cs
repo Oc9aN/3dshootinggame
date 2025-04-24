@@ -60,10 +60,10 @@ public class PlayerFire : PlayerComponent
                 if (hit.collider.gameObject.CompareTag("Enemy"))
                 {
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
+
+                    Player.CurrentWeapon.Data.Damage.SetFrom(gameObject);
                     
-                    Damage damage = new Damage(gameObject, Player.CurrentWeapon.Data.Damage);
-                    
-                    enemy.TakeDamage(damage);
+                    enemy.TakeDamage(Player.CurrentWeapon.Data.Damage);
                 }
             }
 
