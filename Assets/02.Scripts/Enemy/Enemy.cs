@@ -8,9 +8,9 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour, IDamageable
 {
     // 상태만 가지고 있고 인터페이스를 통해 Acting
-    protected Dictionary<EnemyState, IEnemyState> _enemyStates;
+    protected Dictionary<EEnemyState, IEnemyState> _enemyStates;
     private IEnemyState _currentState;
-    private EnemyState _currentStateEnum;
+    private EEnemyState _currentStateEnum;
 
     private int _health;
 
@@ -49,21 +49,21 @@ public class Enemy : MonoBehaviour, IDamageable
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _data.MoveSpeed;
 
-        _enemyStates = new Dictionary<EnemyState, IEnemyState>()
+        _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
         {
-            { EnemyState.Idle, new EnemyIdle(this) },
-            { EnemyState.Patrol, new EnemyPatrol(this) },
-            { EnemyState.Trace, new EnemyTrace(this) },
-            { EnemyState.Return, new EnemyReturn(this) },
-            { EnemyState.Attack, new EnemyAttack(this) },
-            { EnemyState.Damaged, new EnemyDamaged(this) },
-            { EnemyState.Die, new EnemyDie(this) }
+            { EEnemyState.Idle, new EnemyIdle(this) },
+            { EEnemyState.Patrol, new EnemyPatrol(this) },
+            { EEnemyState.Trace, new EnemyTrace(this) },
+            { EEnemyState.Return, new EnemyReturn(this) },
+            { EEnemyState.Attack, new EnemyAttack(this) },
+            { EEnemyState.Damaged, new EnemyDamaged(this) },
+            { EEnemyState.Die, new EnemyDie(this) }
         };
     }
 
     private void Start()
     {
-        ChangeState(EnemyState.Idle);
+        ChangeState(EEnemyState.Idle);
     }
 
     private void Update()
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour, IDamageable
         _currentState.Acting();
     }
 
-    public void ChangeState(EnemyState state)
+    public void ChangeState(EEnemyState state)
     {
         Debug.Log($"상태전환 {_currentStateEnum}->{state}");
         _currentStateEnum = state;
@@ -97,10 +97,10 @@ public class Enemy : MonoBehaviour, IDamageable
         _damageInfo = damage;
         if (_health <= 0)
         {
-            ChangeState(EnemyState.Die);
+            ChangeState(EEnemyState.Die);
             return;
         }
 
-        ChangeState(EnemyState.Damaged);
+        ChangeState(EEnemyState.Damaged);
     }
 }

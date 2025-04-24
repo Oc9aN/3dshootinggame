@@ -1,4 +1,4 @@
-public enum EnemyState
+public enum EEnemyState
 {
     Idle = 0,
     Patrol,

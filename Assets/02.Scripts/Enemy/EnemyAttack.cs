@@ -22,7 +22,7 @@ public class EnemyAttack : IEnemyState
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.AttackDistance)
         {
             _attackCoolTimer = 0f;
-            _enemy.ChangeState(EnemyState.Trace);
+            _enemy.ChangeState(EEnemyState.Trace);
             return;
         }
         // 공격

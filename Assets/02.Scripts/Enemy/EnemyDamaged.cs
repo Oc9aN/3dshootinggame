@@ -50,6 +50,6 @@ public class EnemyDamaged : IEnemyState
     private IEnumerator Damaged_Coroutine()
     {
         yield return new WaitForSeconds(_enemy.Data.DamagedTime);
-        _enemy.ChangeState(EnemyState.Trace);
+        _enemy.ChangeState(EEnemyState.Trace);
     }
 }

@@ -18,13 +18,13 @@ public class EnemyReturn : IEnemyState
         // 전이 Idle
         if (Vector3.Distance(_enemy.transform.position, _enemy.TargetPosition) < _enemy.Data.OnPlaceThreshold)
         {
-            _enemy.ChangeState(EnemyState.Idle);
+            _enemy.ChangeState(EEnemyState.Idle);
             return;
         }
         // 전이 Trace
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.FindDistance)
         {
-            _enemy.ChangeState(EnemyState.Trace);
+            _enemy.ChangeState(EEnemyState.Trace);
             return;
         }
         

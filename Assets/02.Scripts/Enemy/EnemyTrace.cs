@@ -18,13 +18,13 @@ public class EnemyTrace : IEnemyState
         // 전이 Return
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.FindDistance)
         {
-            _enemy.ChangeState(EnemyState.Return);
+            _enemy.ChangeState(EEnemyState.Return);
             return;
         }
         // 전이 Attack
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.AttackDistance)
         {
-            _enemy.ChangeState(EnemyState.Attack);
+            _enemy.ChangeState(EEnemyState.Attack);
             return;
         }
         // 플레이어 추적

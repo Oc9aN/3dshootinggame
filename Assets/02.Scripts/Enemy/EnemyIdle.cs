@@ -24,7 +24,7 @@ public class EnemyIdle : IEnemyState
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.FindDistance)
         {
             _patrolTimer = 0f;
-            _enemy.ChangeState(EnemyState.Trace);
+            _enemy.ChangeState(EEnemyState.Trace);
             return;
         }
         
@@ -33,7 +33,7 @@ public class EnemyIdle : IEnemyState
         {
             // 순찰
             _patrolTimer = 0f;
-            _enemy.ChangeState(EnemyState.Patrol);
+            _enemy.ChangeState(EEnemyState.Patrol);
         }
     }
 
