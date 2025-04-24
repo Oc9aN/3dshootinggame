@@ -10,6 +10,8 @@ public class EnemyDamaged : IEnemyState
     private float _timer = 0f;
     private float _currentKnockBackValue;
     
+    private Vector3 _knockBackDirection;
+    
     public EnemyDamaged(Enemy enemy)
     {
         _enemy = enemy;
@@ -19,10 +21,11 @@ public class EnemyDamaged : IEnemyState
     {
         _damagedCoroutine = Damaged_Coroutine();
         _enemy.StartEnemyStateCoroutine(_damagedCoroutine);
-        _currentKnockBackValue = _enemy.KnockBackForce;
+        _currentKnockBackValue = _enemy.DamageInfo.KnockBackForce;
         _timer = 0f;
         _enemy.NavMeshAgent.isStopped = true;
         _enemy.NavMeshAgent.ResetPath();
+        _knockBackDirection = (_enemy.transform.position - _enemy.DamageInfo.From.transform.position).normalized;
     }
 
     public void Acting()
@@ -31,9 +34,8 @@ public class EnemyDamaged : IEnemyState
         // 경과 시간 비율 (0 ~ 1)
         float timeRatio = _timer / _enemy.Data.DamagedTime;
         // 감소된 넉백 값 (1에서 0으로 선형 감소)
-        _currentKnockBackValue = _enemy.KnockBackForce * (_enemy.Data.DamagedTime - timeRatio);
-        Vector3 direction = (_enemy.transform.position - _enemy.Player.transform.position).normalized;
-        _enemy.CharacterController.Move(direction * (_currentKnockBackValue * Time.deltaTime));
+        _currentKnockBackValue = _enemy.DamageInfo.KnockBackForce * (_enemy.Data.DamagedTime - timeRatio);
+        _enemy.CharacterController.Move(_knockBackDirection * (_currentKnockBackValue * Time.deltaTime));
     }
 
     public void Exit()

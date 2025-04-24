@@ -35,8 +35,8 @@ public class Enemy : MonoBehaviour, IDamageable
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
-    private float _knockBackForce;
-    public float KnockBackForce => _knockBackForce;
+    private Damage _damageInfo;
+    public Damage DamageInfo => _damageInfo;
 
     private void Awake()
     {
@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(Damage damage)
     {
         _health -= damage.DamageValue;
-        _knockBackForce = damage.KnockBackForce;
+        _damageInfo = damage;
         if (_health <= 0)
         {
             ChangeState(EnemyState.Die);

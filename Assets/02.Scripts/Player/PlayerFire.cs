@@ -61,7 +61,7 @@ public class PlayerFire : PlayerComponent
                 {
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
 
-                    Player.CurrentWeapon.Data.Damage.SetFrom(gameObject);
+                    Player.CurrentWeapon.Data.Damage.From = gameObject;
                     
                     enemy.TakeDamage(Player.CurrentWeapon.Data.Damage);
                 }
