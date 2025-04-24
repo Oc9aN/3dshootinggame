@@ -57,13 +57,11 @@ public class PlayerFire : PlayerComponent
                 _bulletEffect.transform.forward = hit.normal;
                 _bulletEffect.Play();
 
-                if (hit.collider.gameObject.CompareTag("Enemy"))
+                if (hit.collider.TryGetComponent(out IDamageable damageableObject))
                 {
-                    Enemy enemy = hit.collider.GetComponent<Enemy>();
-
                     Player.CurrentWeapon.Data.Damage.From = gameObject;
                     
-                    enemy.TakeDamage(Player.CurrentWeapon.Data.Damage);
+                    damageableObject.TakeDamage(Player.CurrentWeapon.Data.Damage);
                 }
             }
 
