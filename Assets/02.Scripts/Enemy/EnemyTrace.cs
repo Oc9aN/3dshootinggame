@@ -28,8 +28,9 @@ public class EnemyTrace : IEnemyState
             return;
         }
         // 플레이어 추적
-        Vector3 direction = (_enemy.Player.transform.position - _enemy.transform.position).normalized;
-        _enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
+        _enemy.NavMeshAgent.SetDestination(_enemy.Player.transform.position);
+        //Vector3 direction = (_enemy.Player.transform.position - _enemy.transform.position).normalized;
+        //_enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
     }
 
     public void Exit()

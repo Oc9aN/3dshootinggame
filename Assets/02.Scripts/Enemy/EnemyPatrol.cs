@@ -10,7 +10,8 @@ public class EnemyPatrol : IEnemyState
 
     public void Enter()
     {
-        
+        // 목표 위치 설정
+        _enemy.TargetPosition = _enemy.PatrolPoints[Random.Range(0, _enemy.PatrolPoints.Count)].position;
     }
 
     public void Acting()
@@ -28,8 +29,9 @@ public class EnemyPatrol : IEnemyState
             return;
         }
         // 목표 지점으로 이동
-        Vector3 direction = (_enemy.TargetPosition - _enemy.transform.position).normalized;
-        _enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
+        _enemy.NavMeshAgent.SetDestination(_enemy.TargetPosition);
+        // Vector3 direction = (_enemy.TargetPosition - _enemy.transform.position).normalized;
+        // _enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
     }
 
     public void Exit()

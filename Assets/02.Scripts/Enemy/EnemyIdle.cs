@@ -33,8 +33,6 @@ public class EnemyIdle : IEnemyState
         {
             // 순찰
             _patrolTimer = 0f;
-            // 목표 위치 설정
-            _enemy.TargetPosition = _enemy.PatrolPoints[Random.Range(0, _enemy.PatrolPoints.Count)].position;
             _enemy.ChangeState(EnemyState.Patrol);
         }
     }

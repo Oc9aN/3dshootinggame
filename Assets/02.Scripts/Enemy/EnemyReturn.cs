@@ -29,8 +29,9 @@ public class EnemyReturn : IEnemyState
         }
         
         // 제자리로 복귀
-        Vector3 direction = (_enemy.TargetPosition - _enemy.transform.position).normalized;
-        _enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
+        _enemy.NavMeshAgent.SetDestination(_enemy.TargetPosition);
+        // Vector3 direction = (_enemy.TargetPosition - _enemy.transform.position).normalized;
+        // _enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
     }
 
     public void Exit()
