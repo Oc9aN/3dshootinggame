@@ -1,0 +1,1 @@
+public class Pool_Enemy : Pool<Enemy> { }

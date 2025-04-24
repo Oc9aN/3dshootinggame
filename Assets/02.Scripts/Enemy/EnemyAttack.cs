@@ -19,7 +19,7 @@ public class EnemyAttack : IEnemyState
     public void Acting()
     {
         // 전이 Trace
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Player.transform.position) >= _enemy.Data.AttackDistance)
+        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.AttackDistance)
         {
             _attackCoolTimer = 0f;
             _enemy.ChangeState(EnemyState.Trace);

@@ -15,15 +15,18 @@ public class Enemy : MonoBehaviour, IDamageable
     private int _health;
 
     [SerializeField]
-    private GameObject _player;
-    public GameObject Player => _player;
+    private GameObject _target;
+
+    public GameObject Target { get => _target; set => _target = value; }
 
     [SerializeField]
     private SO_Enemy _data;
-    public SO_Enemy Data => _data;
+
+    public SO_Enemy Data { get => _data; set => _data = value; }
 
     [SerializeField]
     private List<Transform> _patrolPoints;
+
     public List<Transform> PatrolPoints => _patrolPoints;
 
     private Vector3 _targetPosition;
@@ -31,7 +34,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
-    
+
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
@@ -72,7 +75,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Debug.Log($"상태전환 {_currentStateEnum}->{state}");
         _currentStateEnum = state;
-        
+
         _currentState?.Exit();
         _currentState = _enemyStates[_currentStateEnum];
         _currentState.Enter();
@@ -82,7 +85,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         StartCoroutine(coroutine);
     }
-    
+
     public void StopEnemyStateCoroutine(IEnumerator coroutine)
     {
         StopCoroutine(coroutine);
@@ -97,6 +100,7 @@ public class Enemy : MonoBehaviour, IDamageable
             ChangeState(EnemyState.Die);
             return;
         }
+
         ChangeState(EnemyState.Damaged);
     }
 }

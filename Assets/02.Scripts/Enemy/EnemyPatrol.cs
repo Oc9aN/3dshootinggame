@@ -17,7 +17,7 @@ public class EnemyPatrol : IEnemyState
     public void Acting()
     {
         // 전이 Trace
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Player.transform.position) < _enemy.Data.FindDistance)
+        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.FindDistance)
         {
             _enemy.ChangeState(EnemyState.Trace);
             return;

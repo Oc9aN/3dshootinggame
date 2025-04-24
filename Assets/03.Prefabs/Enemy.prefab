@@ -238,7 +238,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _data: {fileID: 11400000, guid: 2ae64d213fa09b542bbf379159fd38ee, type: 2}
-  _patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolPoints: []

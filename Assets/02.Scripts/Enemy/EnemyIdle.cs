@@ -21,7 +21,7 @@ public class EnemyIdle : IEnemyState
     {
         // 대기 상태
         // 전이 Trace
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Player.transform.position) < _enemy.Data.FindDistance)
+        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.FindDistance)
         {
             _patrolTimer = 0f;
             _enemy.ChangeState(EnemyState.Trace);

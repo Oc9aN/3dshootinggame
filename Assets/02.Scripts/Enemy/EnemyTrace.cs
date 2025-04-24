@@ -16,19 +16,19 @@ public class EnemyTrace : IEnemyState
     public void Acting()
     {
         // 전이 Return
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Player.transform.position) >= _enemy.Data.FindDistance)
+        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.FindDistance)
         {
             _enemy.ChangeState(EnemyState.Return);
             return;
         }
         // 전이 Attack
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Player.transform.position) < _enemy.Data.AttackDistance)
+        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.AttackDistance)
         {
             _enemy.ChangeState(EnemyState.Attack);
             return;
         }
         // 플레이어 추적
-        _enemy.NavMeshAgent.SetDestination(_enemy.Player.transform.position);
+        _enemy.NavMeshAgent.SetDestination(_enemy.Target.transform.position);
         //Vector3 direction = (_enemy.Player.transform.position - _enemy.transform.position).normalized;
         //_enemy.CharacterController.Move(direction * (_enemy.Data.MoveSpeed * Time.deltaTime));
     }
