@@ -34,7 +34,7 @@ public class EnemyDamaged : IEnemyState
         // 경과 시간 비율 (0 ~ 1)
         float timeRatio = _timer / _enemy.Data.DamagedTime;
         // 감소된 넉백 값 (1에서 0으로 선형 감소)
-        _currentKnockBackValue = _enemy.DamageInfo.KnockBackForce * (_enemy.Data.DamagedTime - timeRatio);
+        _currentKnockBackValue = _enemy.DamageInfo.KnockBackForce * (1f - timeRatio);
         _enemy.CharacterController.Move(_knockBackDirection * (_currentKnockBackValue * Time.deltaTime));
     }
 

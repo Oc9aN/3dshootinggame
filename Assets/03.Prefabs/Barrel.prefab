@@ -156,7 +156,7 @@ MonoBehaviour:
   _explodeRange: 5
   _explodeDamage:
     _damageValue: 50
-    _knockBackForce: 30
+    _knockBackForce: 20
   _health: 50
   _remainingTime: 5
   _explodeVFXPrefab: {fileID: 2961793672785661176, guid: 562cc8a9f5f14f04a9e9e0404714153e, type: 3}

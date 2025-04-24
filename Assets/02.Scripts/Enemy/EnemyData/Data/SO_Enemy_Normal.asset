@@ -18,6 +18,6 @@ MonoBehaviour:
   _onPlaceThreshold: 0.1
   _moveSpeed: 3.3
   _attackCoolTime: 2
-  _damagedTime: 0.5
+  _damagedTime: 0.2
   _dieTime: 2
   _patrolTime: 1
