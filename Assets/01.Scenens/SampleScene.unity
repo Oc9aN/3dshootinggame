@@ -1990,7 +1990,7 @@ GameObject:
   - component: {fileID: 631153490}
   - component: {fileID: 631153489}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ZoomIn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3010,7 +3010,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1675623922}
-  _yOffset: 10
+  _minZoom: 5
+  _maxZoom: 15
 --- !u!1 &1151982584
 GameObject:
   m_ObjectHideFlags: 0
@@ -4514,6 +4515,8 @@ GameObject:
   - component: {fileID: 2047147903}
   - component: {fileID: 2047147905}
   - component: {fileID: 2047147904}
+  - component: {fileID: 2047147907}
+  - component: {fileID: 2047147906}
   m_Layer: 5
   m_Name: Minimap
   m_TagString: Untagged
@@ -4580,6 +4583,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047147902}
   m_CullTransparentMesh: 1
+--- !u!114 &2047147906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047147902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c443ba3fe584574585c230cb8e92776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minimapZoomInButton: {fileID: 631153489}
+  _minimapZoomOutButton: {fileID: 2129712054}
+--- !u!114 &2047147907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047147902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7808b5eab52d4e844abcc10b63bc35a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minimapCameraModel: {fileID: 1123200492}
 --- !u!1 &2056879812
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,7 +5119,7 @@ GameObject:
   - component: {fileID: 2129712055}
   - component: {fileID: 2129712054}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ZoomOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
