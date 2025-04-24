@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public abstract class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, IDamageable
 {
     // 상태만 가지고 있고 인터페이스를 통해 Acting
     protected Dictionary<EnemyState, IEnemyState> _enemyStates;
@@ -46,11 +46,17 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _data.MoveSpeed;
 
-        SetStates();
+        _enemyStates = new Dictionary<EnemyState, IEnemyState>()
+        {
+            { EnemyState.Idle, new EnemyIdle(this) },
+            { EnemyState.Patrol, new EnemyPatrol(this) },
+            { EnemyState.Trace, new EnemyTrace(this) },
+            { EnemyState.Return, new EnemyReturn(this) },
+            { EnemyState.Attack, new EnemyAttack(this) },
+            { EnemyState.Damaged, new EnemyDamaged(this) },
+            { EnemyState.Die, new EnemyDie(this) }
+        };
     }
-    
-    // 동작을 정의
-    protected abstract void SetStates();
 
     private void Start()
     {
