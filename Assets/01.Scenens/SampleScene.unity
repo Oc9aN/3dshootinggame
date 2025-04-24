@@ -490,15 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1675623918}
-  _health: 100
-  _findDistance: 7
-  _attackDistance: 3
-  _onPlaceThreshold: 0.1
-  _moveSpeed: 3.3
-  _attackCoolTime: 1
-  _stiffTime: 0.5
-  _dieTime: 2
-  _patrolTime: 1
+  _data: {fileID: 11400000, guid: 2ae64d213fa09b542bbf379159fd38ee, type: 2}
   _patrolPoints:
   - {fileID: 1314660341}
   - {fileID: 1507140378}
