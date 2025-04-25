@@ -4,7 +4,12 @@ using UnityEngine;
 public class Player : MonoBehaviour, IDamageable
 {
     // 목표: 코드에서 변하는 플레이어 데이터 관리
-    // TODO: 이동 방향과 Y가속도도 여기서 관리
+    public event Action<Weapon> OnCurrentWeaponChanged;
+    public event Action<int, int> OnBombCountChanged;
+    public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
+    public event Action<float> OnHealthChanged;
+    public event Action OnDamaged;
+    
     [Header("Data")]
     [SerializeField]
     private SO_Player _data;
@@ -12,7 +17,6 @@ public class Player : MonoBehaviour, IDamageable
     
     [SerializeField]
     private Weapon _currentWeapon;
-    public event Action<Weapon> OnCurrentWeaponChanged;
     public Weapon CurrentWeapon
     {
         get => _currentWeapon;
@@ -51,7 +55,6 @@ public class Player : MonoBehaviour, IDamageable
     // UI에 표시되는 값
     // 폭탄
     private int _currentBombCount = 3;
-    public event Action<int, int> OnBombCountChanged;
     public int BombCount
     {
         get => _currentBombCount;
@@ -65,7 +68,6 @@ public class Player : MonoBehaviour, IDamageable
     // 스테미나
     [SerializeField] // 디버깅
     private float _currentCurrentStamina = 100f;
-    public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
     public float CurrentStamina
     {
         get => _currentCurrentStamina;
@@ -77,8 +79,6 @@ public class Player : MonoBehaviour, IDamageable
     }
     
     private float _currentHealth;
-    public event Action<float> OnHealthChanged;
-
     public float CurrentHealth
     {
         get => _currentHealth;
@@ -115,6 +115,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         Debug.Log("TakeDamage" + damage.From + ": " + damage.DamageValue);
         CurrentHealth -= damage.DamageValue;
+        OnDamaged?.Invoke();
 
         if (CurrentHealth <= 0)
         {

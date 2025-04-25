@@ -25,6 +25,7 @@ public class PlayerPresenter : PlayerComponent
         Player.OnHealthChanged += _playerHealthUI.RefreshSliderValue;
         Player.OnBombCountChanged += _playerBombUI.RefreshBombText;
         Player.OnCurrentWeaponChanged += OnCurrentWeaponChanged;
+        Player.OnDamaged += _playerHealthUI.OnDamage;
         
         _playerStaminaUI.Initialize(Player.Data.MaxStamina);
         _playerHealthUI.Initialize(Player.Data.MaxHealth);
