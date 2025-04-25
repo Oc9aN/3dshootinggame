@@ -8,15 +8,25 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 {
     // 상태만 가지고 있고 인터페이스를 통해 Acting
-    protected Dictionary<EEnemyState, IEnemyState> _enemyStates;
+    public event Action<float> OnDmaged;
+
+    private Dictionary<EEnemyState, IEnemyState> _enemyStates;
     private IEnemyState _currentState;
     private EEnemyState _currentStateEnum;
 
-    private int _health;
+    private float _health;
+    private float Health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            OnDmaged?.Invoke(_health);
+        }
+    }
 
     [SerializeField]
     private GameObject _target;
-
     public GameObject Target { get => _target; set => _target = value; }
 
     [SerializeField]
@@ -53,7 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     {
         _characterController = GetComponent<CharacterController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _health = Data.Health;
+        _health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
 
         _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
@@ -72,15 +82,15 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     {
         _currentState.Acting();
     }
-    
+
     public void Initialize()
     {
         ChangeState(EEnemyState.Idle);
     }
-    
+
     private void OnDataChanged()
     {
-        _health = Data.Health;
+        Health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
     }
 
@@ -106,9 +116,10 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     public void TakeDamage(Damage damage)
     {
-        _health -= damage.DamageValue;
+        Health -= damage.DamageValue;
+
         _damageInfo = damage;
-        if (_health <= 0)
+        if (Health <= 0)
         {
             ChangeState(EEnemyState.Die);
             return;

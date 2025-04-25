@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542e77bde2defbd4487c3dd15c9c3233, type: 3}
   m_Name: SO_Enemy_Trace
   m_EditorClassIdentifier: 
-  _health: 100
+  _maxHealth: 100
   _findDistance: 1e+10
   _attackDistance: 2.5
   _onPlaceThreshold: 0.1

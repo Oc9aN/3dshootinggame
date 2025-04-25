@@ -4,8 +4,8 @@ using UnityEngine;
 public class SO_Enemy : ScriptableObject
 {
     [SerializeField]
-    private int _health;
-    public int Health => _health;
+    private int _maxHealth;
+    public int MaxHealth => _maxHealth;
 
     [SerializeField]
     private float _findDistance = 7f; // 추격 거리
