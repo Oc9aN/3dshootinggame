@@ -30,7 +30,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
     // 상태
-    protected bool _isReloading = false;
+    private bool _isReloading = false;
     public bool IsReloading
     {
         get => _isReloading;

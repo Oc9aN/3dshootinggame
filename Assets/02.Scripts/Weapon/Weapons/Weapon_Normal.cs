@@ -40,9 +40,9 @@ public class Weapon_Normal : Weapon
             _fireRate = _data.FireRate;
             CurrentAmmo--;
             // 재장전 중이면 중지
-            if (_isReloading)
+            if (IsReloading)
             {
-                _isReloading = false;
+                IsReloading = false;
             }
         }
         // 반동 계산 (발사하지 않을 때도 목표 반동 감소)
