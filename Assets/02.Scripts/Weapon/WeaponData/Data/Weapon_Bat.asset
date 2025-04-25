@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06407f2628c59c34280b55aa38d308fc, type: 3}
-  m_Name: Weapon_Knife
+  m_Name: Weapon_Bat
   m_EditorClassIdentifier: 
   _maxAmmo: 1
   _fireRate: 1

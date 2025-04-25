@@ -4501,9 +4501,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponTransform: {fileID: 1191004886}
   _weaponPrefabList:
-  - {fileID: 2959335881137588597, guid: efa20b074b37d284eb5782124d5b22c4, type: 3}
-  - {fileID: 2959335881137588597, guid: b011739ecfd845045b729704b95d1ec3, type: 3}
-  - {fileID: 7961826285522516367, guid: b668d5423e036984cbc639fae0470ac8, type: 3}
+  - {fileID: 4366204514420184148, guid: efa20b074b37d284eb5782124d5b22c4, type: 3}
+  - {fileID: 4630179389934351080, guid: 609c7e8dae6e9e648b628f049ffbc247, type: 3}
+  - {fileID: 164738856626559604, guid: 4565876cf9500d64d9f6907a80423e1c, type: 3}
 --- !u!114 &1675623937
 MonoBehaviour:
   m_ObjectHideFlags: 0

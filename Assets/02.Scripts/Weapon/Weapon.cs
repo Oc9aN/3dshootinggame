@@ -9,7 +9,7 @@ public abstract class Weapon : MonoBehaviour
     protected SO_Weapon _data;
 
     [SerializeField]
-    protected Vector3 _attackPosition;
+    protected Transform _attackPosition;
 
     public SO_Weapon Data => _data;
 

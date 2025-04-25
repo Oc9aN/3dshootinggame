@@ -15,11 +15,11 @@ public class Weapon_Knife : Weapon
             // 부채꼴 범위 안에서 공격
             _fireRate = _data.FireRate;
             // 공격 방향
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange, ~LayerMask.NameToLayer("Player"));
             Vector3 attackDirection = _camera.transform.forward;
             attackDirection.y = 0;
             attackDirection.Normalize();
-            Debug.DrawRay(_attackPosition, attackDirection * _attackRange, Color.yellow, 10f);
+            Debug.DrawRay(_attackPosition.position, attackDirection * _attackRange, Color.yellow, 10f);
             // 최대 각도의 한쪽 방향
             Quaternion halfAngle = Quaternion.Euler(0, _attackAngle / 2f, 0);
             Vector3 rangeDirection = halfAngle * attackDirection;
@@ -31,7 +31,7 @@ public class Weapon_Knife : Weapon
                 {
                     // 데미지를 입는 객체인 경우
                     // 정면 방향을 기준으로 부채꼴 범위 안인지 체크
-                    Vector3 targetDirection = (hitCollider.transform.position - _attackPosition).normalized;
+                    Vector3 targetDirection = (hitCollider.transform.position - _attackPosition.position).normalized;
                     float dot = Vector3.Dot(targetDirection, attackDirection);
                     if (dot >= angleThreshold)
                     {

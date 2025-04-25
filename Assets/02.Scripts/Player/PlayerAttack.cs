@@ -3,7 +3,7 @@ using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerFire : PlayerComponent
+public class PlayerAttack : PlayerComponent
 {
     // 마우스 왼쪽과 오른쪽으로 총알과 수류탄을 발사
 
