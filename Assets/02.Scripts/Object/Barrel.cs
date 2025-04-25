@@ -46,11 +46,6 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explodeRange);
         foreach (var hitCollider in hitColliders)
         {
-            if (ReferenceEquals(hitCollider, gameObject))
-            {
-                continue;
-            }
-            Debug.Log(hitCollider.gameObject.name);
             if (hitCollider.TryGetComponent(out IDamageable damageableObject))
             {
                 _explodeDamage.From = gameObject;
