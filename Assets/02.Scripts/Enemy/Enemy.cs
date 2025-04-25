@@ -22,7 +22,15 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     [SerializeField]
     private SO_Enemy _data;
 
-    public SO_Enemy Data { get => _data; set => _data = value; }
+    public SO_Enemy Data
+    {
+        get => _data;
+        set
+        {
+            _data = value;
+            OnDataChanged();
+        }
+    }
 
     [SerializeField]
     private List<Transform> _patrolPoints;
@@ -46,7 +54,6 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         _characterController = GetComponent<CharacterController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _health = Data.Health;
-        _targetPosition = transform.position;
         _navMeshAgent.speed = _data.MoveSpeed;
 
         _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
@@ -61,10 +68,10 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         };
     }
 
-    private void Start()
-    {
-        ChangeState(EEnemyState.Idle);
-    }
+    // private void Start()
+    // {
+    //     ChangeState(EEnemyState.Idle);
+    // }
 
     private void Update()
     {
@@ -73,10 +80,13 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     
     public void Initialize()
     {
-        _health = Data.Health;
-        _targetPosition = transform.position;
-        _navMeshAgent.speed = _data.MoveSpeed;
         ChangeState(EEnemyState.Idle);
+    }
+    
+    private void OnDataChanged()
+    {
+        _health = Data.Health;
+        _navMeshAgent.speed = _data.MoveSpeed;
     }
 
     public void ChangeState(EEnemyState state)

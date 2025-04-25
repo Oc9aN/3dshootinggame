@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = Pool_Enemy.Instance.GetPooledObject();
         if (ReferenceEquals(enemy, null))
         {
+            Debug.LogWarning("없음");
             return;
         }
 
@@ -45,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
             Random.Range(-_spawnRange, _spawnRange));
         Vector3 spawnPosition = transform.position + randomPosition;
         spawnPosition.y = _spawnHeight;
-        enemy.transform.position = spawnPosition;
+        enemy.NavMeshAgent.Warp(spawnPosition);
         enemy.Data = _enemyData;
         enemy.Target = _target;
     }
@@ -57,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(0, 0, 1, 0.3f);                                            // 반투명 빨간색
+        Gizmos.color = new Color(0, 0, 1, 0.3f);                                            
         Gizmos.DrawCube(transform.position, new Vector3(_spawnRange * 2, 1f, _spawnRange * 2)); // 범위 시각화
     }
 }
