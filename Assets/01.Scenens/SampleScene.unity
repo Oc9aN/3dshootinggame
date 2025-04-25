@@ -688,7 +688,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolObjectPrefab: {fileID: 1525912607980806581, guid: fb40a27b7afedeb4096a846c0d97bc0f, type: 3}
   _poolSize: 3
-  _pool: []
 --- !u!1 &289813814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,6 +2549,7 @@ MonoBehaviour:
   _enemyData: {fileID: 11400000, guid: 97f507b47d501df4ab095dd723a64c64, type: 2}
   _spawnRange: 10
   _spawnDelay: 1
+  _spawnHeight: 1
 --- !u!1 &916679929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,7 +3187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolObjectPrefab: {fileID: 8716824141153237546, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
   _poolSize: 1000
-  _pool: []
 --- !u!1 &1123200487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,7 +3413,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolObjectPrefab: {fileID: 2916245339825876046, guid: 0d777d7442e13cc4e903bca0cf6fe934, type: 3}
   _poolSize: 100
-  _pool: []
 --- !u!1 &1314660340
 GameObject:
   m_ObjectHideFlags: 0
