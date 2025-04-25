@@ -33,6 +33,6 @@ public class EnemyDie : IEnemyState
     {
         // 사망
         yield return new WaitForSeconds(_enemy.Data.DieTime);
-        _enemy.gameObject.SetActive(false);
+        Pool_Enemy.Instance.ReturnPooledObject(_enemy);
     }
 }

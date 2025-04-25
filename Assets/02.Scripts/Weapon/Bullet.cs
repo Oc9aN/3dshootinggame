@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour, IPoolObject
             {
                 // 충돌
                 _isFired = false;
-                gameObject.SetActive(false);
+                Pool_Bullet.Instance.ReturnPooledObject(this);
             }
         }
     }

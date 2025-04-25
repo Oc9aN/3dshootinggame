@@ -27,7 +27,7 @@ public class Bomb : MonoBehaviour, IPoolObject
         GameObject effectObject = Instantiate(_explosionEffectPrefab);
         effectObject.transform.position = transform.position;
         
-        gameObject.SetActive(false);
+        Pool_Bomb.Instance.ReturnPooledObject(this);
     }
 
     public void Initialize()
