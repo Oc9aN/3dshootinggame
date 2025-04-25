@@ -17,16 +17,8 @@ public class PlayerFire : PlayerComponent
 
     private float _bombForce = 1f;
 
-    private Camera _camera;
-
     private Vector3 _currentRecoil;
     private Vector3 _targetRecoil;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _camera = Camera.main;
-    }
 
     private void Update()
     {
@@ -36,62 +28,10 @@ public class PlayerFire : PlayerComponent
 
     private void Fire()
     {
-        _fireRate -= Time.deltaTime;
-        if (Input.GetMouseButton(0) && _fireRate <= 0 && Player.CurrentAmmo > 0)
+        if (Input.GetMouseButton(0))
         {
-            ApplyRandomRecoil(); // 먼저 반동 값을 계산
-
-            // 반동 계산
-            _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * Player.CurrentWeapon.Data.RecoilSpeed);
-            _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * Player.CurrentWeapon.Data.RecoilReturnSpeed);
-
-            _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
-
-            Vector3 fireDirection = _camera.transform.rotation * Vector3.forward;
-            Ray ray = new Ray(_firePosition.transform.position, fireDirection);
-            Vector3 hitPoint = fireDirection * Player.CurrentWeapon.Data.BulletMaxDistance;   // 안맞으면 최대 거리까지 존재
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                hitPoint = hit.point;
-                _bulletEffect.transform.position = hit.point;
-                _bulletEffect.transform.forward = hit.normal;
-                _bulletEffect.Play();
-
-                if (hit.collider.TryGetComponent(out IDamageable damageableObject))
-                {
-                    Player.CurrentWeapon.Data.Damage.From = gameObject;
-                    
-                    damageableObject.TakeDamage(Player.CurrentWeapon.Data.Damage);
-                }
-            }
-
-            // 허공에 쏘는 것도 쏘는 것
-            Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
-            bullet.transform.position = _firePosition.transform.position;
-            bullet.Fire(hitPoint, Player.CurrentWeapon.Data.BulletSpeed);
-
-            _fireRate = Player.CurrentWeapon.Data.FireRate;
-            Player.CurrentAmmo--;
-            // 재장전 중이면 중지
-            if (Player.IsReloading)
-            {
-                Player.IsReloading = false;
-            }
+            Player.CurrentWeapon.Attack(_firePosition.transform.position);
         }
-        // 반동 계산 (발사하지 않을 때도 목표 반동 감소)
-        else
-        {
-            _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * Player.CurrentWeapon.Data.RecoilSpeed);
-            _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * Player.CurrentWeapon.Data.RecoilReturnSpeed);
-            _camera.transform.localEulerAngles += _currentRecoil;
-        }
-    }
-
-    private void ApplyRandomRecoil()
-    {
-        float vertical = Random.Range(0f, Player.CurrentWeapon.Data.VerticalRecoil); // 위로 튕김
-        float horizontal = Random.Range(-Player.CurrentWeapon.Data.HorizontalRecoil, Player.CurrentWeapon.Data.HorizontalRecoil); // 좌우 랜덤
-        _targetRecoil += new Vector3(vertical, horizontal, 0f);
     }
 
     private void Bomb()

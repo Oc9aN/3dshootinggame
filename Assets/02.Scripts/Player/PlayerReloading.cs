@@ -12,17 +12,17 @@ public class PlayerReloading : PlayerComponent
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Player.IsReloading = true;
+            Player.CurrentWeapon.IsReloading = true;
         }
         
-        if (Player.IsReloading)
+        if (Player.CurrentWeapon.IsReloading)
         {
-            Player.ReloadingProgress += Time.deltaTime;
-            if (Player.ReloadingProgress >= Player.CurrentWeapon.Data.ReloadTime)
+            Player.CurrentWeapon.ReloadingProgress += Time.deltaTime;
+            if (Player.CurrentWeapon.ReloadingProgress >= Player.CurrentWeapon.Data.ReloadTime)
             {
                 // 재장전
-                Player.CurrentAmmo = Player.CurrentWeapon.Data.MaxAmmo;
-                Player.IsReloading = false;
+                Player.CurrentWeapon.CurrentAmmo = Player.CurrentWeapon.Data.MaxAmmo;
+                Player.CurrentWeapon.IsReloading = false;
             }
         }
     }

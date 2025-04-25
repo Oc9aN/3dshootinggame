@@ -21,11 +21,17 @@ public class PlayerPresenter : PlayerComponent
     {
         Player.OnStaminaChanged += OnStaminaChanged;
         Player.OnBombCountChanged += OnBombCountChanged;
-        Player.OnAmmoChanged += OnAmmoChanged;
-        Player.OnReloadProgressChanged += OnReloadProgressChanged;
+        Player.OnCurrentWeaponChanged += OnCurrentWeaponChanged;
         
         _playerStaminaUI.Initialize(Player.Data.MaxStamina);
         _playerBombUI.Initialize(Player.Data.MaxBomb);
+    }
+
+    private void OnCurrentWeaponChanged(Weapon weapon)
+    {
+        weapon.OnAmmoChanged += OnAmmoChanged;
+        weapon.OnReloadProgressChanged += OnReloadProgressChanged;
+        
         _playerAmmoUI.Initialize(Player.CurrentWeapon.Data.MaxAmmo);
         _playerReloadUI.Initialize(Player.CurrentWeapon.Data.ReloadTime);
     }

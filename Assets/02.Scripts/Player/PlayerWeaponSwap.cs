@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class PlayerWeaponSwap : PlayerComponent
 {
-    // TODO: 무기 데이터 관리 빼기
+    // 플레이어가 사용하는 무기들
+    // WeaponManager가 있어야할 듯
     [SerializeField]
-    private List<SO_Weapon> _weaponData;
+    private Transform _weaponTransform;
+    
+    [SerializeField]
+    private List<Weapon> _weaponPrefabList;
 
-    private List<Weapon> _weapons;
+    private List<Weapon> _weaponList;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        _weapons = new List<Weapon>(_weaponData.Count);
-        foreach (var data in _weaponData)
+        _weaponList = new List<Weapon>(_weaponPrefabList.Count);
+        
+        foreach (var weaponPrefab in _weaponPrefabList)
         {
-            _weapons.Add(new Weapon(data));
+            Weapon weapon = Instantiate(weaponPrefab, _weaponTransform);
+            weapon.gameObject.SetActive(false);
+            _weaponList.Add(weapon);
         }
         SwapWeapons(0);
     }
@@ -35,6 +41,6 @@ public class PlayerWeaponSwap : PlayerComponent
 
     private void SwapWeapons(int index)
     {
-        Player.CurrentWeapon = _weapons[index];
+        Player.CurrentWeapon = _weaponList[index];
     }
 }
