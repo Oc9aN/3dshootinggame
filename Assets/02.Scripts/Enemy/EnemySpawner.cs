@@ -18,16 +18,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private float _spawnDelay = 1f;
 
-    private void Start()
-    {
-        StartCoroutine(Spawn_Coroutine());
-    }
+    [SerializeField]
+    private float _spawnHeight = 1f;
+    
+    private float _spawnTimer = 0f;
 
-    private IEnumerator Spawn_Coroutine()
+    private void Update()
     {
-        while (true)
+        _spawnTimer += Time.deltaTime;
+        if (_spawnTimer >= _spawnDelay)
         {
-            yield return new WaitForSeconds(_spawnDelay);
+            _spawnTimer = 0f;
             Spawn();
         }
     }
@@ -39,7 +40,11 @@ public class EnemySpawner : MonoBehaviour
         {
             return;
         }
-        Vector3 spawnPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), 1f, Random.Range(-_spawnRange, _spawnRange));
+
+        Vector3 randomPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), 0,
+            Random.Range(-_spawnRange, _spawnRange));
+        Vector3 spawnPosition = transform.position + randomPosition;
+        spawnPosition.y = _spawnHeight;
         enemy.transform.position = spawnPosition;
         enemy.Data = _enemyData;
         enemy.Target = _target;
@@ -52,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1, 0, 0, 0.3f);            // 반투명 빨간색
-        Gizmos.DrawSphere(transform.position, _spawnRange); // 범위 시각화
+        Gizmos.color = new Color(0, 0, 1, 0.3f);                                            // 반투명 빨간색
+        Gizmos.DrawCube(transform.position, new Vector3(_spawnRange * 2, 1f, _spawnRange * 2)); // 범위 시각화
     }
 }

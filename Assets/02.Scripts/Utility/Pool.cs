@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour
+public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour, IPoolObject
 {
     [SerializeField]
     protected T _poolObjectPrefab;
@@ -36,6 +36,7 @@ public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour
             if (!pooledObject.gameObject.activeInHierarchy)
             {
                 pooledObject.gameObject.SetActive(true);
+                pooledObject.Initialize();
                 return pooledObject;
             }
         }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPoolObject
 {
     private Vector3 _hitPoint;
     private Vector3 _startPoint;
@@ -45,5 +45,10 @@ public class Bullet : MonoBehaviour
         _distance = Vector3.Distance(transform.position, _hitPoint);
         _remainingDistance = _distance;
         _speed = speed;
+    }
+
+    public void Initialize()
+    {
+        
     }
 }

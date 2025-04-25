@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : MonoBehaviour, IPoolObject
 {
     [SerializeField]
     private GameObject _explosionEffectPrefab;
@@ -28,5 +28,10 @@ public class Bomb : MonoBehaviour
         effectObject.transform.position = transform.position;
         
         gameObject.SetActive(false);
+    }
+
+    public void Initialize()
+    {
+        
     }
 }

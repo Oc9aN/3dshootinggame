@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 {
     // 상태만 가지고 있고 인터페이스를 통해 Acting
     protected Dictionary<EEnemyState, IEnemyState> _enemyStates;
@@ -43,10 +43,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        _health = Data.Health;
-        _targetPosition = transform.position;
         _characterController = GetComponent<CharacterController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _health = Data.Health;
+        _targetPosition = transform.position;
         _navMeshAgent.speed = _data.MoveSpeed;
 
         _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
@@ -69,6 +69,14 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Update()
     {
         _currentState.Acting();
+    }
+    
+    public void Initialize()
+    {
+        _health = Data.Health;
+        _targetPosition = transform.position;
+        _navMeshAgent.speed = _data.MoveSpeed;
+        ChangeState(EEnemyState.Idle);
     }
 
     public void ChangeState(EEnemyState state)

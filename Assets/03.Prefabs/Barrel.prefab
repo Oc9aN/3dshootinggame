@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5929495985850170976}
   - component: {fileID: 3842011387442503900}
   - component: {fileID: 6897462111836030870}
+  - component: {fileID: 7548168249947659439}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -160,3 +161,23 @@ MonoBehaviour:
   _health: 50
   _remainingTime: 5
   _explodeVFXPrefab: {fileID: 2961793672785661176, guid: 562cc8a9f5f14f04a9e9e0404714153e, type: 3}
+--- !u!114 &7548168249947659439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6293366995358076882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
