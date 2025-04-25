@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     // 목표: 코드에서 변하는 플레이어 데이터 관리
     // TODO: 이동 방향과 Y가속도도 여기서 관리
@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     
     [SerializeField]
     private Weapon _currentWeapon;
-
     public event Action<Weapon> OnCurrentWeaponChanged;
     public Weapon CurrentWeapon
     {
@@ -47,70 +46,79 @@ public class Player : MonoBehaviour
 
     // 스테미나 회복?
     private bool _isRecoverStamina = true;
-    public bool IsRecoverStamina { set => _isRecoverStamina = value; }
+    public bool IsRecoverStamina { get => _isRecoverStamina; set => _isRecoverStamina = value; }
 
     // UI에 표시되는 값
     // 폭탄
-    private int _bombCount = 3;
+    private int _currentBombCount = 3;
     public event Action<int, int> OnBombCountChanged;
     public int BombCount
     {
-        get => _bombCount;
+        get => _currentBombCount;
         set
         {
-            _bombCount = value;
-            OnBombCountChanged?.Invoke(_bombCount, _data.MaxBomb);
+            _currentBombCount = value;
+            OnBombCountChanged?.Invoke(_currentBombCount, _data.MaxBomb);
         }
     }
 
     // 스테미나
     [SerializeField] // 디버깅
-    private float _stamina = 100f;
+    private float _currentCurrentStamina = 100f;
     public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
-    private float Stamina
+    public float CurrentStamina
     {
-        get => _stamina;
+        get => _currentCurrentStamina;
         set
         {
-            _stamina = value;
-            OnStaminaChanged?.Invoke(_stamina);
+            _currentCurrentStamina = value;
+            OnStaminaChanged?.Invoke(_currentCurrentStamina);
+        }
+    }
+    
+    private float _currentHealth;
+    public event Action<float> OnHealthChanged;
+
+    public float CurrentHealth
+    {
+        get => _currentHealth;
+        set
+        {
+            _currentHealth = value;
+            OnHealthChanged?.Invoke(_currentHealth);
         }
     }
 
     private void Start()
     {
-        _stamina = _data.MaxStamina;
-        _bombCount = _data.MaxBomb;
+        _currentCurrentStamina = _data.MaxStamina;
+        _currentBombCount = _data.MaxBomb;
+        _currentHealth = _data.MaxHealth;
     }
-
-    // 스테미나만 Player에서관리
-    private void Update()
-    {
-        RecoverStamina();
-    }
-
-    private void RecoverStamina()
-    {
-        if (!_isRecoverStamina)
-        {
-            return;
-        }
-
-        Stamina += _data.StaminaRecoverPerSecond * Time.deltaTime;
-        Stamina = Mathf.Min(Stamina, _data.MaxStamina);
-    }
-
+    
+    // 사용 함수만 관리
     public bool TryUseStamina(float value)
     {
         // 스테미나가 있다면 사용
-        if (Stamina - value < 0)
+        if (CurrentStamina - value < 0)
         {
             return false;
         }
 
         // 스테미나 사용
         _isRecoverStamina = false;
-        Stamina -= value;
+        CurrentStamina -= value;
         return true;
+    }
+
+    public void TakeDamage(Damage damage)
+    {
+        Debug.Log("TakeDamage" + damage.From + ": " + damage.DamageValue);
+        CurrentHealth -= damage.DamageValue;
+
+        if (CurrentHealth <= 0)
+        {
+            // 사망
+        }
     }
 }

@@ -10,9 +10,6 @@ public class PlayerFire : PlayerComponent
     [SerializeField]
     private GameObject _firePosition;
 
-    [SerializeField]
-    private ParticleSystem _bulletEffect;
-
     private float _fireRate = 0f;
 
     private float _bombForce = 1f;

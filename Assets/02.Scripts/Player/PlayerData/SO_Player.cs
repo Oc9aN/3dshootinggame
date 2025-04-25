@@ -39,6 +39,15 @@ public class SO_Player : ScriptableObject
     private float _staminaRecoverPerSecond = 20f;
     public float  StaminaRecoverPerSecond => _staminaRecoverPerSecond;
     
+    [Header("Health")]
+    [SerializeField]
+    private float _maxHealth = 100f;
+    public float MaxHealth => _maxHealth;
+    
+    [SerializeField]
+    private float _healthRecoverPerSecond = 10f;
+    public float  HealthRecoverPerSecond => _healthRecoverPerSecond;
+    
     [Header("Dash")]
     [SerializeField]
     private float _dashTime = 0.5f;
