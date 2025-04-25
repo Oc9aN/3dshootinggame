@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Weapon_Normal : Weapon
+public class Weapon_Gun : Weapon
 {
-    public override void Attack(Vector3 firePosition)
+    public override void Attack()
     {
         // 공격방식
         if (_fireRate <= 0 && CurrentAmmo > 0)
@@ -15,8 +15,8 @@ public class Weapon_Normal : Weapon
 
             _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
 
-            Vector3 fireDirection = _camera.transform.rotation * Vector3.forward;
-            Ray ray = new Ray(firePosition, fireDirection);
+            Vector3 fireDirection = _camera.transform.forward;
+            Ray ray = new Ray(_attackPosition, fireDirection);
             Vector3 hitPoint = fireDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
             Vector3 hitNormal = fireDirection.normalized;
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -34,7 +34,7 @@ public class Weapon_Normal : Weapon
 
             // 허공에 쏘는 것도 쏘는 것
             Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
-            bullet.transform.position = firePosition;
+            bullet.transform.position = _attackPosition;
             bullet.Fire(hitPoint, _data.BulletSpeed, hitNormal);
 
             _fireRate = _data.FireRate;

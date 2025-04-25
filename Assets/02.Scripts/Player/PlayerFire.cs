@@ -7,9 +7,6 @@ public class PlayerFire : PlayerComponent
 {
     // 마우스 왼쪽과 오른쪽으로 총알과 수류탄을 발사
 
-    [SerializeField]
-    private GameObject _firePosition;
-
     private float _fireRate = 0f;
 
     private float _bombForce = 1f;
@@ -27,7 +24,7 @@ public class PlayerFire : PlayerComponent
     {
         if (Input.GetMouseButton(0))
         {
-            Player.CurrentWeapon.Attack(_firePosition.transform.position);
+            Player.CurrentWeapon.Attack();
         }
     }
 
@@ -51,7 +48,7 @@ public class PlayerFire : PlayerComponent
                 return;
             }
 
-            bomb.transform.position = _firePosition.transform.position;
+            bomb.transform.position = transform.position;
 
             _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);
             bomb.Fire(_bombForce);

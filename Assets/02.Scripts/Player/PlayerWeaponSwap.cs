@@ -37,6 +37,10 @@ public class PlayerWeaponSwap : PlayerComponent
         {
             SwapWeapons(1);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SwapWeapons(2);
+        }
     }
 
     private void SwapWeapons(int index)

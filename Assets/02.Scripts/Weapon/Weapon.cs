@@ -8,6 +8,9 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField]
     protected SO_Weapon _data;
 
+    [SerializeField]
+    protected Vector3 _attackPosition;
+
     public SO_Weapon Data => _data;
 
     protected float _fireRate = 0f;
@@ -72,7 +75,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
     // 공격 방식대로 공격
-    public abstract void Attack(Vector3 firePosition);
+    public abstract void Attack();
 
     protected void ApplyRandomRecoil()
     {
@@ -94,5 +97,6 @@ public abstract class Weapon : MonoBehaviour
     {
         OnAmmoChanged = null;
         OnReloadProgressChanged = null;
+        gameObject.SetActive(false);
     }
 }
