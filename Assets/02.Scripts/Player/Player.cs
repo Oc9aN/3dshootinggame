@@ -94,6 +94,7 @@ public class Player : MonoBehaviour, IDamageable
         set
         {
             _currentHealth = value;
+            _animator.SetLayerWeight(_animator.GetLayerIndex("Injured Layer"), 1 - (_currentHealth / _data.MaxHealth));
             OnHealthChanged?.Invoke(_currentHealth);
         }
     }

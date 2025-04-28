@@ -124,7 +124,6 @@ GameObject:
   - component: {fileID: 6963793326738447921}
   - component: {fileID: 2327008553621731152}
   - component: {fileID: 1289222748089820121}
-  - component: {fileID: 4143952140753807187}
   m_Layer: 0
   m_Name: rifle_trigger
   m_TagString: Untagged
@@ -200,27 +199,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4143952140753807187
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3901233602445707643}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.0032601175, y: 0.06396896, z: 0.03629353}
-  m_Center: {x: -0.00000080029713, y: -0.03092658, z: 0.013773654}
 --- !u!1 &4437423766721073306
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +210,6 @@ GameObject:
   - component: {fileID: 7296080520994344425}
   - component: {fileID: 4622579993818866013}
   - component: {fileID: 3409372359507372702}
-  - component: {fileID: 2165067443391691659}
   m_Layer: 0
   m_Name: rifle_ammo
   m_TagString: Untagged
@@ -309,27 +286,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2165067443391691659
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4437423766721073306}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.06654073, y: 0.2808112, z: 0.24614897}
-  m_Center: {x: 0.00000035203993, y: 0.09938817, z: -0.06343952}
 --- !u!1 &5608337332191428136
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +297,6 @@ GameObject:
   - component: {fileID: 2410884170616101479}
   - component: {fileID: 5987641348260098528}
   - component: {fileID: 2122834832295415459}
-  - component: {fileID: 5711573159581157758}
   m_Layer: 0
   m_Name: rifle_body
   m_TagString: Untagged
@@ -419,24 +374,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5711573159581157758
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5608337332191428136}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.15697712, y: 0.4311161, z: 1.7030973}
-  m_Center: {x: -0.0000027529895, y: 0.03403507, z: 0.8490236}

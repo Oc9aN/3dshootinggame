@@ -53,6 +53,7 @@ public class PlayerAttack : PlayerComponent
             bomb.transform.position = transform.position;
 
             _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);
+            Debug.Log("Boom");
             bomb.Fire(_bombForce);
 
             Player.BombCount--;

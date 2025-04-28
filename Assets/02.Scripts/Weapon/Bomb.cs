@@ -43,6 +43,7 @@ public class Bomb : MonoBehaviour, IPoolObject, IExplodable
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explodeRange);
         foreach (var hitCollider in hitColliders)
         {
+            Debug.Log(hitCollider.gameObject.name);
             if (hitCollider.TryGetComponent(out IDamageable damageableObject))
             {
                 _explodeDamage.From = gameObject;
