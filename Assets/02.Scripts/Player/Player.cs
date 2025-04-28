@@ -9,14 +9,16 @@ public class Player : MonoBehaviour, IDamageable
     public event Action<float> OnStaminaChanged; // 스테미나가 변할 때(늘거나, 줄을 때) 호출
     public event Action<float> OnHealthChanged;
     public event Action OnDamaged;
-    
+
     [Header("Data")]
     [SerializeField]
     private SO_Player _data;
+
     public SO_Player Data => _data;
-    
+
     [SerializeField]
     private Weapon _currentWeapon;
+
     public Weapon CurrentWeapon
     {
         get => _currentWeapon;
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] // 디버깅
     private float _moveSpeed = 7f;
+
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
     private float _yVelocity = 0f;
@@ -38,6 +41,9 @@ public class Player : MonoBehaviour, IDamageable
 
     private Vector3 _direction;
     public Vector3 Direction { get => _direction; set => _direction = value; }
+
+    private Animator _animator;
+    public Animator Animator => _animator;
 
     // 상태
     // 중력 적용?
@@ -55,6 +61,7 @@ public class Player : MonoBehaviour, IDamageable
     // UI에 표시되는 값
     // 폭탄
     private int _currentBombCount = 3;
+
     public int BombCount
     {
         get => _currentBombCount;
@@ -68,6 +75,7 @@ public class Player : MonoBehaviour, IDamageable
     // 스테미나
     [SerializeField] // 디버깅
     private float _currentCurrentStamina = 100f;
+
     public float CurrentStamina
     {
         get => _currentCurrentStamina;
@@ -77,8 +85,9 @@ public class Player : MonoBehaviour, IDamageable
             OnStaminaChanged?.Invoke(_currentCurrentStamina);
         }
     }
-    
+
     private float _currentHealth;
+
     public float CurrentHealth
     {
         get => _currentHealth;
@@ -89,13 +98,18 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    private void Awake()
+    {
+        _animator = GetComponentInChildren<Animator>();
+    }
+
     private void Start()
     {
         _currentCurrentStamina = _data.MaxStamina;
         _currentBombCount = _data.MaxBomb;
         _currentHealth = _data.MaxHealth;
     }
-    
+
     // 사용 함수만 관리
     public bool TryUseStamina(float value)
     {

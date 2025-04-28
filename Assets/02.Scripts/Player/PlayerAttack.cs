@@ -24,6 +24,8 @@ public class PlayerAttack : PlayerComponent
     {
         if (InputHandler.GetMouseButton(0))
         {
+            // 임시 애니메이션
+            Player.Animator.SetTrigger("Shot");
             Player.CurrentWeapon.Attack();
         }
     }

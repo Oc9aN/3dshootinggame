@@ -43,6 +43,8 @@ public class PlayerMove : PlayerComponent
         float vertical = InputHandler.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical);
+        Player.Animator.SetFloat("MoveAmount", direction.magnitude);
+        
         direction.Normalize();
 
         // 플레이어 기준으로 방향을 변환
