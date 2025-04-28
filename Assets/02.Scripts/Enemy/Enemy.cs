@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     [SerializeField]
     private SO_Enemy _data;
-
     public SO_Enemy Data
     {
         get => _data;
@@ -44,7 +43,6 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     [SerializeField]
     private List<Transform> _patrolPoints;
-
     public List<Transform> PatrolPoints => _patrolPoints;
 
     private Vector3 _targetPosition;
@@ -58,11 +56,16 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     private Damage _damageInfo;
     public Damage DamageInfo => _damageInfo;
+    
+    private Animator _animator;
+    public Animator Animator => _animator;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponentInChildren<Animator>();
+        
         _health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
 
@@ -131,5 +134,10 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         }
 
         ChangeState(EEnemyState.Damaged);
+    }
+
+    public void Attack()
+    {
+        _target.GetComponent<IDamageable>().TakeDamage(_data.Damage);
     }
 }

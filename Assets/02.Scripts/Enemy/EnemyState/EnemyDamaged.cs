@@ -26,6 +26,8 @@ public class EnemyDamaged : IEnemyState
         _knockBackDirection = (_enemy.transform.position - _enemy.DamageInfo.From.transform.position).normalized;
         _enemy.NavMeshAgent.isStopped = true;
         _enemy.NavMeshAgent.ResetPath();
+        
+        _enemy.Animator.SetTrigger("Hit");
     }
 
     public void Acting()

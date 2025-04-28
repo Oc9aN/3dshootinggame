@@ -24,6 +24,7 @@ public class EnemyTrace : IEnemyState
         // 전이 Attack
         if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) < _enemy.Data.AttackDistance)
         {
+            _enemy.Animator.SetTrigger("MoveToAttackDelay");
             _enemy.ChangeState(EEnemyState.Attack);
             return;
         }

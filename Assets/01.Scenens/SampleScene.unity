@@ -4540,22 +4540,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 6470185013534267835, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 7259961371453353384, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7259961371453353384, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7259961371453353384, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8716824141153237546, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
-      propertyPath: _data
-      value: 
-      objectReference: {fileID: 11400000, guid: 97f507b47d501df4ab095dd723a64c64, type: 2}
     - target: {fileID: 8716824141153237546, guid: 06c8cd981cc6d1346910fa4c937b2afa, type: 3}
       propertyPath: _target
       value: 

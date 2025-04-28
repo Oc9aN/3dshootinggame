@@ -18,6 +18,7 @@ public class EnemyReturn : IEnemyState
         // 전이 Idle
         if (Vector3.Distance(_enemy.transform.position, _enemy.TargetPosition) < _enemy.Data.OnPlaceThreshold)
         {
+            _enemy.Animator.SetTrigger("MoveToIdle");
             _enemy.ChangeState(EEnemyState.Idle);
             return;
         }

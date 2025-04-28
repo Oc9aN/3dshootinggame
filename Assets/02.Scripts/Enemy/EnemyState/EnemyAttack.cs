@@ -25,21 +25,29 @@ public class EnemyAttack : IEnemyState
         {
             _attackCoolTimer = 0f;
             _enemy.ChangeState(EEnemyState.Trace);
+            
+            _enemy.Animator.SetTrigger("AttackDelayToMove");
             return;
         }
-        // 공격
-        _attackCoolTimer += Time.deltaTime;
-        if (_attackCoolTimer >= _enemy.Data.AttackCoolTime)
-        {
-            Debug.Log("Attack");
-            _attackCoolTimer = 0f;
-            
-            _enemy.Target.GetComponent<IDamageable>().TakeDamage(_enemy.Data.Damage);
-        }
+
+        Attack();
     }
 
     public void Exit()
     {
         
+    }
+
+    private void Attack()
+    {
+        // 공격
+        _attackCoolTimer += Time.deltaTime;
+        if (_attackCoolTimer >= _enemy.Data.AttackCoolTime)
+        {
+            Debug.Log("Attack");
+            _enemy.Animator.SetTrigger("AttackDelayToAttack");
+            
+            _attackCoolTimer = 0f;
+        }
     }
 }

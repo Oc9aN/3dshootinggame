@@ -16,6 +16,8 @@ public class EnemyDie : IEnemyState
     {
         _dieCoroutine = Die_Coroutine();
         _enemy.StartEnemyStateCoroutine(_dieCoroutine);
+        
+        _enemy.Animator.SetTrigger("Die");
     }
 
     public void Acting()
