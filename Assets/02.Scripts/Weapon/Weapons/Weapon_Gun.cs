@@ -16,10 +16,13 @@ public class Weapon_Gun : Weapon
             _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
 
             Vector3 fireDirection = _camera.transform.forward;
-            Ray ray = new Ray(_attackPosition.position, fireDirection);
-            Vector3 hitPoint = fireDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
+            Debug.DrawRay(_camera.transform.position, fireDirection * _data.BulletMaxDistance, Color.red, 5f);
+            Ray ray = new Ray(_camera.transform.position, fireDirection);
+            
+            Vector3 hitPoint = _camera.transform.position + fireDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
             Vector3 hitNormal = fireDirection.normalized;
-            if (Physics.Raycast(ray, out RaycastHit hit, ~LayerMask.NameToLayer("Player")))
+            
+            if (Physics.Raycast(ray, out RaycastHit hit, _data.BulletMaxDistance, ~(1 << LayerMask.NameToLayer("Player"))))
             {
                 hitPoint = hit.point;
                 hitNormal = hit.normal;

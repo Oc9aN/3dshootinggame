@@ -22,7 +22,7 @@ public class PlayerAttack : PlayerComponent
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0))
+        if (InputHandler.GetMouseButton(0))
         {
             Player.CurrentWeapon.Attack();
         }

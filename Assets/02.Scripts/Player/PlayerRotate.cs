@@ -13,7 +13,7 @@ public class PlayerRotate : PlayerComponent
     private void Rotate()
     {
         // 1. 마우스 입력을 받는다.
-        float mouseX = Input.GetAxis("Mouse X");
+        float mouseX = InputHandler.GetAxis("Mouse X");
         
         // 2. 마우스 입력으로부터 회전 시킬 크기를 누적한다.
         _rotationX += mouseX * Player.Data.RotateSpeed * Time.deltaTime;

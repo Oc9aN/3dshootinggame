@@ -60,5 +60,13 @@ public class Bullet : MonoBehaviour, IPoolObject
 
     public void Initialize()
     {
+        _hitPoint = Vector3.zero;
+        _hitNormal = Vector3.zero;
+        _startPoint = Vector3.zero;
+        _distance = 0;
+        _remainingDistance = 0;
+        _speed = 0;
+        _isFired = false;
+        _trailRenderer.Clear();
     }
 }

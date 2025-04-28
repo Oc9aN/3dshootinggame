@@ -14,8 +14,8 @@ public class CameraThirdView : ICameraViewStrategy
     public void View(Transform camera, Transform target)
     {
         // 1. 마우스 입력을 받는다.
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = InputHandler.GetAxis("Mouse X");
+        float mouseY = InputHandler.GetAxis("Mouse Y");
         
         // 2. 마우스 입력으로부터 회전 시킬 크기를 누적한다.
         _rotationX += mouseX * ROTATE_SPEED * Time.deltaTime;
