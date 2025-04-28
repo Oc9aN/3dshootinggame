@@ -15,8 +15,8 @@ MonoBehaviour:
   _maxAmmo: 50
   _fireRate: 0.1
   _reloadTime: 2
-  _verticalRecoil: 2
-  _horizontalRecoil: 1
+  _verticalRecoil: 4
+  _horizontalRecoil: 2
   _recoilSpeed: 10
   _recoilReturnSpeed: 20
   _bulletMaxDistance: 100

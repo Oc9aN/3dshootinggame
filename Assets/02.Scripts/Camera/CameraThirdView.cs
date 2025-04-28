@@ -6,8 +6,6 @@ public class CameraThirdView : ICameraViewStrategy
     private const float ROTATE_SPEED = 90f;
     private const float CAMERA_DISTANCE = 5f;
     
-    private readonly Vector3 _positionMargin = new Vector3(1f, 1f, 0f);
-    
     private float _rotationX = 0f;
     private float _rotationY = 0f;
 
@@ -23,6 +21,7 @@ public class CameraThirdView : ICameraViewStrategy
         _rotationY = Mathf.Clamp(_rotationY, -90f, 90f);
         
         camera.eulerAngles = new Vector3(-_rotationY, _rotationX, 0f);
-        camera.position = target.position + -camera.forward * CAMERA_DISTANCE + _positionMargin;
+        Vector3 Shoulder = target.right * 2f + target.up * 2f;
+        camera.position = target.position + Shoulder + -camera.forward * CAMERA_DISTANCE;
     }
 }

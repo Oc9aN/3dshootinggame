@@ -52,6 +52,6 @@ public class InputHandler
             return false;
         }
         
-        return Input.GetKey(key);
+        return Input.GetKeyDown(key);
     }
 }
