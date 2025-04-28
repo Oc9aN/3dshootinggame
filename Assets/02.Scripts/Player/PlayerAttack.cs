@@ -31,16 +31,16 @@ public class PlayerAttack : PlayerComponent
     private void Bomb()
     {
         // 0: 왼쪽, 2: 오른쪽, 3: 휠
-        if (Input.GetMouseButtonDown(1))
+        if (InputHandler.GetMouseButtonDown(1))
         {
             _bombForce = Player.Data.MinBombForce;
         }
-        else if (Input.GetMouseButton(1))
+        else if (InputHandler.GetMouseButton(1))
         {
             // 차징
             _bombForce += Player.Data.AddBombForcePerSecond * Time.deltaTime;
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (InputHandler.GetMouseButtonUp(1))
         {
             Bomb bomb = Pool_Bomb.Instance.GetPooledObject();
             if (Player.BombCount <= 0 || ReferenceEquals(bomb, null))

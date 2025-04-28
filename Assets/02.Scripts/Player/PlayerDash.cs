@@ -21,7 +21,7 @@ public class PlayerDash : PlayerComponent
 
     private void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Player.TryUseStamina(Player.Data.DashStaminaCost))
+        if (InputHandler.GetKeyDown(KeyCode.E) && Player.TryUseStamina(Player.Data.DashStaminaCost))
         {
             StartCoroutine(DashCoroutine());
         }

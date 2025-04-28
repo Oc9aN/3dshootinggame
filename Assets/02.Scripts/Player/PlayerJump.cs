@@ -35,7 +35,7 @@ public class PlayerJump : PlayerComponent
         }
 
         // 점프
-        if (Input.GetKeyDown(KeyCode.Space) && _jumpAble)
+        if (InputHandler.GetKeyDown(KeyCode.Space) && _jumpAble)
         {
             Player.YVelocity = Player.Data.JumpForce;
             _jumpCounter++;

@@ -29,15 +29,15 @@ public class PlayerWeaponSwap : PlayerComponent
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (InputHandler.GetKeyDown(KeyCode.Alpha1))
         {
             SwapWeapons(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (InputHandler.GetKeyDown(KeyCode.Alpha2))
         {
             SwapWeapons(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (InputHandler.GetKeyDown(KeyCode.Alpha3))
         {
             SwapWeapons(2);
         }

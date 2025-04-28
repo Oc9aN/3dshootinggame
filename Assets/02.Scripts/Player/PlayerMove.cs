@@ -39,8 +39,8 @@ public class PlayerMove : PlayerComponent
             return;
         }
         // 키보드 입력
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = InputHandler.GetAxis("Horizontal");
+        float vertical = InputHandler.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical);
         direction.Normalize();
