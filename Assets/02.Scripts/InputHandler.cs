@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class InputHandler
 {
-    private static bool blockInput = false;
-    public static bool BlockInput { get => blockInput; set => blockInput = value; }
+    private static bool _blockInput = false;
+    public static bool BlockInput { get => _blockInput; set => _blockInput = value; }
 
     public static float GetAxis(string axisName)
     {
-        if (blockInput)
+        if (_blockInput)
         {
             return 0;
         }
@@ -17,7 +17,7 @@ public class InputHandler
     
     public static bool GetMouseButtonDown(int button)
     {
-        if (blockInput)
+        if (_blockInput)
         {
             return false;
         }
@@ -27,7 +27,7 @@ public class InputHandler
 
     public static bool GetMouseButton(int button)
     {
-        if (blockInput)
+        if (_blockInput)
         {
             return false;
         }
@@ -37,7 +37,7 @@ public class InputHandler
     
     public static bool GetMouseButtonUp(int button)
     {
-        if (blockInput)
+        if (_blockInput)
         {
             return false;
         }
@@ -47,7 +47,7 @@ public class InputHandler
 
     public static bool GetKeyDown(KeyCode key)
     {
-        if (blockInput)
+        if (_blockInput)
         {
             return false;
         }

@@ -13,7 +13,7 @@ public class UI_Game : MonoBehaviour
     private CanvasGroup _readyGroup;
 
     [SerializeField]
-    private TextMeshProUGUI _readyText;
+    private TextMeshProUGUI _fadeText;
     
     [SerializeField]
     private float _readyTextChangeTime = 0.5f;
@@ -22,6 +22,7 @@ public class UI_Game : MonoBehaviour
     private float _readyImageFadeTime = 2f;
 
     private IEnumerator _readyCoroutine;
+    private IEnumerator _overCoroutine;
 
     public void Ready()
     {
@@ -31,12 +32,12 @@ public class UI_Game : MonoBehaviour
 
     private IEnumerator Ready_Coroutine()
     {
-        StringBuilder ready = new StringBuilder(_readyText.text);
+        StringBuilder ready = new StringBuilder("Ready");
         for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(_readyTextChangeTime);
             ready.Append(".");
-            _readyText.text = ready.ToString();
+            _fadeText.text = ready.ToString();
         }
 
         while (_readyGroup.alpha > 0)
@@ -54,6 +55,18 @@ public class UI_Game : MonoBehaviour
 
     public void Over()
     {
+        _fadeText.text = "Over";
         
+        _overCoroutine = Over_Coroutine();
+        StartCoroutine(_overCoroutine);
+    }
+    
+    private IEnumerator Over_Coroutine()
+    {
+        while (_readyGroup.alpha < 1)
+        {
+            _readyGroup.alpha += Time.deltaTime / _readyImageFadeTime;
+            yield return null;
+        }
     }
 }

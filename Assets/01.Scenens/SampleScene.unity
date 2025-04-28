@@ -2684,7 +2684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _readyGroup: {fileID: 317141369}
-  _readyText: {fileID: 296105515}
+  _fadeText: {fileID: 296105515}
   _readyTextChangeTime: 0.5
   _readyImageFadeTime: 2
 --- !u!1 &713610575

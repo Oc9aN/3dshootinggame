@@ -22,5 +22,5 @@ MonoBehaviour:
   _dieTime: 0
   _patrolTime: 1
   _damage:
-    _damageValue: 5
+    _damageValue: 10
     _knockBackForce: 0
