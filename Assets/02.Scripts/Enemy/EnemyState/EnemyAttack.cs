@@ -13,7 +13,9 @@ public class EnemyAttack : IEnemyState
 
     public void Enter()
     {
-        
+        _enemy.NavMeshAgent.velocity = Vector3.zero;
+        _enemy.NavMeshAgent.isStopped = true;
+        _enemy.NavMeshAgent.ResetPath();
     }
 
     public void Acting()
@@ -31,6 +33,8 @@ public class EnemyAttack : IEnemyState
         {
             Debug.Log("Attack");
             _attackCoolTimer = 0f;
+            
+            _enemy.Target.GetComponent<IDamageable>().TakeDamage(_enemy.Data.Damage);
         }
     }
 

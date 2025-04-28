@@ -17,7 +17,10 @@ MonoBehaviour:
   _attackDistance: 2.5
   _onPlaceThreshold: 0.1
   _moveSpeed: 3.3
-  _attackCoolTime: 2
+  _attackCoolTime: 1
   _damagedTime: 0.2
   _dieTime: 0
   _patrolTime: 1
+  _damage:
+    _damageValue: 5
+    _knockBackForce: 0

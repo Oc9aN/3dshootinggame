@@ -78,6 +78,11 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         };
     }
 
+    private void Start()
+    {
+        ChangeState(EEnemyState.Idle);
+    }
+
     private void Update()
     {
         _currentState.Acting();

@@ -41,4 +41,8 @@ public class SO_Enemy : ScriptableObject
     [SerializeField]
     private float _patrolTime = 1f;
     public float PatrolTime => _patrolTime;
+    
+    [SerializeField]
+    private Damage _damage;
+    public Damage Damage => _damage;
 }
