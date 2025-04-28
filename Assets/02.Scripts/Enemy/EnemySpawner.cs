@@ -25,6 +25,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        Spawning();
+    }
+
+    private void Spawning()
+    {
+        if (GameManger.Instance.GameState != EGameState.Run)
+        {
+            return;
+        }
+        
         _spawnTimer += Time.deltaTime;
         if (_spawnTimer >= _spawnDelay)
         {

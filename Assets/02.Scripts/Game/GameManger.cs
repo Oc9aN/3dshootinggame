@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class GameManger : MonoBehaviour
+public class GameManger : Singleton<GameManger>
 {
     // 게임 진행을 관리
     // Ready -> Run -> Over

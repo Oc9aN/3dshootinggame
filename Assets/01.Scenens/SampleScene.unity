@@ -4848,6 +4848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf605ec3ed977c4489469406f1842283, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManger: {fileID: 0}
   _data: {fileID: 11400000, guid: 276775803c0b6d947bcfc6fe8ae87559, type: 2}
   _currentWeapon: {fileID: 0}
   _moveSpeed: 7

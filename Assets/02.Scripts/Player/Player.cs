@@ -119,7 +119,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (CurrentHealth <= 0)
         {
-            // 사망
+            GameManger.Instance.GameState = EGameState.Over;
         }
     }
 }

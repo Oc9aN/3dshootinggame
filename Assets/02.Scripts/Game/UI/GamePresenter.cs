@@ -3,20 +3,18 @@ using UnityEngine;
 
 public class GamePresenter : MonoBehaviour
 {
-    private GameManger _gameModel;
-
     [SerializeField]
     private UI_Game _gameView;
 
     private void Awake()
     {
-        _gameModel = GetComponent<GameManger>();
+        
     }
 
     private void Start()
     {
-        _gameModel.OnGameStateChanged += OnGameStateChanged;
-        _gameView.OnReadyEnd += () => _gameModel.GameState = EGameState.Run;
+        GameManger.Instance.OnGameStateChanged += OnGameStateChanged;
+        _gameView.OnReadyEnd += () => GameManger.Instance.GameState = EGameState.Run;
     }
 
     private void OnGameStateChanged(EGameState gameState)
