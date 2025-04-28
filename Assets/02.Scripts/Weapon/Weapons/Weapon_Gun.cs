@@ -14,20 +14,33 @@ public class Weapon_Gun : Weapon
             _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * _data.RecoilReturnSpeed);
 
             _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
+            
+            // TODO: 시야에 따라 다르게
+            // 카메라 크로스헤어 기준으로 레이를 쏜 경우
+            Vector3 aimDirection = _camera.transform.forward;
+            Ray cameraRay = new Ray(_camera.transform.position, aimDirection);
 
-            Vector3 fireDirection = _camera.transform.forward;
-            Debug.DrawRay(_camera.transform.position, fireDirection * _data.BulletMaxDistance, Color.red, 5f);
-            Ray ray = new Ray(_camera.transform.position, fireDirection);
-            
-            Vector3 hitPoint = _camera.transform.position + fireDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
-            Vector3 hitNormal = fireDirection.normalized;
-            
-            if (Physics.Raycast(ray, out RaycastHit hit, _data.BulletMaxDistance, ~(1 << LayerMask.NameToLayer("Player"))))
+            Vector3 cameraHitPoint = _camera.transform.position + aimDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
+            Debug.DrawRay(_camera.transform.position, aimDirection * _data.BulletMaxDistance, Color.red, 5f);
+            if (Physics.Raycast(cameraRay, out RaycastHit cameraHit, _data.BulletMaxDistance,
+                    ~(1 << LayerMask.NameToLayer("Player"))))
             {
-                hitPoint = hit.point;
-                hitNormal = hit.normal;
+                cameraHitPoint = cameraHit.point;
+            }
 
-                if (hit.collider.TryGetComponent(out IDamageable damageableObject))
+            // 카메라로 조준한 위치를 총구에서부터 새로운 레이로 체크 => 실제 총알에 맞는 것처럼 하기 위함.
+            Vector3 hitDirection = cameraHitPoint - _attackPosition.position;
+            Vector3 hitNormal = -aimDirection.normalized;
+            Vector3 gunHitPoint = _attackPosition.position + hitDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
+            
+            Debug.DrawRay(_attackPosition.position, hitDirection * _data.BulletMaxDistance, Color.yellow, 5f);
+            Ray gunRay = new Ray(_attackPosition.position, hitDirection);
+            if (Physics.Raycast(gunRay, out RaycastHit gunHit, _data.BulletMaxDistance,
+                    ~(1 << LayerMask.NameToLayer("Player"))))
+            {
+                hitNormal = gunHit.normal;
+                gunHitPoint = gunHit.point;
+                if (gunHit.collider.TryGetComponent(out IDamageable damageableObject))
                 {
                     _data.Damage.From = gameObject;
 
@@ -38,7 +51,7 @@ public class Weapon_Gun : Weapon
             // 허공에 쏘는 것도 쏘는 것
             Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
             bullet.transform.position = _attackPosition.position;
-            bullet.Fire(hitPoint, _data.BulletSpeed, hitNormal);
+            bullet.Fire(gunHitPoint, _data.BulletSpeed, hitNormal);
 
             _fireRate = _data.FireRate;
             CurrentAmmo--;
