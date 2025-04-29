@@ -40,6 +40,8 @@ public class Weapon_Knife : Weapon
                     }
                 }
             }
+            
+            TriggerAnimation();
         }
     }
 

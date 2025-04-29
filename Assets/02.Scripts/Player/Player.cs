@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamageable
@@ -118,6 +119,11 @@ public class Player : MonoBehaviour, IDamageable
         _currentCurrentStamina = _data.MaxStamina;
         _currentBombCount = _data.MaxBomb;
         _currentHealth = _data.MaxHealth;
+    }
+
+    private void Update()
+    {
+        _animator.transform.localRotation = quaternion.identity;
     }
 
     // 사용 함수만 관리

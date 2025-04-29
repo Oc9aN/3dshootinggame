@@ -34,7 +34,9 @@ public class PlayerWeaponSwap : PlayerComponent
         {
             // 무기에 맞는 애니메이션 트리거를 액션으로 지정
             SwapWeapons(0);
-            Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("RifleShot");
+            Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("Attack");
+            Player.Animator.SetLayerWeight(Player.Animator.GetLayerIndex("Rifle Layer"), 1);
+            Player.Animator.SetLayerWeight(Player.Animator.GetLayerIndex("Melee Layer"), 0);
         }
         else if (InputHandler.GetKeyDown(KeyCode.Alpha2))
         {
@@ -43,6 +45,9 @@ public class PlayerWeaponSwap : PlayerComponent
         else if (InputHandler.GetKeyDown(KeyCode.Alpha3))
         {
             SwapWeapons(2);
+            Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("Attack");
+            Player.Animator.SetLayerWeight(Player.Animator.GetLayerIndex("Rifle Layer"), 0);
+            Player.Animator.SetLayerWeight(Player.Animator.GetLayerIndex("Melee Layer"), 1);
         }
     }
 
