@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,6 +7,8 @@ using Random = UnityEngine.Random;
 public class PlayerAttack : PlayerComponent
 {
     // 마우스 왼쪽과 오른쪽으로 총알과 수류탄을 발사
+    [SerializeField]
+    private Transform _bombPosition;
 
     private float _fireRate = 0f;
 
@@ -14,13 +17,15 @@ public class PlayerAttack : PlayerComponent
     private Vector3 _currentRecoil;
     private Vector3 _targetRecoil;
 
+    private IEnumerator _bombCoroutine;
+
     private void Update()
     {
-        Fire();
+        Attack();
         Bomb();
     }
 
-    private void Fire()
+    private void Attack()
     {
         if (InputHandler.GetMouseButton(0))
         {
@@ -42,19 +47,32 @@ public class PlayerAttack : PlayerComponent
         }
         else if (InputHandler.GetMouseButtonUp(1))
         {
-            Bomb bomb = Pool_Bomb.Instance.GetPooledObject();
-            if (Player.BombCount <= 0 || ReferenceEquals(bomb, null))
-            {
-                return;
-            }
-
-            bomb.transform.position = transform.position;
-
-            _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);
-            Debug.Log("Boom");
-            bomb.Fire(_bombForce);
-
-            Player.BombCount--;
+            Player.Animator.SetTrigger("Throw");
+            _bombCoroutine = Bomb_Coroutine();
+            StartCoroutine(_bombCoroutine);
         }
+    }
+
+    private IEnumerator Bomb_Coroutine()
+    {
+        yield return new WaitForSeconds(0.7f);
+        BombFire();
+    }
+
+    private void BombFire()
+    {
+        Bomb bomb = Pool_Bomb.Instance.GetPooledObject();
+        if (Player.BombCount <= 0 || ReferenceEquals(bomb, null))
+        {
+            return;
+        }
+
+        bomb.transform.position = _bombPosition.position;
+
+        _bombForce = Mathf.Min(_bombForce, Player.Data.MaxBombForce);
+        Debug.Log("Boom");
+        bomb.Fire(_bombForce);
+
+        Player.BombCount--;
     }
 }

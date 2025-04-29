@@ -33,7 +33,6 @@ public class PlayerJump : PlayerComponent
             if (_jumpCounter > 0)
             {
                 Player.Animator.SetTrigger("JumpEnd");
-                Player.Animator.transform.localPosition = Vector3.down;
             }
             _jumpAble = true;
             _jumpCounter = 0;
