@@ -37,7 +37,16 @@ public class Player : MonoBehaviour, IDamageable
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
     private float _yVelocity = 0f;
-    public float YVelocity { get => _yVelocity; set => _yVelocity = value; }
+
+    public float YVelocity
+    {
+        get => _yVelocity;
+        set
+        {
+            _yVelocity = value;
+            _animator.SetFloat("YVelocity", value);
+        }
+    }
 
     private Vector3 _direction;
     public Vector3 Direction { get => _direction; set => _direction = value; }

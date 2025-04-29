@@ -30,6 +30,10 @@ public class PlayerJump : PlayerComponent
         }
         if (_characterController.isGrounded)
         {
+            if (_jumpCounter > 0)
+            {
+                Player.Animator.SetTrigger("JumpEnd");
+            }
             _jumpAble = true;
             _jumpCounter = 0;
         }
@@ -39,6 +43,7 @@ public class PlayerJump : PlayerComponent
         {
             Player.YVelocity = Player.Data.JumpForce;
             _jumpCounter++;
+            Player.Animator.SetTrigger("Jump");
             if (_jumpCounter >= MAX_JUMPCOUNT)
             {
                 // 더 많이 뛰면 점프 막기
