@@ -104,7 +104,7 @@ public class Player : MonoBehaviour, IDamageable
         set
         {
             _currentHealth = value;
-            _animator.SetLayerWeight(_animator.GetLayerIndex("Injured Layer"), 1 - (_currentHealth / _data.MaxHealth));
+            // _animator.SetLayerWeight(_animator.GetLayerIndex("Injured Layer"), 1 - (_currentHealth / _data.MaxHealth));
             OnHealthChanged?.Invoke(_currentHealth);
         }
     }
@@ -119,11 +119,6 @@ public class Player : MonoBehaviour, IDamageable
         _currentCurrentStamina = _data.MaxStamina;
         _currentBombCount = _data.MaxBomb;
         _currentHealth = _data.MaxHealth;
-    }
-
-    private void Update()
-    {
-        _animator.transform.localRotation = quaternion.identity;
     }
 
     // 사용 함수만 관리
