@@ -394,6 +394,15 @@ AnimatorController:
     - serializedVersion: 2
       m_State: {fileID: -3819235373564857282}
       m_Motion: {fileID: 7362265215785756308}
+    - serializedVersion: 2
+      m_State: {fileID: 343554848141627205}
+      m_Motion: {fileID: -203655887218126122, guid: b84ef6a2bd3a52f4894edbf5ce80cdee, type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: -7264192393334993317}
+      m_Motion: {fileID: -203655887218126122, guid: f3342edaa6a29c74d8dd95b11a596be6, type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: -4101044904028238423}
+      m_Motion: {fileID: -203655887218126122, guid: e7f653a34c7044b4ca278624d217739d, type: 3}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 1
@@ -1005,7 +1014,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Attack
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1892465922291129980}
