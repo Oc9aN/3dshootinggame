@@ -25,13 +25,16 @@ public class PlayerWeaponSwap : PlayerComponent
             _weaponList.Add(weapon);
         }
         SwapWeapons(0);
+        Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("RifleShot");
     }
 
     private void Update()
     {
         if (InputHandler.GetKeyDown(KeyCode.Alpha1))
         {
+            // 무기에 맞는 애니메이션 트리거를 액션으로 지정
             SwapWeapons(0);
+            Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("RifleShot");
         }
         else if (InputHandler.GetKeyDown(KeyCode.Alpha2))
         {

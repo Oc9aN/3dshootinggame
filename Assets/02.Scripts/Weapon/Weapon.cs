@@ -5,6 +5,9 @@ using Random = UnityEngine.Random;
 public abstract class Weapon : MonoBehaviour
 {
     // 플레이어가 가지는 무기
+    public event Action<float> OnReloadProgressChanged;
+    public event Action AttackAnimationTrigger;
+    
     [SerializeField]
     protected SO_Weapon _data;
 
@@ -47,7 +50,6 @@ public abstract class Weapon : MonoBehaviour
     
     // 재장전 진행도
     private float _reloadingProgress = 0f;
-    public event Action<float> OnReloadProgressChanged;
 
     public float ReloadingProgress
     {
@@ -98,5 +100,11 @@ public abstract class Weapon : MonoBehaviour
         OnAmmoChanged = null;
         OnReloadProgressChanged = null;
         gameObject.SetActive(false);
+        AttackAnimationTrigger = null;
+    }
+
+    protected void TriggerAnimation()
+    {
+        AttackAnimationTrigger?.Invoke();
     }
 }

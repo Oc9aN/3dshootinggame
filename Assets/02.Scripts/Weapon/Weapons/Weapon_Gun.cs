@@ -1,7 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class Weapon_Gun : Weapon
 {
+    private Vector3 _bulletHitPoint;
+    private Vector3 _bulletHitNormal;
+
+    private IEnumerator _fireCoroutine;
+    
     public override void Attack()
     {
         // 공격방식
@@ -30,16 +36,16 @@ public class Weapon_Gun : Weapon
 
             // 카메라로 조준한 위치를 총구에서부터 새로운 레이로 체크 => 실제 총알에 맞는 것처럼 하기 위함.
             Vector3 hitDirection = cameraHitPoint - _attackPosition.position;
-            Vector3 hitNormal = -aimDirection.normalized;
-            Vector3 gunHitPoint = _attackPosition.position + hitDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
+            _bulletHitNormal = -aimDirection.normalized;
+            _bulletHitPoint = _attackPosition.position + hitDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
             
             Debug.DrawRay(_attackPosition.position, hitDirection * _data.BulletMaxDistance, Color.yellow, 5f);
             Ray gunRay = new Ray(_attackPosition.position, hitDirection);
             if (Physics.Raycast(gunRay, out RaycastHit gunHit, _data.BulletMaxDistance,
                     ~(1 << LayerMask.NameToLayer("Player"))))
             {
-                hitNormal = gunHit.normal;
-                gunHitPoint = gunHit.point;
+                _bulletHitNormal = gunHit.normal;
+                _bulletHitPoint = gunHit.point;
                 if (gunHit.collider.TryGetComponent(out IDamageable damageableObject))
                 {
                     _data.Damage.From = gameObject;
@@ -48,10 +54,14 @@ public class Weapon_Gun : Weapon
                 }
             }
 
-            // 허공에 쏘는 것도 쏘는 것
-            Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
-            bullet.transform.position = _attackPosition.position;
-            bullet.Fire(gunHitPoint, _data.BulletSpeed, hitNormal);
+            // 애니메이션
+            TriggerAnimation();
+            if (!ReferenceEquals(_fireCoroutine, null))
+            {
+                StopCoroutine(_fireCoroutine);
+            }
+            _fireCoroutine = FireBullet_Coroutine();
+            StartCoroutine(_fireCoroutine);
 
             _fireRate = _data.FireRate;
             CurrentAmmo--;
@@ -68,5 +78,13 @@ public class Weapon_Gun : Weapon
             _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * _data.RecoilReturnSpeed);
             _camera.transform.localEulerAngles += _currentRecoil;
         }
+    }
+
+    public IEnumerator FireBullet_Coroutine()
+    {
+        yield return new WaitForSeconds(_fireRate / 2f);
+        Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
+        bullet.transform.position = _attackPosition.position;
+        bullet.Fire(_bulletHitPoint, _data.BulletSpeed, _bulletHitNormal);
     }
 }
