@@ -7,6 +7,8 @@ public abstract class Weapon : MonoBehaviour
     // 플레이어가 가지는 무기
     public event Action<float> OnReloadProgressChanged;
     public event Action AttackAnimationTrigger;
+    public event Action<int, int> OnAmmoChanged;
+    public event Action OnAttack;
     
     [SerializeField]
     protected SO_Weapon _data;
@@ -24,7 +26,6 @@ public abstract class Weapon : MonoBehaviour
     protected Camera _camera;
     
     private int _currentAmmo;
-    public event Action<int, int> OnAmmoChanged;
     public int CurrentAmmo
     {
         get => _currentAmmo;
@@ -61,7 +62,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _camera = Camera.main;
     }
@@ -106,5 +107,10 @@ public abstract class Weapon : MonoBehaviour
     protected void TriggerAnimation()
     {
         AttackAnimationTrigger?.Invoke();
+    }
+
+    protected void TriggerOnAttack()
+    {
+        OnAttack?.Invoke();
     }
 }
