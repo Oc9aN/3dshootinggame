@@ -12,6 +12,11 @@ public class Weapon_Gun : Weapon
 
     private IEnumerator _fireCoroutine;
 
+    public override void Initialize()
+    {
+        
+    }
+
     public override void Attack()
     {
         // 공격방식

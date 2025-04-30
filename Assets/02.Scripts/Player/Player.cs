@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IDamageable
     private SO_Player _data;
 
     public SO_Player Data => _data;
-    
+
     private Weapon _currentWeapon;
 
     public Weapon CurrentWeapon
@@ -33,20 +33,10 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] // 디버깅
     private float _moveSpeed = 7f;
-
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 
     private float _yVelocity = 0f;
-
-    public float YVelocity
-    {
-        get => _yVelocity;
-        set
-        {
-            _yVelocity = value;
-            _animator.SetFloat("YVelocity", value);
-        }
-    }
+    public float YVelocity { get => _yVelocity; set { _yVelocity = value; } }
 
     private Vector3 _direction;
     public Vector3 Direction { get => _direction; set => _direction = value; }

@@ -1,3 +1,5 @@
+using System.Collections;
+using Drakkar.GameUtils;
 using UnityEngine;
 
 public class Weapon_Knife : Weapon
@@ -8,10 +10,39 @@ public class Weapon_Knife : Weapon
     [SerializeField]
     private float _attackAngle;
 
+    private DrakkarTrail _trail;
+    
+    private IEnumerator _trailCoroutine;
+
+    public override void Initialize()
+    {
+        _trail = GetComponentInChildren<DrakkarTrail>();
+    }
+    
+    private void OnBlade()
+    {
+        _trail.Begin();
+    }
+    
+    private void EndBlade()
+    {
+        _trail.End();
+    }
+
     public override void Attack()
     {
         if (_fireRate <= 0 && CurrentAmmo > 0)
         {
+            // 블레이드 이펙트
+            if (!ReferenceEquals(_trailCoroutine, null))
+            {
+                StopCoroutine(_trailCoroutine);
+                EndBlade();
+            }
+            OnBlade();
+            _trailCoroutine = Trail_Coroutine();
+            StartCoroutine(_trailCoroutine);
+            
             // 부채꼴 범위 안에서 공격
             _fireRate = _data.FireRate;
             // 공격 방향
@@ -43,6 +74,12 @@ public class Weapon_Knife : Weapon
             
             TriggerAnimation();
         }
+    }
+
+    private IEnumerator Trail_Coroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        EndBlade();
     }
 
     private void OnDrawGizmos()

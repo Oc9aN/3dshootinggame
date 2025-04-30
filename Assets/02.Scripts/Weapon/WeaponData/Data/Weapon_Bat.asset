@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   _maxAmmo: 1
-  _fireRate: 1
+  _fireRate: 1.5
   _reloadTime: 0
   _verticalRecoil: 0
   _horizontalRecoil: 0

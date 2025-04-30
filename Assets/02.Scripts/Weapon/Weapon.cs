@@ -62,7 +62,7 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         _camera = Camera.main;
     }
@@ -76,6 +76,8 @@ public abstract class Weapon : MonoBehaviour
     {
         _fireRate -= Time.deltaTime;
     }
+
+    public abstract void Initialize();
 
     // 공격 방식대로 공격
     public abstract void Attack();
