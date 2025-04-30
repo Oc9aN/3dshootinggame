@@ -80,7 +80,7 @@ public class Weapon_Gun : Weapon
         }
     }
 
-    public IEnumerator FireBullet_Coroutine()
+    private IEnumerator FireBullet_Coroutine()
     {
         yield return new WaitForSeconds(_fireRate);
         Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
