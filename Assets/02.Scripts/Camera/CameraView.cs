@@ -23,27 +23,45 @@ public class CameraView : MonoBehaviour
         _cameraFirstView = new CameraFirstView(transform, _firstViewTarget, _player);
         _cameraThirdView = new CameraThirdView(transform, _player);
         _cameraQuarterView = new CameraQuarterView(transform, _player);
-        _cameraViewStrategy = _cameraFirstView;
-        _cameraViewStrategy.Initialize();
+
+        ViewManager.Instance.OnViewChanged += OnViewChanged;
+        ViewManager.Instance.ViewType = EViewType.FirstPerson;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
+            ViewManager.Instance.ViewType = EViewType.FirstPerson;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ViewManager.Instance.ViewType = EViewType.ThirdPerson;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            ViewManager.Instance.ViewType = EViewType.QuarterView;
+        }
+
+        _cameraViewStrategy.View();
+    }
+
+    private void OnViewChanged(EViewType viewType)
+    {
+        if (viewType == EViewType.FirstPerson)
+        {
             _cameraViewStrategy = _cameraFirstView;
             _cameraViewStrategy.Initialize();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        else if (viewType == EViewType.ThirdPerson)
         {
             _cameraViewStrategy = _cameraThirdView;
             _cameraViewStrategy.Initialize();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        else if (viewType == EViewType.QuarterView)
         {
             _cameraViewStrategy = _cameraQuarterView;
             _cameraViewStrategy.Initialize();
         }
-        _cameraViewStrategy.View();
     }
 }
