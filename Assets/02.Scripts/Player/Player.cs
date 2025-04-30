@@ -16,8 +16,7 @@ public class Player : MonoBehaviour, IDamageable
     private SO_Player _data;
 
     public SO_Player Data => _data;
-
-    [SerializeField]
+    
     private Weapon _currentWeapon;
 
     public Weapon CurrentWeapon
@@ -144,7 +143,7 @@ public class Player : MonoBehaviour, IDamageable
 
         if (CurrentHealth <= 0)
         {
-            GameManger.Instance.GameState = EGameState.Over;
+            GameManager.Instance.GameState = EGameState.Over;
         }
     }
 }

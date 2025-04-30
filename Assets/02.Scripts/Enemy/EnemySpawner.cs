@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawning()
     {
-        if (GameManger.Instance.GameState != EGameState.Run)
+        if (GameManager.Instance.GameState != EGameState.Run)
         {
             return;
         }

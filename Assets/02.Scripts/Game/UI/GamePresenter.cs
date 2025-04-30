@@ -13,8 +13,8 @@ public class GamePresenter : MonoBehaviour
 
     private void Start()
     {
-        GameManger.Instance.OnGameStateChanged += OnGameStateChanged;
-        _gameView.OnReadyEnd += () => GameManger.Instance.GameState = EGameState.Run;
+        GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
+        _gameView.OnReadyEnd += () => GameManager.Instance.GameState = EGameState.Run;
     }
 
     private void OnGameStateChanged(EGameState gameState)

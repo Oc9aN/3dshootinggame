@@ -3,6 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SO_Weapon", menuName = "Scriptable Objects/SO_Weapon")]
 public class SO_Weapon : ScriptableObject
 {
+    [Header("Type")]
+    [SerializeField]
+    private EWeaponType _type;
+    public EWeaponType Type => _type;
+    
     [Header("Fire")]
     [SerializeField]
     private int _maxAmmo = 50;

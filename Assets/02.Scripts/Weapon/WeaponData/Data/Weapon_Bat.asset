@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06407f2628c59c34280b55aa38d308fc, type: 3}
   m_Name: Weapon_Bat
   m_EditorClassIdentifier: 
+  _type: 2
   _maxAmmo: 1
   _fireRate: 1
   _reloadTime: 0
