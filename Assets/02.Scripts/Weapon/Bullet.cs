@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour, IPoolObject
 {
-    [SerializeField]
-    private ParticleSystem _bulletEffectPrefab;
-    
     private Vector3 _hitPoint;
     private Vector3 _hitNormal;
     private Vector3 _startPoint;
@@ -15,13 +12,10 @@ public class Bullet : MonoBehaviour, IPoolObject
     private bool _isFired = false;
 
     private TrailRenderer _trailRenderer;
-    
-    private ParticleSystem _bulletEffect;
 
     private void Awake()
     {
         _trailRenderer = GetComponent<TrailRenderer>();
-        _bulletEffect = Instantiate(_bulletEffectPrefab);
     }
 
     private void Update()
@@ -36,9 +30,8 @@ public class Bullet : MonoBehaviour, IPoolObject
             if (_remainingDistance <= 0)
             {
                 // 충돌
-                _bulletEffect.transform.position = _hitPoint;
-                _bulletEffect.transform.forward = _hitNormal;
-                _bulletEffect.Play();
+                BulletParticle bulletEffect = Pool_BulletEffect.Instance.GetPooledObject();
+                bulletEffect.Play(_hitPoint, _hitNormal);
                 _isFired = false;
                 Pool_Bullet.Instance.ReturnPooledObject(this);
             }

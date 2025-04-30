@@ -161,4 +161,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9bfc83d2321a842bc34a0308e53644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletEffectPrefab: {fileID: 19800002, guid: 54dd9cb5740188a488b8baebbf19207c, type: 3}
+  _bulletEffectPrefab: {fileID: 3442735712881579452, guid: 34edf4ff1305a864f923d428a120d1ca, type: 3}
