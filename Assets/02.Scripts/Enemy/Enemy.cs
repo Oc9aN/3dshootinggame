@@ -124,6 +124,11 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     public void TakeDamage(Damage damage)
     {
+        if (_currentStateEnum == EEnemyState.Die)
+        {
+            return;
+        }
+        
         Health -= damage.DamageValue;
 
         _damageInfo = damage;

@@ -18,6 +18,8 @@ public class EnemyDie : IEnemyState
         _enemy.StartEnemyStateCoroutine(_dieCoroutine);
         
         _enemy.Animator.SetTrigger("Die");
+        
+        OnDieHandler();
     }
 
     public void Acting()
@@ -41,5 +43,8 @@ public class EnemyDie : IEnemyState
     private void OnDieHandler()
     {
         // 코인 드랍
+        Coin coin = Pool_Coin.Instance.GetPooledObject();
+        coin.transform.position = _enemy.transform.position;
+        coin.OnEnableHandler(_enemy.Target.transform);
     }
 }
