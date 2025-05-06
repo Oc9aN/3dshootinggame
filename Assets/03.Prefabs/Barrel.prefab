@@ -161,6 +161,7 @@ MonoBehaviour:
   _health: 50
   _remainingTime: 5
   _explodeVFXPrefab: {fileID: 2961793672785661176, guid: 562cc8a9f5f14f04a9e9e0404714153e, type: 3}
+  _decalPrefab: {fileID: 3281126742043520544, guid: 8abfa80c588cedb44824aef22c6309ea, type: 3}
 --- !u!208 &2309050228334985555
 NavMeshObstacle:
   m_ObjectHideFlags: 0

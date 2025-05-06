@@ -25,8 +25,12 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
     [SerializeField]
     private float _remainingTime;
 
+    [Header("VFX")]
     [SerializeField]
     private ParticleSystem _explodeVFXPrefab;
+    
+    [SerializeField]
+    private GameObject _decalPrefab;
 
     private Rigidbody _rigidbody;
     
@@ -45,6 +49,11 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
         ParticleSystem vfx = Instantiate(_explodeVFXPrefab);
         vfx.transform.position = transform.position;
         vfx.Play();
+        
+        // 데칼 생성
+        GameObject decal = Instantiate(_decalPrefab);
+        decal.transform.position = transform.position + Vector3.up;
+        decal.transform.forward = -transform.up;
         
         // 카메라 흔들림
         _cameraShake.Shake(0.3f, 0.5f);
