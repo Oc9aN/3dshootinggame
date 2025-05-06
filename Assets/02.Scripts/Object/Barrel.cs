@@ -29,10 +29,13 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
     private ParticleSystem _explodeVFXPrefab;
 
     private Rigidbody _rigidbody;
+    
+    private CameraShake _cameraShake;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _cameraShake = Camera.main.GetComponent<CameraShake>();
     }
 
     public void Explode()
@@ -42,6 +45,9 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
         ParticleSystem vfx = Instantiate(_explodeVFXPrefab);
         vfx.transform.position = transform.position;
         vfx.Play();
+        
+        // 카메라 흔들림
+        _cameraShake.Shake(0.3f, 0.5f);
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explodeRange);
         foreach (var hitCollider in hitColliders)
