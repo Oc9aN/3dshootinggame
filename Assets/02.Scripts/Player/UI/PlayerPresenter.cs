@@ -41,5 +41,6 @@ public class PlayerPresenter : PlayerComponent
         _playerReloadUI.Initialize(Player.CurrentWeapon.Data.ReloadTime);
         
         _playerWeaponUI.RefreshWeaponImage(Player.CurrentWeapon.Data.WeaponSprite);
+        _playerWeaponUI.RefreshCrosshairImage(Player.CurrentWeapon.Data.CrosshairSprite);
     }
 }

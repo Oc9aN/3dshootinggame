@@ -54,8 +54,9 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 randomPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), 0,
             Random.Range(-_spawnRange, _spawnRange));
-        Vector3 spawnPosition = transform.position + randomPosition;
-        spawnPosition.y = _spawnHeight;
+        Physics.Raycast(transform.position + randomPosition,  Vector3.down, out RaycastHit hit, 10f);
+        Vector3 spawnPosition = hit.point;
+        spawnPosition.y += _spawnHeight;
         enemy.NavMeshAgent.Warp(spawnPosition);
         enemy.Data = _enemyData;
         enemy.Target = _target;

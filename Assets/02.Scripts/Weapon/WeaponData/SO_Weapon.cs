@@ -54,4 +54,8 @@ public class SO_Weapon : ScriptableObject
     [SerializeField]
     private Sprite _weaponSprite;
     public Sprite WeaponSprite => _weaponSprite;
+    
+    [SerializeField]
+    private Sprite _crosshairSprite;
+    public Sprite CrosshairSprite => _crosshairSprite;
 }

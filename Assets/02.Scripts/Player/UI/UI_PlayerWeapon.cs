@@ -9,6 +9,9 @@ public class UI_PlayerWeapon : MonoBehaviour
 
     [SerializeField]
     private Image _weaponImage;
+    
+    [SerializeField]
+    private Image _crosshairImage;
 
     public void Initialize(int maxBombCount)
     {
@@ -23,5 +26,10 @@ public class UI_PlayerWeapon : MonoBehaviour
     public void RefreshWeaponImage(Sprite sprite)
     {
         _weaponImage.sprite = sprite;
+    }
+
+    public void RefreshCrosshairImage(Sprite sprite)
+    {
+        _crosshairImage.sprite = sprite;
     }
 }
