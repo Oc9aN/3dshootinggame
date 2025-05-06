@@ -25,3 +25,4 @@ MonoBehaviour:
   _damage:
     _damageValue: 10
     _knockBackForce: 100
+  _weaponSprite: {fileID: 21300000, guid: 3fb73301826bb5e4d8442f570ea960b1, type: 3}

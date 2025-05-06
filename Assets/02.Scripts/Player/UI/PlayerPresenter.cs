@@ -14,7 +14,7 @@ public class PlayerPresenter : PlayerComponent
     private UI_PlayerBomb _playerBombUI;
     
     [SerializeField]
-    private UI_PlayerAmmo _playerAmmoUI;
+    private UI_PlayerWeapon _playerWeaponUI;
     
     [SerializeField]
     private UI_PlayerReload _playerReloadUI;
@@ -34,10 +34,12 @@ public class PlayerPresenter : PlayerComponent
 
     private void OnCurrentWeaponChanged(Weapon weapon)
     {
-        weapon.OnAmmoChanged += _playerAmmoUI.RefreshAmmoText;
+        weapon.OnAmmoChanged += _playerWeaponUI.RefreshAmmoText;
         weapon.OnReloadProgressChanged += _playerReloadUI.RefreshSliderValue;
         
-        _playerAmmoUI.Initialize(Player.CurrentWeapon.Data.MaxAmmo);
+        _playerWeaponUI.Initialize(Player.CurrentWeapon.Data.MaxAmmo);
         _playerReloadUI.Initialize(Player.CurrentWeapon.Data.ReloadTime);
+        
+        _playerWeaponUI.RefreshWeaponImage(Player.CurrentWeapon.Data.WeaponSprite);
     }
 }

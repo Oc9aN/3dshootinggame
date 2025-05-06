@@ -50,4 +50,8 @@ public class SO_Weapon : ScriptableObject
     [SerializeField]
     private Damage _damage;
     public Damage Damage => _damage;
+    
+    [SerializeField]
+    private Sprite _weaponSprite;
+    public Sprite WeaponSprite => _weaponSprite;
 }
