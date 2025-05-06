@@ -37,4 +37,9 @@ public class EnemyDie : IEnemyState
         yield return new WaitForSeconds(_enemy.Data.DieTime);
         Pool_Enemy.Instance.ReturnPooledObject(_enemy);
     }
+
+    private void OnDieHandler()
+    {
+        // 코인 드랍
+    }
 }
