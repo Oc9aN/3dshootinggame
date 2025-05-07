@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 // 싱글톤으로 접근 가능한 풀
-public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour, IPoolObject
+public class Pool<T> where T : MonoBehaviour, IPoolObject
 {
-    [SerializeField]
-    protected T _poolObjectPrefab;
+    private T _poolObjectPrefab;
 
-    [SerializeField]
-    protected int _poolSize = 3;
+    private int _poolSize = 3;
+    
+    private GameObject _parent;
 
-    [SerializeField]
-    protected Stack<T> _pool;
-
-    private void Start()
+    private Stack<T> _pool;
+    
+    public Pool(T poolObjectPrefab, int poolSize, GameObject parent)
     {
+        _poolObjectPrefab =  poolObjectPrefab;
+        _poolSize = poolSize;
+        _parent = parent;
         PoolInitialize();
     }
 
@@ -24,7 +27,7 @@ public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour, IPoolObject
         _pool = new Stack<T>(_poolSize);
         for (int i = 0; i < _poolSize; i++)
         {
-            T poolObject = Instantiate(_poolObjectPrefab, transform, true);
+            T poolObject = Object.Instantiate(_poolObjectPrefab, _parent.transform, true);
             poolObject.gameObject.SetActive(false);
             _pool.Push(poolObject);
         }
@@ -40,7 +43,7 @@ public class Pool<T> : Singleton<Pool<T>> where T : MonoBehaviour, IPoolObject
             return pooledObject;
         }
         // 새 오브젝트를 풀링
-        pooledObject = Instantiate(_poolObjectPrefab, transform, true);
+        pooledObject = Object.Instantiate(_poolObjectPrefab, _parent.transform, true);
         return pooledObject;
     }
 

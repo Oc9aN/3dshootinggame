@@ -851,6 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2951125340273836148}
   - component: {fileID: 9085075502964726286}
+  - component: {fileID: 3135237902042631312}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -897,6 +898,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3135237902042631312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2575865957605792462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cb4020b57a4bc98454ae31539417be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2588418141638364844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,8 +1116,8 @@ GameObject:
   - component: {fileID: 5164991070984887791}
   - component: {fileID: 4883003406185419468}
   - component: {fileID: 3194102984796961533}
-  - component: {fileID: 325620800747128330}
   - component: {fileID: 1278195345378479804}
+  - component: {fileID: 8661230808984742123}
   m_Layer: 8
   m_Name: Enemy_Range
   m_TagString: Enemy
@@ -1177,21 +1190,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &325620800747128330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3385981972571154719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e954a106692a0d34690c08687cc361ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _data: {fileID: 11400000, guid: 97f507b47d501df4ab095dd723a64c64, type: 2}
-  _patrolPoints: []
 --- !u!114 &1278195345378479804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1204,6 +1202,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81de877abb122ed4cace6da2b6fc3534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8661230808984742123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385981972571154719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1314d9e985b748668fd9bde95e2d7cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _data: {fileID: 11400000, guid: 562d8fff978c16d46b4633cb103a6920, type: 2}
+  _patrolPoints: []
 --- !u!1 &3435283493695042423
 GameObject:
   m_ObjectHideFlags: 0

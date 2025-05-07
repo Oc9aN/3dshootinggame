@@ -17,9 +17,11 @@ MonoBehaviour:
   _rotateSpeed: 90
   _runMoveSpeed: 12
   _useStaminaPerSecond: 10
-  _jumpForce: 5
+  _jumpForce: 4
   _maxStamina: 100
   _staminaRecoverPerSecond: 20
+  _maxHealth: 100
+  _healthRecoverPerSecond: 10
   _dashTime: 0.1
   _dashStaminaCost: 20
   _dashForce: 50
@@ -29,10 +31,3 @@ MonoBehaviour:
   _minBombForce: 5
   _maxBombForce: 20
   _addBombForcePerSecond: 5
-  _maxAmmo: 50
-  _fireRate: 0.1
-  _reloadTime: 2
-  _verticalRecoil: 5
-  _horizontalRecoil: 4
-  _recoilSpeed: 20
-  _recoilReturnSpeed: 30

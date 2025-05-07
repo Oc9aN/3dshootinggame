@@ -14,7 +14,7 @@ public class EnemyPresenter : MonoBehaviour
 
     private void Start()
     {
-        _enemy.OnDmaged += _enemyHealth.RefreshSliderValue;
+        _enemy.OnDamaged += _enemyHealth.RefreshSliderValue;
         
         _enemyHealth.Initialize(_enemy.Data.MaxHealth);
     }

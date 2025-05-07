@@ -45,4 +45,8 @@ public class SO_Enemy : ScriptableObject
     [SerializeField]
     private Damage _damage;
     public Damage Damage => _damage;
+
+    [SerializeField]
+    private EEnemyType _enemyType;
+    public EEnemyType EnemyType => _enemyType;
 }

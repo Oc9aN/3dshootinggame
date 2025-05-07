@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawn()
     {
-        Enemy enemy = Pool_Enemy.Instance.GetPooledObject();
+        Enemy enemy = Pool_Enemy.Instance.GetPooledObject(GetRandomType());
         if (ReferenceEquals(enemy, null))
         {
             Debug.LogWarning("없음");
@@ -60,6 +60,20 @@ public class EnemySpawner : MonoBehaviour
         enemy.NavMeshAgent.Warp(spawnPosition);
         enemy.Data = _enemyData;
         enemy.Target = _target;
+    }
+
+    private EEnemyType GetRandomType()
+    {
+        int range = Random.Range(0, 100);
+        if (range < 25)
+        {
+            return EEnemyType.Normal;
+        }
+        if (range < 50)
+        {
+            return EEnemyType.Boomer;
+        }
+        return EEnemyType.Normal;
     }
 
     private void OnDestroy()

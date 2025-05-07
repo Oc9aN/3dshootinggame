@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class EnemyAttack : IEnemyState
 {
-    private const float DEFAULT_ATTACK_TIME = 0.3f;
+    private const float ATTACK_TIME = 0.3f;
+    private const float ATTACKING_TIME = 1f;
 
     protected Enemy _enemy;
 
     private float _attackCoolTimer = 0f;
-
-    private IEnumerator _attackCoroutine;
+    
+    protected bool _isAttacking;
 
     public EnemyAttack(Enemy enemy)
     {
         _enemy = enemy;
+
+        _enemy.OnAttack += OnAttack;
+        _enemy.OnAttackEnd += () => _isAttacking = false;
     }
 
     public void Enter()
@@ -22,12 +26,15 @@ public class EnemyAttack : IEnemyState
         _enemy.NavMeshAgent.velocity = Vector3.zero;
         _enemy.NavMeshAgent.isStopped = true;
         _enemy.NavMeshAgent.ResetPath();
+
+        // 첫 공격은 빠르게
+        _attackCoolTimer = _enemy.Data.AttackCoolTime / 2f;
     }
 
     public void Acting()
     {
         // 전이 Trace
-        if (Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.AttackDistance)
+        if (!_isAttacking && Vector3.Distance(_enemy.transform.position, _enemy.Target.transform.position) >= _enemy.Data.AttackDistance)
         {
             _attackCoolTimer = 0f;
             _enemy.ChangeState(EEnemyState.Trace);
@@ -36,19 +43,15 @@ public class EnemyAttack : IEnemyState
             return;
         }
 
-        Attack();
+        AttackRoutine();
     }
 
     public void Exit()
     {
-        if (!ReferenceEquals(_attackCoroutine, null))
-        {
-            _enemy.StopEnemyStateCoroutine(_attackCoroutine);
-            _attackCoroutine = null;
-        }
+
     }
 
-    private void Attack()
+    private void AttackRoutine()
     {
         // 공격
         _attackCoolTimer += Time.deltaTime;
@@ -58,15 +61,13 @@ public class EnemyAttack : IEnemyState
             _enemy.Animator.SetTrigger("AttackDelayToAttack");
 
             _attackCoolTimer = 0f;
-
-            _attackCoroutine = Attack_Coroutine();
-            _enemy.StartEnemyStateCoroutine(_attackCoroutine);
+            
+            _isAttacking = true;
         }
     }
 
-    protected virtual IEnumerator Attack_Coroutine()
+    protected virtual void OnAttack()
     {
-        yield return new WaitForSeconds(DEFAULT_ATTACK_TIME);
         _enemy.Target.GetComponent<IDamageable>().TakeDamage(_enemy.Data.Damage);
     }
 }

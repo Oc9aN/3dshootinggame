@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 {
     // 상태만 가지고 있고 인터페이스를 통해 Acting
-    public event Action<float> OnDmaged;
+    public event Action<float> OnDamaged;
+    public event Action OnAttack;
+    public event Action OnAttackEnd;
 
     protected Dictionary<EEnemyState, IEnemyState> _enemyStates;
     private IEnemyState _currentState;
@@ -22,7 +24,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         set
         {
             _health = value;
-            OnDmaged?.Invoke(_health);
+            OnDamaged?.Invoke(_health);
         }
     }
 
@@ -158,5 +160,15 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         }
 
         ChangeState(EEnemyState.Damaged);
+    }
+
+    public void Attack()
+    {
+        OnAttack?.Invoke();
+    }
+
+    public void AttackEnd()
+    {
+        OnAttackEnd?.Invoke();
     }
 }
