@@ -10,9 +10,6 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _target;
     
     [SerializeField]
-    private SO_Enemy _enemyData;
-    
-    [SerializeField]
     private float _spawnRange = 10f;
     
     [SerializeField]
@@ -58,7 +55,6 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = hit.point;
         spawnPosition.y += _spawnHeight;
         enemy.NavMeshAgent.Warp(spawnPosition);
-        enemy.Data = _enemyData;
         enemy.Target = _target;
     }
 
@@ -67,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
         int range = Random.Range(0, 100);
         if (range < 25)
         {
-            return EEnemyType.Normal;
+            return EEnemyType.Range;
         }
         if (range < 50)
         {
