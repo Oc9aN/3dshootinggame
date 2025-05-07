@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyDie : IEnemyState
 {
-    private Enemy _enemy;
+    protected Enemy _enemy;
     
     private IEnumerator _dieCoroutine;
     
@@ -40,7 +40,7 @@ public class EnemyDie : IEnemyState
         Pool_Enemy.Instance.ReturnPooledObject(_enemy);
     }
 
-    private void OnDieHandler()
+    protected virtual void OnDieHandler()
     {
         // 코인 드랍
         int randomNumber = Random.Range(1, 5);

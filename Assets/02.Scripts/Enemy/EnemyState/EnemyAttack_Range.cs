@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class EnemyAttack_Range : EnemyAttack
 {
-    private const float ATTACK_TIME = 0.7f;
-    private const float ATTACK_RANGE = 8f;
-    private const float ATTACKING_TIME = 4f;
+    private const float ATTACK_RANGE = 5f;
     
     public EnemyAttack_Range(Enemy enemy) : base(enemy) { }
 

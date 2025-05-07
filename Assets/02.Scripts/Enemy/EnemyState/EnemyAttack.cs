@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EnemyAttack : IEnemyState
 {
-    private const float ATTACK_TIME = 0.3f;
-    private const float ATTACKING_TIME = 1f;
-
     protected Enemy _enemy;
 
     private float _attackCoolTimer = 0f;
