@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         
         _propertyBlock = new MaterialPropertyBlock();
 
-        _health = Data.MaxHealth;
+        Health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
 
         SetEnemyState();
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     {
         ChangeState(EEnemyState.Idle);
         
-        _health = Data.MaxHealth;
+        Health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
         
         _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
