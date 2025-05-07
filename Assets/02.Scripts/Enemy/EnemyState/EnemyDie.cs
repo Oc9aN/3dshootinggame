@@ -20,6 +20,7 @@ public class EnemyDie : IEnemyState
         _enemy.Animator.SetTrigger("Die");
         
         _enemy.CharacterController.enabled = false;
+        _enemy.NavMeshAgent.enabled = false;
         
         OnDieHandler();
     }

@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     private Animator _animator;
     public Animator Animator => _animator;
-    
+
     private SkinnedMeshRenderer _skinnedMeshRenderer;
     private MaterialPropertyBlock _propertyBlock;
 
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        
+
         _propertyBlock = new MaterialPropertyBlock();
 
         Health = Data.MaxHealth;
@@ -111,12 +111,13 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     public void Initialize()
     {
         ChangeState(EEnemyState.Idle);
-        
-       _characterController.enabled = true;
-        
+
+        _characterController.enabled = true;
+        _navMeshAgent.enabled = true;
+
         Health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
-        
+
         _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
         _propertyBlock.SetColor("_EmissionColor", Color.black);
         _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
