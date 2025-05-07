@@ -20,7 +20,6 @@ public class WeaponManager : Singleton<WeaponManager>
             Weapon weapon = Instantiate(weaponPrefab, transform);
             weapon.transform.localPosition = Vector3.zero;
             weapon.gameObject.SetActive(false);
-            weapon.Initialize();
             _weaponList.Add(weapon);
         }
     }

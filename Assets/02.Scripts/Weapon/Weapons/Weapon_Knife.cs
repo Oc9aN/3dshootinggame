@@ -14,8 +14,9 @@ public class Weapon_Knife : Weapon
     
     private IEnumerator _trailCoroutine;
 
-    public override void Initialize()
+    protected override void Awake()
     {
+        base.Awake();
         _trail = GetComponentInChildren<DrakkarTrail>();
     }
     
@@ -47,7 +48,7 @@ public class Weapon_Knife : Weapon
             _fireRate = _data.FireRate;
             // 공격 방향
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange, ~LayerMask.NameToLayer("Player"));
-            Vector3 attackDirection = _camera.transform.forward;
+            Vector3 attackDirection = _weaponAimStrategy.WeaponAiming(this) - _attackPosition.position;
             attackDirection.y = 0;
             attackDirection.Normalize();
             Debug.DrawRay(_attackPosition.position, attackDirection * _attackRange, Color.yellow, 10f);
@@ -88,6 +89,7 @@ public class Weapon_Knife : Weapon
 
         Vector3 center = transform.position;
         Vector3 forward = transform.forward;
+        forward.y = 0;
 
         float halfAngle = _attackAngle * 0.5f;
         Quaternion leftRot = Quaternion.Euler(0, -halfAngle, 0);

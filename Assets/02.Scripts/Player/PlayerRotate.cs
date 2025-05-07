@@ -1,10 +1,28 @@
+using System;
 using UnityEngine;
 
 public class PlayerRotate : PlayerComponent
 {
     // 카메라 각도는 0도에서 시작한다. 밑에 변수는 그 값.
-    private float _rotationX = 0f;
+    private IRotationStrategy _rotationStrategy;
     
+    private CrosshairRotationStrategy _crosshairRotationStrategy;
+    private CursorRotationStrategy _cursorRotationStrategy;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _crosshairRotationStrategy = new CrosshairRotationStrategy();
+        _cursorRotationStrategy =  new CursorRotationStrategy();
+
+        _rotationStrategy = _crosshairRotationStrategy;
+    }
+
+    private void Start()
+    {
+        ViewManager.Instance.OnViewChanged += OnViewChanged;
+    }
+
     private void Update()
     {
         Rotate();
@@ -12,12 +30,18 @@ public class PlayerRotate : PlayerComponent
 
     private void Rotate()
     {
-        // 1. 마우스 입력을 받는다.
-        float mouseX = InputHandler.GetAxis("Mouse X");
-        
-        // 2. 마우스 입력으로부터 회전 시킬 크기를 누적한다.
-        _rotationX += mouseX * Player.Data.RotateSpeed * Time.deltaTime;
-        
-        transform.eulerAngles = new Vector3(0f, _rotationX, 0f);
+        transform.eulerAngles = new Vector3(0f, _rotationStrategy.RotationAngle(Player), 0f);
+    }
+
+    private void OnViewChanged(EViewType viewType)
+    {
+        if (viewType == EViewType.FirstPerson || viewType == EViewType.ThirdPerson)
+        {
+            _rotationStrategy = _crosshairRotationStrategy;
+        }
+        else
+        {
+            _rotationStrategy = _cursorRotationStrategy;
+        }
     }
 }

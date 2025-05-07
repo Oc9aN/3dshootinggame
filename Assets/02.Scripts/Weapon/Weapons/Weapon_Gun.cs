@@ -12,11 +12,6 @@ public class Weapon_Gun : Weapon
 
     private IEnumerator _fireCoroutine;
 
-    public override void Initialize()
-    {
-        
-    }
-
     public override void Attack()
     {
         // 공격방식
@@ -61,22 +56,9 @@ public class Weapon_Gun : Weapon
 
         _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
 
-        // TODO: 시야에 따라 다르게
-        // 카메라 크로스헤어 기준으로 레이를 쏜 경우
-        Vector3 aimDirection = _camera.transform.forward;
-        Ray cameraRay = new Ray(_camera.transform.position, aimDirection);
-
-        Vector3 cameraHitPoint = _camera.transform.position + aimDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
-        Debug.DrawRay(_camera.transform.position, aimDirection * _data.BulletMaxDistance, Color.red, 5f);
-        if (Physics.Raycast(cameraRay, out RaycastHit cameraHit, _data.BulletMaxDistance,
-                ~(1 << LayerMask.NameToLayer("Player"))))
-        {
-            cameraHitPoint = cameraHit.point;
-        }
-
-        // 카메라로 조준한 위치를 총구에서부터 새로운 레이로 체크 => 실제 총알에 맞는 것처럼 하기 위함.
-        Vector3 hitDirection = cameraHitPoint - _attackPosition.position;
-        _bulletHitNormal = -aimDirection.normalized;
+        // 시야에 따라 다르게
+        Vector3 hitDirection = _weaponAimStrategy.WeaponAiming(this);
+        _bulletHitNormal = -hitDirection.normalized;
         _bulletHitPoint = _attackPosition.position + hitDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
 
         Debug.DrawRay(_attackPosition.position, hitDirection * _data.BulletMaxDistance, Color.yellow, 5f);

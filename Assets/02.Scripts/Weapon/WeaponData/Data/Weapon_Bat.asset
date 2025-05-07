@@ -20,7 +20,7 @@ MonoBehaviour:
   _horizontalRecoil: 0
   _recoilSpeed: 0
   _recoilReturnSpeed: 0
-  _bulletMaxDistance: 0
+  _bulletMaxDistance: 100
   _bulletSpeed: 0
   _damage:
     _damageValue: 10
