@@ -47,7 +47,7 @@ public class Weapon_Knife : Weapon
             // 부채꼴 범위 안에서 공격
             _fireRate = _data.FireRate;
             // 공격 방향
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange, ~LayerMask.NameToLayer("Player"));
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _attackRange, ~(1 << LayerMask.NameToLayer("Player")));
             Vector3 attackDirection = _weaponAimStrategy.WeaponAiming(this) - _attackPosition.position;
             attackDirection.y = 0;
             attackDirection.Normalize();

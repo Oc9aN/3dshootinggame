@@ -6,7 +6,7 @@ public class CursorAimStrategy : IWeaponAimStrategy
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 aimRayPosition = ray.GetPoint(100f);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit,  100f, 1 << LayerMask.NameToLayer("Ground")))
         {
             aimRayPosition = hit.point;
         }

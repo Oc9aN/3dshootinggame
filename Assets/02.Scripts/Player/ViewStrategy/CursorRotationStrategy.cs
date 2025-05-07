@@ -6,7 +6,7 @@ public class CursorRotationStrategy : IRotationStrategy
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 lookTarget = ray.GetPoint(100f);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, 1 << LayerMask.NameToLayer("Ground")))
         {
             lookTarget = hit.point;
         }
