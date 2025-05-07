@@ -112,6 +112,9 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     {
         ChangeState(EEnemyState.Idle);
         
+        _health = Data.MaxHealth;
+        _navMeshAgent.speed = _data.MoveSpeed;
+        
         _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
         _propertyBlock.SetColor("_EmissionColor", Color.black);
         _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);

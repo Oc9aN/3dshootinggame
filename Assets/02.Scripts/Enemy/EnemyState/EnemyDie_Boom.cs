@@ -32,6 +32,11 @@ public class EnemyDie_Boom : EnemyDie, IExplodable
 
     public void Explode()
     {
+        // 폭발
+        ParticleSystem vfx = Pool_Particle.Instance.GetPooledObject(EParticleType.BoomEffect);
+        vfx.transform.position = _enemy.transform.position;
+        vfx.Play();
+        
         // 아군도 공격
         Collider[] colliders = Physics.OverlapSphere(_enemy.transform.position, ATTACK_RANGE);
         Debug.Log(colliders.Length);

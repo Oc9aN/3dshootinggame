@@ -13,7 +13,7 @@ public class Enemy_Boomer : Enemy
             { EEnemyState.Return, new EnemyReturn(this) },
             { EEnemyState.Attack, new EnemyAttack(this) },
             { EEnemyState.Damaged, new EnemyDamaged(this) },
-            { EEnemyState.Die, new EnemyDie(this) }
+            { EEnemyState.Die, new EnemyDie_Boom(this) }
         };
     }
 }
