@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bomb : MonoBehaviour, IPoolObject, IExplodable
 {
@@ -25,7 +26,7 @@ public class Bomb : MonoBehaviour, IPoolObject, IExplodable
     public void Fire(float force)
     {
         _rigidbody.AddForce(_camera.transform.forward * force, ForceMode.Impulse);
-        _rigidbody.AddTorque(Vector3.one);
+        _rigidbody.AddTorque(Random.insideUnitSphere);
     }
 
     private void OnCollisionEnter(Collision collision)
