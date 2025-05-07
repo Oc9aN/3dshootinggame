@@ -19,6 +19,8 @@ public class EnemyDie : IEnemyState
         
         _enemy.Animator.SetTrigger("Die");
         
+        _enemy.CharacterController.enabled = false;
+        
         OnDieHandler();
     }
 

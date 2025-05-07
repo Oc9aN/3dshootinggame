@@ -112,6 +112,8 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     {
         ChangeState(EEnemyState.Idle);
         
+       _characterController.enabled = true;
+        
         Health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
         
