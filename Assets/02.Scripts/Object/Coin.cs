@@ -19,17 +19,6 @@ public class Coin : MonoBehaviour, IPoolObject
     
     private Sequence _sequence;
 
-    private void Awake()
-    {
-        _sequence = DOTween.Sequence();
-        float originalHeight = transform.position.y;
-        float randomDuration = Random.Range(0.8f, 1.2f);
-        _sequence.Append(transform.DOMoveY(originalHeight + _bounceForce, randomDuration).SetEase(Ease.InBounce));
-        _sequence.Append(transform.DOMoveY(originalHeight, randomDuration).SetEase(Ease.OutBounce));
-        _sequence.SetLoops(-1, LoopType.Restart);
-        _sequence.Pause();
-    }
-
     private void Update()
     {
         if (!ReferenceEquals(_target, null))
@@ -56,8 +45,13 @@ public class Coin : MonoBehaviour, IPoolObject
     public void OnEnableHandler(Transform target)
     {
         _target = target;
-        
-        _sequence.Restart();
+
+        _sequence = DOTween.Sequence();
+        float originalHeight = transform.position.y;
+        float randomDuration = Random.Range(0.8f, 1.2f);
+        _sequence.Append(transform.DOMoveY(originalHeight + _bounceForce, randomDuration).SetEase(Ease.InBounce));
+        _sequence.Append(transform.DOMoveY(originalHeight, randomDuration).SetEase(Ease.OutBounce));
+        _sequence.SetLoops(-1, LoopType.Restart);
     }
 
     private IEnumerator Coin_Coroutine()
@@ -73,7 +67,7 @@ public class Coin : MonoBehaviour, IPoolObject
             yield return null;
         }
 
-        _sequence.Pause();
+        _sequence.Kill();
         Pool_Coin.Instance.ReturnPooledObject(this);
     }
 
