@@ -1443,8 +1443,8 @@ GameObject:
   - component: {fileID: 2390880969097374994}
   - component: {fileID: 6667590336350981676}
   - component: {fileID: 8328375564650583278}
-  - component: {fileID: 6002990132026860947}
   - component: {fileID: 1786836244940608522}
+  - component: {fileID: -6688024571360439921}
   m_Layer: 8
   m_Name: Enemy_Bommer
   m_TagString: Enemy
@@ -1517,21 +1517,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6002990132026860947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7415919392216833606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e954a106692a0d34690c08687cc361ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _data: {fileID: 11400000, guid: 97f507b47d501df4ab095dd723a64c64, type: 2}
-  _patrolPoints: []
 --- !u!114 &1786836244940608522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1544,6 +1529,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81de877abb122ed4cace6da2b6fc3534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6688024571360439921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7415919392216833606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5371a9e8ca064325a11c7f0732706ff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
+  _data: {fileID: 11400000, guid: 97f507b47d501df4ab095dd723a64c64, type: 2}
+  _patrolPoints: []
 --- !u!1 &7436087686756451764
 GameObject:
   m_ObjectHideFlags: 0

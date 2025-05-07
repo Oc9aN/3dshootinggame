@@ -30,8 +30,10 @@ public class Bullet : MonoBehaviour, IPoolObject
             if (_remainingDistance <= 0)
             {
                 // 충돌
-                BulletParticle bulletEffect = Pool_BulletEffect.Instance.GetPooledObject();
-                bulletEffect.Play(_hitPoint, _hitNormal);
+                ParticleSystem bulletEffect = Pool_Particle.Instance.GetPooledObject(EParticleType.BulletEffect);
+                bulletEffect.transform.position = _hitPoint;
+                bulletEffect.transform.forward = _hitNormal;
+                bulletEffect.Play();
                 _isFired = false;
                 Pool_Bullet.Instance.ReturnPooledObject(this);
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 // 싱글톤으로 접근 가능한 풀
-public class Pool<T> where T : MonoBehaviour, IPoolObject
+public class Pool<T> where T : Component, IPoolObject
 {
     private T _poolObjectPrefab;
 

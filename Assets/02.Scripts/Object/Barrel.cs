@@ -27,9 +27,6 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
 
     [Header("VFX")]
     [SerializeField]
-    private ParticleSystem _explodeVFXPrefab;
-    
-    [SerializeField]
     private GameObject _decalPrefab;
 
     private Rigidbody _rigidbody;
@@ -46,7 +43,7 @@ public class Barrel : MonoBehaviour, IExplodable, IDamageable
     {
         StartCoroutine(Explode_Coroutine());
         // 폭발
-        ParticleSystem vfx = Instantiate(_explodeVFXPrefab);
+        ParticleSystem vfx = Pool_Particle.Instance.GetPooledObject(EParticleType.BoomEffect);
         vfx.transform.position = transform.position;
         vfx.Play();
         
