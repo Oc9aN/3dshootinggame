@@ -1,11 +1,17 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAttack : IEnemyState
 {
-    private Enemy _enemy;
-    
+    private const float DEFAULT_ATTACK_TIME = 0.3f;
+
+    protected Enemy _enemy;
+
     private float _attackCoolTimer = 0f;
-    
+
+    private IEnumerator _attackCoroutine;
+
     public EnemyAttack(Enemy enemy)
     {
         _enemy = enemy;
@@ -25,7 +31,7 @@ public class EnemyAttack : IEnemyState
         {
             _attackCoolTimer = 0f;
             _enemy.ChangeState(EEnemyState.Trace);
-            
+
             _enemy.Animator.SetTrigger("AttackDelayToMove");
             return;
         }
@@ -35,7 +41,11 @@ public class EnemyAttack : IEnemyState
 
     public void Exit()
     {
-        
+        if (!ReferenceEquals(_attackCoroutine, null))
+        {
+            _enemy.StopEnemyStateCoroutine(_attackCoroutine);
+            _attackCoroutine = null;
+        }
     }
 
     private void Attack()
@@ -46,8 +56,17 @@ public class EnemyAttack : IEnemyState
         {
             Debug.Log("Attack");
             _enemy.Animator.SetTrigger("AttackDelayToAttack");
-            
+
             _attackCoolTimer = 0f;
+
+            _attackCoroutine = Attack_Coroutine();
+            _enemy.StartEnemyStateCoroutine(_attackCoroutine);
         }
+    }
+
+    protected virtual IEnumerator Attack_Coroutine()
+    {
+        yield return new WaitForSeconds(DEFAULT_ATTACK_TIME);
+        _enemy.Target.GetComponent<IDamageable>().TakeDamage(_enemy.Data.Damage);
     }
 }

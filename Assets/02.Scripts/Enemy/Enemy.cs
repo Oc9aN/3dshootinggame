@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     // 상태만 가지고 있고 인터페이스를 통해 Acting
     public event Action<float> OnDmaged;
 
-    private Dictionary<EEnemyState, IEnemyState> _enemyStates;
+    protected Dictionary<EEnemyState, IEnemyState> _enemyStates;
     private IEnemyState _currentState;
     private EEnemyState _currentStateEnum;
 
@@ -79,16 +79,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         _health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
 
-        _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
-        {
-            { EEnemyState.Idle, new EnemyIdle(this) },
-            { EEnemyState.Patrol, new EnemyPatrol(this) },
-            { EEnemyState.Trace, new EnemyTrace(this) },
-            { EEnemyState.Return, new EnemyReturn(this) },
-            { EEnemyState.Attack, new EnemyAttack(this) },
-            { EEnemyState.Damaged, new EnemyDamaged(this) },
-            { EEnemyState.Die, new EnemyDie(this) }
-        };
+        SetEnemyState();
     }
 
     private void Start()
@@ -99,6 +90,20 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     private void Update()
     {
         _currentState.Acting();
+    }
+
+    protected virtual void SetEnemyState()
+    {
+        _enemyStates = new Dictionary<EEnemyState, IEnemyState>()
+        {
+            { EEnemyState.Idle, new EnemyIdle(this) },
+            { EEnemyState.Patrol, new EnemyPatrol(this) },
+            { EEnemyState.Trace, new EnemyTrace(this) },
+            { EEnemyState.Return, new EnemyReturn(this) },
+            { EEnemyState.Attack, new EnemyAttack(this) },
+            { EEnemyState.Damaged, new EnemyDamaged(this) },
+            { EEnemyState.Die, new EnemyDie(this) }
+        };
     }
 
     public void Initialize()
@@ -153,10 +158,5 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         }
 
         ChangeState(EEnemyState.Damaged);
-    }
-
-    public void Attack()
-    {
-        _target.GetComponent<IDamageable>().TakeDamage(_data.Damage);
     }
 }
