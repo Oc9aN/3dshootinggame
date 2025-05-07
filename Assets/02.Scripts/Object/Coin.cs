@@ -56,6 +56,8 @@ public class Coin : MonoBehaviour, IPoolObject
 
     private IEnumerator Coin_Coroutine()
     {
+        _sequence.Kill();
+        
         float timer = 0f;
         Vector3 startPoint = transform.position;
         Vector3 controlPoint = transform.position + Random.insideUnitSphere * 3f;
@@ -67,7 +69,6 @@ public class Coin : MonoBehaviour, IPoolObject
             yield return null;
         }
 
-        _sequence.Kill();
         Pool_Coin.Instance.ReturnPooledObject(this);
     }
 
