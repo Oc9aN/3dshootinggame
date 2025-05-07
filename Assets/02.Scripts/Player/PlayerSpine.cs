@@ -28,7 +28,14 @@ public class PlayerSpine : PlayerComponent
 
     private void LateUpdate()
     {
-        _spine.transform.localEulerAngles += new Vector3(_camera.transform.eulerAngles.x, _YAngle, _camera.transform.eulerAngles.z);
+        if (ViewManager.Instance.ViewType == EViewType.FirstPerson || ViewManager.Instance.ViewType == EViewType.ThirdPerson)
+        {
+            _spine.transform.localEulerAngles += new Vector3(_camera.transform.eulerAngles.x, _YAngle, _camera.transform.eulerAngles.z);
+        }
+        else
+        {
+            _spine.transform.localEulerAngles += new Vector3(_spine.transform.eulerAngles.x, _YAngle, _spine.transform.eulerAngles.z);
+        }
     }
 
     private void OnWeaponChanged(Weapon currentWeapon)
