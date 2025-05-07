@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     private EEnemyState _currentStateEnum;
 
     private float _health;
+
     private float Health
     {
         get => _health;
@@ -27,10 +28,12 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     [SerializeField]
     private GameObject _target;
+
     public GameObject Target { get => _target; set => _target = value; }
 
     [SerializeField]
     private SO_Enemy _data;
+
     public SO_Enemy Data
     {
         get => _data;
@@ -43,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     [SerializeField]
     private List<Transform> _patrolPoints;
+
     public List<Transform> PatrolPoints => _patrolPoints;
 
     private Vector3 _targetPosition;
@@ -56,16 +60,22 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
 
     private Damage _damageInfo;
     public Damage DamageInfo => _damageInfo;
-    
+
     private Animator _animator;
     public Animator Animator => _animator;
+    
+    private SkinnedMeshRenderer _skinnedMeshRenderer;
+    private MaterialPropertyBlock _propertyBlock;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
+        _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         
+        _propertyBlock = new MaterialPropertyBlock();
+
         _health = Data.MaxHealth;
         _navMeshAgent.speed = _data.MoveSpeed;
 
@@ -94,6 +104,10 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
     public void Initialize()
     {
         ChangeState(EEnemyState.Idle);
+        
+        _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
+        _propertyBlock.SetColor("_EmissionColor", Color.black);
+        _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
     }
 
     private void OnDataChanged()
@@ -128,7 +142,7 @@ public class Enemy : MonoBehaviour, IDamageable, IPoolObject
         {
             return;
         }
-        
+
         Health -= damage.DamageValue;
 
         _damageInfo = damage;

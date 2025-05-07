@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyDamaged : IEnemyState
 {
+    private const float FLASH_TIME = 0.1f;
+    
     private Enemy _enemy;
     
     private IEnumerator _damagedCoroutine;
@@ -12,9 +14,14 @@ public class EnemyDamaged : IEnemyState
     
     private Vector3 _knockBackDirection;
     
+    private SkinnedMeshRenderer _skinnedMeshRenderer;
+    private MaterialPropertyBlock _propertyBlock;
+    
     public EnemyDamaged(Enemy enemy)
     {
         _enemy = enemy;
+        _skinnedMeshRenderer = _enemy.GetComponentInChildren<SkinnedMeshRenderer>();
+        _propertyBlock = new MaterialPropertyBlock();
     }
 
     public void Enter()
@@ -51,7 +58,17 @@ public class EnemyDamaged : IEnemyState
 
     private IEnumerator Damaged_Coroutine()
     {
-        yield return new WaitForSeconds(_enemy.Data.DamagedTime);
+        SetEmissionColor(Color.red);
+        yield return new WaitForSeconds(FLASH_TIME);
+        SetEmissionColor(Color.black);
+        yield return new WaitForSeconds(_enemy.Data.DamagedTime - FLASH_TIME);
         _enemy.ChangeState(EEnemyState.Trace);
+    }
+
+    private void SetEmissionColor(Color color)
+    {
+        _skinnedMeshRenderer.GetPropertyBlock(_propertyBlock);
+        _propertyBlock.SetColor("_EmissionColor", color);
+        _skinnedMeshRenderer.SetPropertyBlock(_propertyBlock);
     }
 }
