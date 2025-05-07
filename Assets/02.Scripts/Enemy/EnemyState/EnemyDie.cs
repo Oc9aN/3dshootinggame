@@ -43,8 +43,16 @@ public class EnemyDie : IEnemyState
     private void OnDieHandler()
     {
         // 코인 드랍
-        Coin coin = Pool_Coin.Instance.GetPooledObject();
-        coin.transform.position = _enemy.transform.position;
-        coin.OnEnableHandler(_enemy.Target.transform);
+        int randomNumber = Random.Range(1, 5);
+        for (int i = 0; i < randomNumber; i++)
+        {
+            Coin coin = Pool_Coin.Instance.GetPooledObject();
+            Vector2 randomPosition = Random.insideUnitCircle;
+            Vector3 coinPosition = _enemy.transform.position;
+            coinPosition.x += randomPosition.x;
+            coinPosition.z += randomPosition.y;
+            coin.transform.position = coinPosition;
+            coin.OnEnableHandler(_enemy.Target.transform);
+        }
     }
 }

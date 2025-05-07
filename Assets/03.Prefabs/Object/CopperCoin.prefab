@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff3ab3e46daa32438c5ea257fea9932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetDistance: 0
   _bounceForce: 0
 --- !u!1 &7331214285900779350
 GameObject:
@@ -58,7 +59,7 @@ GameObject:
   - component: {fileID: 4809191266980106948}
   - component: {fileID: 4472495253413911496}
   m_Layer: 0
-  m_Name: SilverCoin
+  m_Name: CopperCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

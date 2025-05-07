@@ -8,52 +8,66 @@ public class Coin : MonoBehaviour, IPoolObject
 {
     // 코인 등장 효과 후 플레이어로 이동
     [SerializeField]
+    private float _targetDistance;
+
+    [SerializeField]
     private float _bounceForce;
 
     private Transform _target;
-    
+
     private IEnumerator _coinCoroutine;
-    
+
     public void Initialize()
     {
-        
+        _target = null;
+        _coinCoroutine = null;
+    }
+
+    private void Update()
+    {
+        if (!ReferenceEquals(_target, null))
+        {
+            if (Vector3.Distance(transform.position, _target.position) < _targetDistance)
+            {
+                if (!ReferenceEquals(_coinCoroutine, null))
+                {
+                    return;
+                }
+
+                _coinCoroutine = Coin_Coroutine();
+                StartCoroutine(_coinCoroutine);
+            }
+        }
     }
 
     public void OnEnableHandler(Transform target)
     {
         _target = target;
-        
+
         Sequence seq = DOTween.Sequence();
         float originalHeight = transform.position.y;
-        seq.Append(transform.DOMoveY(originalHeight + _bounceForce, 1f).SetEase(Ease.InBounce));
-        seq.Append(transform.DOMoveY(originalHeight, 1f).SetEase(Ease.OutBounce));
-        seq.OnComplete(() =>
-        {
-            // 완료 후 흡수
-            if (!ReferenceEquals(_coinCoroutine, null))
-            {
-                StopCoroutine(_coinCoroutine);
-            }
-            _coinCoroutine = Coin_Coroutine();
-            StartCoroutine(_coinCoroutine);
-        });
+        float randomDuration = Random.Range(0.8f, 1.2f);
+        seq.Append(transform.DOMoveY(originalHeight + _bounceForce, randomDuration).SetEase(Ease.InBounce));
+        seq.Append(transform.DOMoveY(originalHeight, randomDuration).SetEase(Ease.OutBounce));
+        seq.SetLoops(-1, LoopType.Restart);
     }
 
     private IEnumerator Coin_Coroutine()
     {
         float timer = 0f;
         Vector3 startPoint = transform.position;
-        Vector3 controlPoint =  transform.position + Random.insideUnitSphere;
+        Vector3 controlPoint = transform.position + Random.insideUnitSphere * 3f;
         controlPoint.y = Mathf.Abs(controlPoint.y);
         while (timer < 1f)
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * 2f;
             transform.position = CalculateBezierPoint(timer, startPoint, controlPoint, _target.position);
             yield return null;
         }
+
         Pool_Coin.Instance.ReturnPooledObject(this);
     }
-    
+
     private Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
     {
         // (1 - t)^2 * p0 + 2(1 - t)t * p1 + t^2 * p2

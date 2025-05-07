@@ -131,4 +131,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff3ab3e46daa32438c5ea257fea9932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetDistance: 10
   _bounceForce: 2
