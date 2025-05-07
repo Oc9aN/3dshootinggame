@@ -53,7 +53,7 @@ public class Pool_Particle : Singleton<Pool_Particle>
         // 있는 경우 꺼냄
         if (_pool[type].TryPop(out ParticleSystem pooledObject))
         {
-            pooledObject.Pause();
+            pooledObject.Stop();
             pooledObject.gameObject.SetActive(true);
             return pooledObject;
         }
