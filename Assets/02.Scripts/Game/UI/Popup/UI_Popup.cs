@@ -18,6 +18,11 @@ public class UI_Popup : MonoBehaviour
         PopupManager.Instance.AddPopup(this);
     }
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void Open(Action closeCallback)
     {
         if (gameObject.activeSelf)

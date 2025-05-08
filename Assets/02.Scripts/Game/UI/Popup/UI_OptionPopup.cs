@@ -24,11 +24,6 @@ public class UI_OptionPopup : UI_Popup
         _creditButton.onClick.AddListener(OnClickCreditButton);
     }
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
     private void OnClickContinueButton()
     {
         PopupManager.Instance.ClosePopup(EPopupType.UI_OptionPopup);
