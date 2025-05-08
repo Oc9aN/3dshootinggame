@@ -30,7 +30,9 @@ public class EnemyDamaged : IEnemyState
         _enemy.StartEnemyStateCoroutine(_damagedCoroutine);
         _currentKnockBackValue = _enemy.DamageInfo.KnockBackForce;
         _timer = 0f;
-        _knockBackDirection = (_enemy.transform.position - _enemy.DamageInfo.From.transform.position).normalized;
+        _knockBackDirection = _enemy.transform.position - _enemy.DamageInfo.From.transform.position;
+        _knockBackDirection.y = 0f;
+        _knockBackDirection.Normalize();
         _enemy.NavMeshAgent.isStopped = true;
         _enemy.NavMeshAgent.ResetPath();
         
