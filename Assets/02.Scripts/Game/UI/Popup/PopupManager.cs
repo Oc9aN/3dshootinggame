@@ -7,13 +7,13 @@ public class PopupManager : Singleton<PopupManager>
     // 여러 팝업을 관리
     private List<UI_Popup> _popups;
     // 팝업 뎁스를 관리
-    private List<UI_Popup> _openedPopups;
+    private Stack<UI_Popup> _openedPopups;
 
     protected override void InternalAwake()
     {
         base.InternalAwake();
         _popups = new List<UI_Popup>();
-        _openedPopups = new List<UI_Popup>();
+        _openedPopups = new Stack<UI_Popup>();
     }
 
     public void AddPopup(UI_Popup popup)
@@ -32,10 +32,9 @@ public class PopupManager : Singleton<PopupManager>
         {
             if (popup.name == popupName)
             {
-                popup.Open(closeCallback);
-                if (!_openedPopups.Exists(x => x.name == popupName))
+                if (popup.Open(closeCallback))
                 {
-                    _openedPopups.Add(popup);
+                    _openedPopups.Push(popup);
                 }
             }
         }
@@ -53,20 +52,18 @@ public class PopupManager : Singleton<PopupManager>
             if (popup.name == popupName)
             {
                 popup.Close();
-                _openedPopups.Remove(popup);
+                _openedPopups.Pop();
             }
         }
     }
 
     public void HighestPopupClose(Action failCallback = null)
     {
-        Debug.Log(_openedPopups.Count);
-        if (_openedPopups.Count <= 0)
+        if (!_openedPopups.TryPop(out UI_Popup popup))
         {
             failCallback?.Invoke();
             return;
         }
-        _openedPopups[_openedPopups.Count - 1].Close();
-        _openedPopups.RemoveAt(_openedPopups.Count - 1);
+        popup.Close();
     }
 }

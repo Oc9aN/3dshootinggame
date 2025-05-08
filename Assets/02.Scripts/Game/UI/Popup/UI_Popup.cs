@@ -14,20 +14,19 @@ public class UI_Popup : MonoBehaviour
     protected virtual void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
-        
-        PopupManager.Instance.AddPopup(this);
     }
 
     private void Start()
     {
+        PopupManager.Instance.AddPopup(this);
         gameObject.SetActive(false);
     }
 
-    public void Open(Action closeCallback)
+    public bool Open(Action closeCallback)
     {
         if (gameObject.activeSelf)
         {
-            return;
+            return false;
         }
 
         _closeCallback = closeCallback;
@@ -36,6 +35,8 @@ public class UI_Popup : MonoBehaviour
         _rectTransform.localScale = Vector3.zero;
         gameObject.SetActive(true);
         _rectTransform.DOScale(new Vector3(1f, 1f, 1f), _duration).SetUpdate(true).SetEase(Ease.Unset);
+        
+        return true;
     }
     
     public void Close()
