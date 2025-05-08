@@ -31,6 +31,7 @@ public class UI_OptionPopup : UI_Popup
 
     private void OnClickContinueButton()
     {
+        PopupManager.Instance.ClosePopup(EPopupType.UI_OptionPopup);
         GameManager.Instance.Continue();
     }
 
