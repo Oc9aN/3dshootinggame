@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_TouchBounce : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -14,11 +15,15 @@ public class UI_TouchBounce : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     private Vector2 _originPivot;
     private Vector2 _originAnchoredPosition;
 
+    private bool _isLayout;
+
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
         _originPivot = _rectTransform.pivot;
         _originAnchoredPosition = _rectTransform.anchoredPosition;
+
+        _isLayout = transform.parent.TryGetComponent(out LayoutGroup layoutGroup);
     }
 
     private void OnDisable()
@@ -28,7 +33,10 @@ public class UI_TouchBounce : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _originAnchoredPosition = _rectTransform.anchoredPosition;
+        if (_isLayout)
+        {
+            _originAnchoredPosition = _rectTransform.anchoredPosition;
+        }
         _rectTransform.DOKill();
         PivotChange();
         _rectTransform.DOScale(new Vector3(EndScale, EndScale, 1f), Duration).SetUpdate(true);

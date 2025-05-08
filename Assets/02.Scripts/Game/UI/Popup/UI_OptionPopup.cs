@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_OptionPopup : MonoBehaviour, IPopup
+public class UI_OptionPopup : UI_Popup
 {
     [SerializeField]
     private Button _continueButton;
@@ -15,28 +14,17 @@ public class UI_OptionPopup : MonoBehaviour, IPopup
     
     [SerializeField]
     private Button _creditButton;
-    
-    [SerializeField]
-    private UI_CreditPopup _creditPopup;
-    
-    private void Start()
+
+    protected override void Awake()
     {
+        base.Awake();
         _continueButton.onClick.AddListener(OnClickContinueButton);
         _retryButton.onClick.AddListener(OnClickRetryButton);
         _quitButton.onClick.AddListener(OnClickQuitButton);
         _creditButton.onClick.AddListener(OnClickCreditButton);
-        
-        GameManager.Instance.OptionPopup = this;
-        gameObject.SetActive(false);
     }
 
-    public void Open()
-    {
-        gameObject.SetActive(true);
-        PopupManager.Instance.Popups.Push(this);
-    }
-    
-    public void Close()
+    private void Start()
     {
         gameObject.SetActive(false);
     }
@@ -62,6 +50,6 @@ public class UI_OptionPopup : MonoBehaviour, IPopup
 
     private void OnClickCreditButton()
     {
-        _creditPopup.Open();
+        PopupManager.Instance.OpenPopup(EPopupType.UI_CreditPopup);
     }
 }

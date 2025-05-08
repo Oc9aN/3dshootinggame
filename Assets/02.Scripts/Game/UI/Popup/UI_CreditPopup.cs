@@ -1,21 +1,10 @@
-using System;
 using UnityEngine;
 
-public class UI_CreditPopup : MonoBehaviour, IPopup
+public class UI_CreditPopup : UI_Popup
 {
-    private void Awake()
+    protected override void Awake()
     {
-        gameObject.SetActive(false);
-    }
-
-    public void Open()
-    {
-        gameObject.SetActive(true);
-        PopupManager.Instance.Popups.Push(this);
-    }
-    
-    public void Close()
-    {
+        base.Awake();
         gameObject.SetActive(false);
     }
 }
