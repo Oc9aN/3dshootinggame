@@ -32,4 +32,9 @@ public class UI_PlayerWeapon : MonoBehaviour
     {
         _crosshairImage.sprite = sprite;
     }
+
+    public void ActiveCrosshair(bool active)
+    {
+        _crosshairImage.gameObject.SetActive(active);
+    }
 }

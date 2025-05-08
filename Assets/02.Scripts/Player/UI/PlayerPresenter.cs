@@ -27,6 +27,8 @@ public class PlayerPresenter : PlayerComponent
         Player.OnCurrentWeaponChanged += OnCurrentWeaponChanged;
         Player.OnDamaged += _playerHealthUI.OnDamage;
         
+        ViewManager.Instance.OnViewChanged += OnViewChanged;
+        
         _playerStaminaUI.Initialize(Player.Data.MaxStamina);
         _playerHealthUI.Initialize(Player.Data.MaxHealth);
         _playerBombUI.Initialize(Player.Data.MaxBomb);
@@ -42,5 +44,17 @@ public class PlayerPresenter : PlayerComponent
         
         _playerWeaponUI.RefreshWeaponImage(Player.CurrentWeapon.Data.WeaponSprite);
         _playerWeaponUI.RefreshCrosshairImage(Player.CurrentWeapon.Data.CrosshairSprite);
+    }
+
+    private void OnViewChanged(EViewType viewType)
+    {
+        if (viewType == EViewType.FirstPerson || viewType == EViewType.ThirdPerson)
+        {
+            _playerWeaponUI.ActiveCrosshair(true);
+        }
+        else
+        {
+            _playerWeaponUI.ActiveCrosshair(false);
+        }
     }
 }
