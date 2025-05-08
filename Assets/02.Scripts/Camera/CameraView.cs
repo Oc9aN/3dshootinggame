@@ -49,17 +49,15 @@ public class CameraView : MonoBehaviour
         if (viewType == EViewType.FirstPerson)
         {
             _cameraViewStrategy = _cameraFirstView;
-            _cameraViewStrategy.Initialize();
         }
         else if (viewType == EViewType.ThirdPerson)
         {
             _cameraViewStrategy = _cameraThirdView;
-            _cameraViewStrategy.Initialize();
         }
         else if (viewType == EViewType.QuarterView)
         {
             _cameraViewStrategy = _cameraQuarterView;
-            _cameraViewStrategy.Initialize();
         }
+        _cameraViewStrategy.Reset();
     }
 }

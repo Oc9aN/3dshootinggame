@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface ICameraViewStrategy
 {
-    public void Initialize();
+    public void Reset();
     public void View();
 }

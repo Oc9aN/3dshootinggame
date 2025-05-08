@@ -13,7 +13,7 @@ public class CameraQuarterView : ICameraViewStrategy
         _player = player;
     }
 
-    public void Initialize()
+    public void Reset()
     {
         
     }
