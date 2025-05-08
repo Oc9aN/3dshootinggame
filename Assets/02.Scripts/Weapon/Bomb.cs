@@ -25,7 +25,19 @@ public class Bomb : MonoBehaviour, IPoolObject, IExplodable
 
     public void Fire(float force)
     {
-        _rigidbody.AddForce(_camera.transform.forward * force, ForceMode.Impulse);
+        if (ViewManager.Instance.ViewType == EViewType.FirstPerson ||
+            ViewManager.Instance.ViewType == EViewType.ThirdPerson)
+        {
+            _rigidbody.AddForce(_camera.transform.forward * force, ForceMode.Impulse);
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float targetY = transform.position.y;
+            Vector3 targetPoint = ray.GetPoint((targetY - ray.origin.y) / ray.direction.y);
+            Vector3 aimDirection = targetPoint - transform.position;
+            _rigidbody.AddForce(aimDirection.normalized * force, ForceMode.Impulse);
+        }
         _rigidbody.AddTorque(Random.insideUnitSphere);
     }
 

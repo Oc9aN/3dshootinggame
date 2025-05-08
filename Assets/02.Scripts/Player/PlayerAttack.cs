@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using Unity.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class PlayerAttack : PlayerComponent
 {
