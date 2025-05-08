@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
     // 게임 진행을 관리
     // Ready -> Run -> Over
+    private UI_OptionPopup _optionPopup;
+    public UI_OptionPopup OptionPopup { get => _optionPopup; set => _optionPopup = value; }
     public event Action<EGameState> OnGameStateChanged;
     
     private EGameState _gameState = EGameState.Ready;
@@ -38,8 +41,36 @@ public class GameManager : Singleton<GameManager>
         GameState = EGameState.Ready;
     }
 
-    public void GameOver()
+    private void Update()
     {
-        GameState = EGameState.Over;
+        if (InputHandler.GetKeyDown(KeyCode.Escape))
+        {
+            PopupManager.Instance.PopupClose(Pause);
+        }
+    }
+
+    private void Pause()
+    {
+        GameState = EGameState.Puase;
+        Time.timeScale = 0;
+
+        _optionPopup?.Open();
+    }
+
+    public void Continue()
+    {
+        GameState = EGameState.Run;
+        Time.timeScale = 1;
+        
+        _optionPopup?.Close();
+    }
+
+    public void Restart()
+    {
+        GameState = EGameState.Run;
+        Time.timeScale = 1;
+
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }

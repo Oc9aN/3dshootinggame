@@ -2,5 +2,6 @@ public enum EGameState
 {
     Ready,
     Run,
-    Over
+    Over,
+    Puase
 }

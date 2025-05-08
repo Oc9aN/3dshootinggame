@@ -12,6 +12,11 @@ public class CursorSetting : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState != EGameState.Run)
+        {
+            return;
+        }
+        
         if (InputHandler.GetKeyDown(KeyCode.Escape))
         {
             // UI 열기

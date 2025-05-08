@@ -1,15 +1,9 @@
-using System;
 using UnityEngine;
 
 public class GamePresenter : MonoBehaviour
 {
     [SerializeField]
     private UI_Game _gameView;
-
-    private void Awake()
-    {
-        
-    }
 
     private void Start()
     {
