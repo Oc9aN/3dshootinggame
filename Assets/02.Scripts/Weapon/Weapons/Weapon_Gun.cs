@@ -57,7 +57,7 @@ public class Weapon_Gun : Weapon
         _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
 
         // 시야에 따라 다르게
-        Vector3 hitDirection = _weaponAimStrategy.WeaponAiming(this);
+        Vector3 hitDirection = _weaponAimStrategy.GetWeaponAimingDirection(this);
         _bulletHitNormal = -hitDirection.normalized;
         _bulletHitPoint = _attackPosition.position + hitDirection * _data.BulletMaxDistance; // 안맞으면 최대 거리까지 존재
 

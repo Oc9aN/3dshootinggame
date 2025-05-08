@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CrosshairAimStrategy : IWeaponAimStrategy
 {
-    public Vector3 WeaponAiming(Weapon weapon)
+    public Vector3 GetWeaponAimingDirection(Weapon weapon)
     {
         // 카메라 크로스헤어 기준으로 레이를 쏜 경우
         Vector3 aimDirection = Camera.main.transform.forward;

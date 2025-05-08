@@ -8,5 +8,5 @@ public interface IWeaponAimStrategy
     /// </summary>
     /// <param name="weapon">현재 무기</param>
     /// <returns></returns>
-    public Vector3 WeaponAiming(Weapon weapon);
+    public Vector3 GetWeaponAimingDirection(Weapon weapon);
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CursorAimStrategy : IWeaponAimStrategy
 {
-    public Vector3 WeaponAiming(Weapon weapon)
+    public Vector3 GetWeaponAimingDirection(Weapon weapon)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float targetY = weapon.transform.position.y;
