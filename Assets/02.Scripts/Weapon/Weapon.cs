@@ -21,9 +21,6 @@ public abstract class Weapon : MonoBehaviour
 
     protected float _fireRate = 0f;
 
-    protected Vector3 _currentRecoil;
-    protected Vector3 _targetRecoil;
-
     protected Camera _camera;
 
     protected IWeaponAimStrategy _weaponAimStrategy;
@@ -93,13 +90,6 @@ public abstract class Weapon : MonoBehaviour
 
     // 공격 방식대로 공격
     public abstract void Attack();
-
-    protected void ApplyRandomRecoil()
-    {
-        float vertical = Random.Range(0f, _data.VerticalRecoil);                          // 위로 튕김
-        float horizontal = Random.Range(-_data.HorizontalRecoil, _data.HorizontalRecoil); // 좌우 랜덤
-        _targetRecoil += new Vector3(vertical, horizontal, 0f);
-    }
 
     public void SetWeapon()
     {

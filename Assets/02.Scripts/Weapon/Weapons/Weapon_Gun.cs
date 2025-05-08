@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Weapon_Gun : Weapon
 {
@@ -9,6 +10,9 @@ public class Weapon_Gun : Weapon
 
     private Vector3 _bulletHitPoint;
     private Vector3 _bulletHitNormal;
+
+    private Vector3 _currentRecoil;
+    private Vector3 _targetRecoil;
 
     private IEnumerator _fireCoroutine;
 
@@ -20,14 +24,14 @@ public class Weapon_Gun : Weapon
             ApplyRandomRecoil(); // 먼저 반동 값을 계산
 
             Fire();
-            
+
             if (!ReferenceEquals(_fireCoroutine, null))
             {
                 StopCoroutine(_fireCoroutine);
             }
             _fireCoroutine = FireBullet_Coroutine();
             StartCoroutine(_fireCoroutine);
-            
+
             // 연출
             TriggerAnimation();
 
@@ -44,17 +48,19 @@ public class Weapon_Gun : Weapon
         {
             _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * _data.RecoilSpeed);
             _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * _data.RecoilReturnSpeed);
-            _camera.transform.localEulerAngles += _currentRecoil;
         }
+    }
+
+    private void LateUpdate()
+    {
+        _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용 (LateUpdate로 이동)
     }
 
     private void Fire()
     {
-        // 반동 계산
+        // 반동 계산 (LateUpdate에서 적용하므로 여기서는 목표 반동만 설정)
         _currentRecoil = Vector3.Lerp(_currentRecoil, _targetRecoil, Time.deltaTime * _data.RecoilSpeed);
         _targetRecoil = Vector3.Lerp(_targetRecoil, Vector3.zero, Time.deltaTime * _data.RecoilReturnSpeed);
-
-        _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용
 
         // 시야에 따라 다르게
         Vector3 hitDirection = _weaponAimStrategy.GetWeaponAimingDirection(this);
@@ -85,5 +91,12 @@ public class Weapon_Gun : Weapon
         Bullet bullet = Pool_Bullet.Instance.GetPooledObject();
         bullet.transform.position = _attackPosition.position;
         bullet.Fire(_bulletHitPoint, _data.BulletSpeed, _bulletHitNormal);
+    }
+
+    private void ApplyRandomRecoil()
+    {
+        float vertical = Random.Range(0f, _data.VerticalRecoil);                          // 위로 튕김
+        float horizontal = Random.Range(-_data.HorizontalRecoil, _data.HorizontalRecoil); // 좌우 랜덤
+        _targetRecoil += new Vector3(vertical, horizontal, 0f);
     }
 }
