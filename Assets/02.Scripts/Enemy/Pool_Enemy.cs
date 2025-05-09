@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Pool_Enemy : Singleton<Pool_Enemy>
 {
+    // TODO: 팩토리 형식으로
     [SerializeField]
     private List<Enemy> _poolObjectPrefab;
 
