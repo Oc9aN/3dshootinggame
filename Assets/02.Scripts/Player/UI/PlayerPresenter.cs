@@ -35,6 +35,7 @@ public class PlayerPresenter : PlayerComponent
         _playerBombUI.Initialize(Player.Data.MaxBomb);
     }
 
+    // TODO: 무기 UI는 무기 Presenter가
     private void OnCurrentWeaponChanged(Weapon weapon)
     {
         weapon.OnAmmoChanged += _playerWeaponUI.RefreshAmmoText;
