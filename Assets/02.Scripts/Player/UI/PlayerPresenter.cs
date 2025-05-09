@@ -13,6 +13,7 @@ public class PlayerPresenter : PlayerComponent
     [SerializeField]
     private UI_PlayerBomb _playerBombUI;
     
+    // TODO: 무기 UI는 무기 Presenter가
     [SerializeField]
     private UI_PlayerWeapon _playerWeaponUI;
     
