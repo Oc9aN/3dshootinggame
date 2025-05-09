@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UI_LoginScene : MonoBehaviour
 {
+    private const string PREFIX = "ID_";
     private const string SALT = "1004";
     
     [Header("패널")]
@@ -104,7 +105,7 @@ public class UI_LoginScene : MonoBehaviour
             return;
         }
 
-        PlayerPrefs.SetString(id, pw);
+        PlayerPrefs.SetString(PREFIX + id, Encryption(pw + SALT));
         
         GoToLogin(id);
     }
@@ -125,13 +126,13 @@ public class UI_LoginScene : MonoBehaviour
             return;
         }
         
-        if (!PlayerPrefs.HasKey(id))
+        if (!PlayerPrefs.HasKey(PREFIX + id))
         {
             _loginInputField.ResultText.text = "없는 아이디입니다.";
             return;
         }
 
-        if (!string.Equals(PlayerPrefs.GetString(id), Encryption(pw + SALT)))
+        if (!string.Equals(PlayerPrefs.GetString(PREFIX + id), Encryption(pw + SALT)))
         {
             _loginInputField.ResultText.text = "틀린 비밀번호입니다.";
             return;
