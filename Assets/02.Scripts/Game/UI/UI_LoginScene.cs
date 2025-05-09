@@ -1,9 +1,13 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_LoginScene : MonoBehaviour
 {
+    private const string SALT = "1004";
+    
     [Header("패널")]
     [SerializeField]
     private GameObject _loginPanel;
@@ -127,12 +131,29 @@ public class UI_LoginScene : MonoBehaviour
             return;
         }
 
-        if (!string.Equals(PlayerPrefs.GetString(id), pw))
+        if (!string.Equals(PlayerPrefs.GetString(id), Encryption(pw + SALT)))
         {
             _loginInputField.ResultText.text = "틀린 비밀번호입니다.";
             return;
         }
 
         _loginInputField.ResultText.text = "로그인에 성공했습니다.";
+    }
+
+    private string Encryption(string pw)
+    {
+        SHA256 sha256 = SHA256.Create();
+        
+        // 운영체제 혹은 언어별로 string을 표현하는 방식이 다 다르므로 UTF-8버전의 바이트 배열로 바꿔야한다.
+        byte[] bytes = Encoding.UTF8.GetBytes(pw);
+        byte[] hash = sha256.ComputeHash(bytes);
+        
+        string resultText = string.Empty;
+        foreach (var b in hash)
+        {
+            resultText += b.ToString("X2");
+        }
+        
+        return resultText;
     }
 }
