@@ -2,6 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_LoginScene : MonoBehaviour
@@ -33,7 +34,7 @@ public class UI_LoginScene : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteAll();
         
         GoToLogin();
 
@@ -42,6 +43,9 @@ public class UI_LoginScene : MonoBehaviour
         
         _registerInputField.ConfirmButton.onClick.AddListener(Register);
         _loginInputField.ConfirmButton.onClick.AddListener(Login);
+        
+        _loginInputField.IDInputField.onValueChanged.AddListener((_) => LoginCheck());
+        _loginInputField.PWInputField.onValueChanged.AddListener((_) => LoginCheck());
     }
 
     private void OnClickLoginButton()
@@ -128,17 +132,26 @@ public class UI_LoginScene : MonoBehaviour
         
         if (!PlayerPrefs.HasKey(PREFIX + id))
         {
-            _loginInputField.ResultText.text = "없는 아이디입니다.";
+            _loginInputField.ResultText.text = "아이디와 비밀번호를 확인해 주세요.";
             return;
         }
 
         if (!string.Equals(PlayerPrefs.GetString(PREFIX + id), Encryption(pw + SALT)))
         {
-            _loginInputField.ResultText.text = "틀린 비밀번호입니다.";
+            _loginInputField.ResultText.text = "아이디와 비밀번호를 확인해 주세요.";
             return;
         }
 
-        _loginInputField.ResultText.text = "로그인에 성공했습니다.";
+        // _loginInputField.ResultText.text = "로그인에 성공했습니다.";
+        SceneManager.LoadScene(1);
+    }
+
+    private void LoginCheck()
+    {
+        string id = _loginInputField.IDInputField.text;
+        string pw = _loginInputField.PWInputField.text;
+        
+        _loginInputField.ConfirmButton.enabled = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(pw);
     }
 
     private string Encryption(string pw)
