@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 public class Barrel : MonoBehaviour, IExplodable, IDamageable
 {
     // 폭발하는 통
-    // TODO: 값이 다른 여러 객체가 필요해지면 SO로 빼기
     [SerializeField]
     private float _minExplodeForce;
 
