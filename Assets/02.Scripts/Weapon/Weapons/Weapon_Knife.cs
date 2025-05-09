@@ -75,6 +75,11 @@ public class Weapon_Knife : Weapon
         }
     }
 
+    protected override void Reloading()
+    {
+        return;
+    }
+
     private IEnumerator Trail_Coroutine()
     {
         yield return new WaitForSeconds(1f);

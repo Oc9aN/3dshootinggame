@@ -15,6 +15,27 @@ public class Weapon_Gun : Weapon
     private Vector3 _targetRecoil;
 
     private IEnumerator _fireCoroutine;
+    private IEnumerator _reloadCoroutine;
+
+    // 상태
+    private bool _isReloading = false;
+
+    // 재장전 진행도
+    private float _reloadingProgress = 0f;
+
+    protected override void Update()
+    {
+        base.Update();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reloading();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용 (LateUpdate로 이동)
+    }
 
     public override void Attack()
     {
@@ -29,6 +50,7 @@ public class Weapon_Gun : Weapon
             {
                 StopCoroutine(_fireCoroutine);
             }
+
             _fireCoroutine = FireBullet_Coroutine();
             StartCoroutine(_fireCoroutine);
 
@@ -37,10 +59,12 @@ public class Weapon_Gun : Weapon
 
             _fireRate = _data.FireRate;
             CurrentAmmo--;
-            // 재장전 중이면 중지
-            if (IsReloading)
+            if (_isReloading)
             {
-                IsReloading = false;
+                // 장전 중 공격
+                StopCoroutine(_reloadCoroutine);
+                _isReloading = false;
+                SetReloadingProgress(0f);
             }
         }
         // 반동 계산 (발사하지 않을 때도 목표 반동 감소)
@@ -51,9 +75,29 @@ public class Weapon_Gun : Weapon
         }
     }
 
-    private void LateUpdate()
+    protected override void Reloading()
     {
-        _camera.transform.localEulerAngles += _currentRecoil; // 카메라 회전 적용 (LateUpdate로 이동)
+        if (_isReloading)
+        {
+            return;
+        }
+
+        _reloadCoroutine = Reloading_Coroutine();
+        StartCoroutine(_reloadCoroutine);
+    }
+
+    private IEnumerator Reloading_Coroutine()
+    {
+        while (_reloadingProgress <= _data.ReloadTime)
+        {
+            SetReloadingProgress(_reloadingProgress + Time.deltaTime);
+            yield return null;
+        }
+
+        // 재장전
+        CurrentAmmo = _data.MaxAmmo;
+        _isReloading = false;
+        SetReloadingProgress(0f);
     }
 
     private void Fire()
@@ -98,5 +142,11 @@ public class Weapon_Gun : Weapon
         float vertical = Random.Range(0f, _data.VerticalRecoil);                          // 위로 튕김
         float horizontal = Random.Range(-_data.HorizontalRecoil, _data.HorizontalRecoil); // 좌우 랜덤
         _targetRecoil += new Vector3(vertical, horizontal, 0f);
+    }
+
+    private void SetReloadingProgress(float progress)
+    {
+        _reloadingProgress = progress;
+        TriggerOnReload(_reloadingProgress);
     }
 }

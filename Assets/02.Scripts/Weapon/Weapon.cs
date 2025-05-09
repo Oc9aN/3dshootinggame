@@ -39,33 +39,6 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    // 상태
-    private bool _isReloading = false;
-
-    public bool IsReloading
-    {
-        get => _isReloading;
-        set
-        {
-            _isReloading = value;
-            if (!_isReloading)
-                ReloadingProgress = 0f;
-        }
-    }
-
-    // 재장전 진행도
-    private float _reloadingProgress = 0f;
-
-    public float ReloadingProgress
-    {
-        get => _reloadingProgress;
-        set
-        {
-            _reloadingProgress = value;
-            OnReloadProgressChanged?.Invoke(_reloadingProgress);
-        }
-    }
-
     protected virtual void Awake()
     {
         _camera = Camera.main;
@@ -83,13 +56,14 @@ public abstract class Weapon : MonoBehaviour
         CurrentAmmo = _data.MaxAmmo;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         _fireRate -= Time.deltaTime;
     }
 
     // 공격 방식대로 공격
     public abstract void Attack();
+    protected abstract void Reloading();
 
     public void SetWeapon()
     {
@@ -115,6 +89,11 @@ public abstract class Weapon : MonoBehaviour
     protected void TriggerOnAttack()
     {
         OnAttack?.Invoke();
+    }
+
+    protected void TriggerOnReload(float progress)
+    {
+        OnReloadProgressChanged?.Invoke(progress);
     }
 
     private void OnViewChanged(EViewType viewType)
