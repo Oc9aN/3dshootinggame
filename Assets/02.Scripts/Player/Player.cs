@@ -17,9 +17,7 @@ public class Player : MonoBehaviour, IDamageable
 
     public SO_Player Data => _data;
 
-    // TODO: 무기와 의존성 분리
     private Weapon _currentWeapon;
-
     public Weapon CurrentWeapon
     {
         get => _currentWeapon;
