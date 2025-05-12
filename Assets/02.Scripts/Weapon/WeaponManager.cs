@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class WeaponManager : Singleton<WeaponManager>
 {
     // 전체 무기 관리
     // 무기 데이터
+    public event Action<Weapon> OnWeaponChanged; 
+    
     [SerializeField]
     private List<Weapon> _weaponPrefabList;
 
@@ -23,8 +26,9 @@ public class WeaponManager : Singleton<WeaponManager>
             _weaponList.Add(weapon);
         }
     }
+    
     // 무기 가져가기
-    public Weapon GetWeapon(EWeaponType type, Weapon returnWeapon)
+    public Weapon GetWeapon(EWeaponType type, Weapon returnWeapon, Transform parent)
     {
         if (!ReferenceEquals(returnWeapon, null))
         {
@@ -32,15 +36,22 @@ public class WeaponManager : Singleton<WeaponManager>
         }
         
         Weapon getWeapon = _weaponList[(int)type];
+        
         getWeapon.gameObject.SetActive(true);
+        getWeapon.transform.parent = parent;
+        getWeapon.transform.localPosition = Vector3.zero;
+        getWeapon.transform.localRotation = Quaternion.identity;
+        getWeapon.InitializeWeapon();
+        
+        OnWeaponChanged?.Invoke(getWeapon);
         return getWeapon;
     }
     
-    // 무기 반환
     private void ReturnWeapon(Weapon returnWeapon)
     {
-        returnWeapon.gameObject.SetActive(false);
-        returnWeapon.transform.parent = transform;
+        returnWeapon.InitializeEvent();
+        gameObject.SetActive(false);
         returnWeapon.transform.localPosition = Vector3.zero;
+        returnWeapon.transform.localRotation = Quaternion.identity;
     }
 }

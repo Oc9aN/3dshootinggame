@@ -80,10 +80,8 @@ public class PlayerWeaponSwap : PlayerComponent
 
     private void SwapWeapons(EWeaponType type)
     {
-        Player.CurrentWeapon = WeaponManager.Instance.GetWeapon(type, Player.CurrentWeapon);
-        Player.CurrentWeapon.transform.parent = _weaponTransform;
-        Player.CurrentWeapon.transform.localPosition = Vector3.zero;
-        Player.CurrentWeapon.transform.localRotation = Quaternion.identity;
-        Player.CurrentWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("Attack");
+        Weapon changedWeapon = WeaponManager.Instance.GetWeapon(type, Player.CurrentWeapon, _weaponTransform);
+        changedWeapon.AttackAnimationTrigger += () => Player.Animator.SetTrigger("Attack");
+        Player.CurrentWeapon = changedWeapon;
     }
 }

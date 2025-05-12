@@ -65,19 +65,16 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Attack();
     protected abstract void Reloading();
 
-    public void SetWeapon()
+    public void InitializeWeapon()
     {
         _fireRate = 0f;
-        gameObject.SetActive(true);
-        transform.localPosition = Vector3.zero;
         CurrentAmmo = _currentAmmo;
     }
 
-    public void SwapWeapon()
+    public void InitializeEvent()
     {
         OnAmmoChanged = null;
         OnReloadProgressChanged = null;
-        gameObject.SetActive(false);
         AttackAnimationTrigger = null;
     }
 

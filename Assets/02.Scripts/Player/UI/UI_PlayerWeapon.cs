@@ -13,14 +13,9 @@ public class UI_PlayerWeapon : MonoBehaviour
     [SerializeField]
     private Image _crosshairImage;
 
-    public void Initialize(int maxBombCount)
+    public void RefreshAmmoText(int bulletCount, int maxBulletCount)
     {
-        _ammoText.text = $"남은 총알 {maxBombCount}/{maxBombCount}";
-    }
-
-    public void RefreshAmmoText(int bombCount, int maxBombCount)
-    {
-        _ammoText.text = $"남은 총알 {bombCount}/{maxBombCount}";
+        _ammoText.text = $"남은 총알 {bulletCount}/{maxBulletCount}";
     }
 
     public void RefreshWeaponImage(Sprite sprite)

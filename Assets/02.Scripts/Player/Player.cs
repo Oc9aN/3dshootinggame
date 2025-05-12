@@ -25,10 +25,8 @@ public class Player : MonoBehaviour, IDamageable
         get => _currentWeapon;
         set
         {
-            _currentWeapon?.SwapWeapon();
             _currentWeapon = value;
             OnCurrentWeaponChanged?.Invoke(_currentWeapon);
-            _currentWeapon.SetWeapon();
         }
     }
 
