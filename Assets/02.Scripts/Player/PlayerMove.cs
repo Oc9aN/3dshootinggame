@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class PlayerMove : PlayerComponent

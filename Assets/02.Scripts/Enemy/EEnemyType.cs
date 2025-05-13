@@ -1,8 +1,8 @@
 public enum EEnemyType
 {
-    Normal = 0,
-    Range,
-    Boomer,
+    Enemy_Normal = 0,
+    Enemy_Range,
+    Enemy_Boomer,
     
     Count,
 }

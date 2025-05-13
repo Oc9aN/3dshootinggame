@@ -1537,7 +1537,7 @@ GameObject:
   - component: {fileID: 1786836244940608522}
   - component: {fileID: -6688024571360439921}
   m_Layer: 8
-  m_Name: Enemy_Bommer
+  m_Name: Enemy_Boomer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

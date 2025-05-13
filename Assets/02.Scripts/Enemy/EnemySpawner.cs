@@ -49,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
+        // 모든 적에 대해서 공통적인 초기화 작업
         Vector3 randomPosition = new Vector3(Random.Range(-_spawnRange, _spawnRange), 0,
             Random.Range(-_spawnRange, _spawnRange));
         Physics.Raycast(transform.position + randomPosition,  Vector3.down, out RaycastHit hit, 10f);
@@ -63,13 +64,13 @@ public class EnemySpawner : MonoBehaviour
         int range = Random.Range(0, 100);
         if (range < 25)
         {
-            return EEnemyType.Range;
+            return EEnemyType.Enemy_Range;
         }
         if (range < 50)
         {
-            return EEnemyType.Boomer;
+            return EEnemyType.Enemy_Boomer;
         }
-        return EEnemyType.Normal;
+        return EEnemyType.Enemy_Normal;
     }
 
     private void OnDestroy()
